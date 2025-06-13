@@ -2,13 +2,15 @@
 Kenpro ICT Cohort 2025
 
 ## Bio
-Hi, I'm Mark! I'm a student and aspiring web developer with a passion for coding. I enjoy building websites and exploring new technologies.
+Hi, I'm Mohamed! I'm a student and aspiring Software Engineer with a passion for coding. I enjoy building websites and exploring new technologies.
 
 ## Skills
 - HTML
 - CSS
 - JavaScript
 - Python
+- PHP
+- MySQL
 
 ## Interests
 - Web Development
@@ -16,7 +18,7 @@ Hi, I'm Mark! I'm a student and aspiring web developer with a passion for coding
 - Technology
 
 ## Contact
-- Email: thegreat@mdcartel.me
+- Email: ibrahimadan9596@gmail.com
 
 
  ## Mohamed Ibrahim Adan
@@ -37,7 +39,7 @@ I'm a passionate and driven software engineering student focused on building inn
 
 💼 **Internship Experience**  
 **Bulsho Fibre Link** — *Intern (ICT & Networking)*  
-📅 May 2024 – June 2024  
+📅 May 2024 – July 2024  
 - Gained hands-on experience in fiber optic networking and internet infrastructure.  
 - Assisted in configuring routers, switches, and wireless networks for client installations.  
 - Supported customer service operations and troubleshooting network connectivity issues.  
