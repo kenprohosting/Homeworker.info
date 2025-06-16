@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Employee Evaluation Form</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <div class="form-wrapper">
+    <h2>Employee Evaluation Form</h2>
+
+    <table class="info-table">
+      <tr>
+        <td colspan="2"><label>Employee name</label><input type="text" /></td>
+      </tr>
+      <tr>
+        <td><label>Job title</label><input type="text" /></td>
+        <td><label>Employer name</label><input type="text" /></td>
+      </tr>
+      <tr>
+        <td><label>Last review date</label><input type="date" /></td>
+        <td><label>Review period</label><input type="text" /></td>
+      </tr>
+      <tr>
+        <td colspan="2"><label>Review date</label><input type="date" /></td>
+      </tr>
+    </table>
+
+    <h3>Competency Rating</h3>
+    <p><em>Rate on a scale of 1-5 (1 = lowest, 5 = highest)</em></p>
+    <table class="rating-table">
+      <thead>
+        <tr>
+          <th>Competency</th>
+          <th>Rating</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Job knowledge</td><td><input type="number" min="1" max="5"></td><td><textarea></textarea></td></tr>
+        <tr><td>Quality of work</td><td><input type="number" min="1" max="5"></td><td><textarea></textarea></td></tr>
+        <tr><td>Communication skills</td><td><input type="number" min="1" max="5"></td><td><textarea></textarea></td></tr>
+        <tr><td>Teamwork & collaboration</td><td><input type="number" min="1" max="5"></td><td><textarea></textarea></td></tr>
+        <tr><td>Problem-solving abilities</td><td><input type="number" min="1" max="5"></td><td><textarea></textarea></td></tr>
+        <tr><td>Initiative</td><td><input type="number" min="1" max="5"></td><td><textarea></textarea></td></tr>
+        <tr><td>Dependability</td><td><input type="number" min="1" max="5"></td><td><textarea></textarea></td></tr>
+      </tbody>
+    </table>
+
+    <h3>Overall Employee Performance</h3>
+    <table class="performance-table">
+      <thead>
+        <tr>
+          <th>Statement</th>
+          <th>Rating (1–5)</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Employee achieves the objectives of the job</td><td><input type="number" min="1" max="5"></td><td><textarea></textarea></td></tr>
+        <tr><td>Employee meets the criteria for performance</td><td><input type="number" min="1" max="5"></td><td><textarea></textarea></td></tr>
+        <tr><td>Employee fulfills all the requirements of the job</td><td><input type="number" min="1" max="5"></td><td><textarea></textarea></td></tr>
+      </tbody>
+    </table>
+
+    <h3>Employee Potential</h3>
+    <p>How would you qualify the employee's potential?</p>
+    <table class="potential-table">
+      <tr>
+        <td><input type="checkbox"> Maximized</td>
+        <td><input type="checkbox"> Growth within function</td>
+        <td><input type="checkbox"> Promotable in the long term</td>
+        <td><input type="checkbox"> Promotable in the short term</td>
+      </tr>
+    </table>
+
+    <footer>
+      <p><a href="https://www.kenpro.org.com" target="_blank">kenpro.org</a></p>
+    </footer>
+  </div>
+</body>
+</html>

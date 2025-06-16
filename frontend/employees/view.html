@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Employees</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar (same as index.html) -->
+        <aside class="sidebar">
+            <!-- Copy sidebar content from index.html -->
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search employees...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="user-profile">
+                    <img src="../images/user-avatar.jpg" alt="User">
+                    <span>Admin</span>
+                </div>
+            </header>
+            
+            <div class="content-area">
+                <div class="page-header">
+                    <h1>Employees</h1>
+                    <a href="add.html" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Add Employee
+                    </a>
+                </div>
+                
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>EMP001</td>
+                                <td>John Doe</td>
+                                <td>Receptionist</td>
+                                <td>john@example.com</td>
+                                <td>(123) 456-7890</td>
+                                <td><span class="status active">Active</span></td>
+                                <td class="actions">
+                                    <a href="#" class="btn-edit"><i class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn-delete"><i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>EMP002</td>
+                                <td>Jane MISIKO</td>
+                                <td>Housekeeper</td>
+                                <td>jane@example.com</td>
+                                <td>(123) 456-7891</td>
+                                <td><span class="status active">Active</span></td>
+                                <td class="actions">
+                                    <a href="#" class="btn-edit"><i class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn-delete"><i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>EMP003</td>
+                                <td>Robert KIPROP</td>
+                                <td>Manager</td>
+                                <td>robert@example.com</td>
+                                <td>(123) 456-7892</td>
+                                <td><span class="status inactive">Inactive</span></td>
+                                <td class="actions">
+                                    <a href="#" class="btn-edit"><i class="fas fa-edit"></i></a>
+                                    <a href="#" class="btn-delete"><i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

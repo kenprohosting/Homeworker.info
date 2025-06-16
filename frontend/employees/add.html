@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Employee</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="container">
+    <form class="form-card">
+      <h2>Add Employee</h2>
+
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter full name" required>
+
+      <label for="age">Age</label>
+      <input type="text" id="number" name="number" placeholder="18+" required>
+
+      <label for="gender">Gender</label>
+      <select>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+
+      <label for="location">Location</label>
+      <input type="text" id="location" name="location" placeholder="Type an address" required>
+
+      <label for="phone">Phone Number</label>
+      <div class="phone-group">
+        <select id="country" name="country">
+          <option value="+254">+254 (KE)</option>
+        </select>
+        <input type="tel" id="phone" name="phone" placeholder="123 456 7890" required>
+      </div>
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" placeholder="you@example.com" required>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</body>
+</html>
