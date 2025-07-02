@@ -132,6 +132,7 @@ if (!empty($profilePath) && file_exists($profilePath)):
     <button type="submit">Update Profile</button>
 </form>
 
+<<<<<<< HEAD
 <!-- Reviews Section -->
 <?php
 // Fetch all reviews for this employee
@@ -154,5 +155,7 @@ $all_reviews = $reviews->fetchAll(PDO::FETCH_ASSOC);
     <?php endforeach; ?>
 </div>
 
+=======
+>>>>>>> bf4d09db357fb0cddf6c0fc024c1eed1105fbecb
 </body>
 </html>

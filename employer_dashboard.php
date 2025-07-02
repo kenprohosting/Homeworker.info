@@ -140,9 +140,15 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
       <div class="card">
         <?php
           $profile = 'uploads/default.jpg';
+<<<<<<< HEAD
           if (!empty($emp['profile_pic'])) {
               if (file_exists(__DIR__ . '/' . $emp['profile_pic'])) {
                   $profile = $emp['profile_pic'];
+=======
+          if (!empty($emp['Profile_pic'])) {
+              if (file_exists(__DIR__ . '/' . $emp['Profile_pic'])) {
+                  $profile = $emp['Profile_pic'];
+>>>>>>> bf4d09db357fb0cddf6c0fc024c1eed1105fbecb
               }
           }
         ?>
@@ -183,7 +189,11 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
           <td><?= htmlspecialchars($b['Status']) ?></td>
           <td>
             <?php if ($b['Status'] === 'confirmed'): ?>
+<<<<<<< HEAD
                 <a href="employer_payment.php?bid=<?= $b['ID'] ?>" class="btn">Make Payment</a>
+=======
+                <a href="payment.php?bid=<?= $b['ID'] ?>" class="btn">Make Payment</a>
+>>>>>>> bf4d09db357fb0cddf6c0fc024c1eed1105fbecb
             <?php elseif ($b['Status'] === 'completed'): ?>
                 <span style="color:green;">Paid</span>
             <?php elseif ($b['Status'] === 'cancelled'): ?>

@@ -25,6 +25,7 @@ if (!$employee) {
 
 $book_date = date('Y-m-d'); // today's date
 
+<<<<<<< HEAD
 // --- Review Section ---
 $review_success = '';
 $review_error = '';
@@ -77,6 +78,8 @@ $reviews = $conn->prepare("SELECT r.*, e.Name AS employer_name FROM review_table
 $reviews->execute([$employee_id]);
 $all_reviews = $reviews->fetchAll(PDO::FETCH_ASSOC);
 
+=======
+>>>>>>> bf4d09db357fb0cddf6c0fc024c1eed1105fbecb
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $conn->prepare("INSERT INTO bookings 
@@ -126,6 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="box">
     <h2>Book <?= htmlspecialchars($employee['Name']) ?></h2>
     
+<<<<<<< HEAD
     <!-- Review Section -->
     <div class="review-section" style="background:#fff;padding:20px;border-radius:8px;margin-bottom:20px;">
         <h3>Leave a Review</h3>
@@ -196,6 +200,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
     <!-- End Review Section -->
 
+=======
+>>>>>>> bf4d09db357fb0cddf6c0fc024c1eed1105fbecb
     <form method="POST">
         <label>Book Date:</label>
         <input type="text" name="book_date" value="<?= $book_date ?>" readonly>
