@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>IntaSend Payment Button Test</title>
+    <!-- Add IntaSend SDK script -->
+    <script src="https://unpkg.com/intasend-inlinejs-sdk@4.0.1/build/intasend-inline.js"></script>  
+</head>
+<body>
+    <h1>Test IntaSend Payment Button</h1>
+    <form id="payment-form">
+        <label for="amount">Enter Amount: </label>
+        <input type="number" id="amount" name="amount" min="1" required>
+    </form>
+
+    <!-- IntaSend Payment Button -->
+    <div>
+    <button 
+        id="intasend-button" 
+        class="intaSendPayButton"  
+        data-amount="100" 
+        data-currency="KES">
+        Pay with IntaSend
+    </button>
+    </div>
+
+    <script>
+        
+        new window.IntaSend({
+            publicAPIKey: "ISPubKey_test_e767a17c-5afd-4a1b-8754-9415379df6b6",
+            live: false //set to true when going live
+        })
+
+        .on("COMPLETE", (results) => {console.log("Do something on success", results)})
+        .on("FAILED", (results) => {console.log("Do something on failure", results)})
+        .on("IN-PROGRESS", (results) => {console.log("Payment in progress status", results)})
+
+        document.getElementById('amount').addEventListener('input', function() {
+            var amount = document.getElementById('amount').value;
+            console.log(amount)
+            var intasendButton = document.getElementById('intasend-button');
+            /* sets attribute of data-amount of button to a new value */
+            intasendButton.setAttribute('data-amount', amount); 
+        });
+
+    </script>
+
+    
+</body>
+</html>
