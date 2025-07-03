@@ -132,30 +132,5 @@ if (!empty($profilePath) && file_exists($profilePath)):
     <button type="submit">Update Profile</button>
 </form>
 
-<<<<<<< HEAD
-<!-- Reviews Section -->
-<?php
-// Fetch all reviews for this employee
-$reviews = $conn->prepare("SELECT r.*, e.Name AS employer_name FROM reviews r JOIN employer e ON r.employer_id = e.ID WHERE r.employee_id = ? ORDER BY r.created_at DESC");
-$reviews->execute([$employee_id]);
-$all_reviews = $reviews->fetchAll(PDO::FETCH_ASSOC);
-?>
-<div style='max-width:600px;margin:40px auto;background:#fff;padding:20px;border-radius:8px;'>
-    <h3>Reviews</h3>
-    <?php foreach ($all_reviews as $review): ?>
-        <div style='margin-bottom:20px;'>
-            <strong><?= htmlspecialchars($review['employer_name']) ?></strong> 
-            <span style='color:#FFD600;font-size:1.2em;'>
-                <?= str_repeat('★', $review['rating']) . str_repeat('☆', 5 - $review['rating']) ?>
-            </span><br>
-            <em><?= htmlspecialchars($review['comment']) ?></em><br>
-            <small><?= $review['created_at'] ?></small>
-        </div>
-        <hr>
-    <?php endforeach; ?>
-</div>
-
-=======
->>>>>>> bf4d09db357fb0cddf6c0fc024c1eed1105fbecb
 </body>
 </html>
