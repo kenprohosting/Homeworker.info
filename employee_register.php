@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           <option value="wajir">Wajir</option>
           <option value="west-pokot">West Pokot</option>
         </select>
-        <input type="text" name="skills" placeholder="Skills (e.g. Baby Sitting)" required>
+        <input type="text" name="skills" placeholder="Skills (e.g. Gardening)" required>
         <select name="education" required>
             <option value="">--Select Education Level--</option>
             <option>Primary</option>
@@ -141,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     document.getElementById("age").addEventListener("input", function () {
       const age = parseInt(this.value, 10);
       if (age <= 18 || age >= 60) {
-        this.setCustomValidity("Age must be more than 18 and less than 60.");
+        this.setCustomValidity("AGE MUST BE ABOVE 18.");
       } else {
         this.setCustomValidity("");
       }
