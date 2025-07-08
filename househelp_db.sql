@@ -129,6 +129,37 @@ INSERT INTO `review_table` (`ID`, `Booking_ID`, `Rating`, `Comment`, `Date`, `Re
 (2, 1, '3', 'Good employer, clear instructions', '2025-06-13', 'employee', '2025-06-17 10:00:00'),
 (3, 2, '3', 'good', '2025-06-07', 'employer', '2025-06-17 10:00:00');
 
+-- Table structure for table `jobs`
+CREATE TABLE `jobs` (
+  `ID` int(11) NOT NULL,
+  `Employer_ID` int(11) NOT NULL,
+  `Title` varchar(100) NOT NULL,
+  `Description` text NOT NULL,
+  `Required_skills` varchar(200) NOT NULL,
+  `Location` varchar(100) NOT NULL,
+  `Salary_min` decimal(10,2) DEFAULT NULL,
+  `Salary_max` decimal(10,2) DEFAULT NULL,
+  `Job_type` enum('one-time','part-time','full-time') NOT NULL,
+  `Start_date` date NOT NULL,
+  `Duration_hours` int(11) DEFAULT NULL,
+  `Special_requirements` text DEFAULT NULL,
+  `Status` enum('active','filled','expired','cancelled') NOT NULL DEFAULT 'active',
+  `Expiry_date` date NOT NULL,
+  `Created_at` datetime DEFAULT current_timestamp(),
+  `Updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Table structure for table `job_applications`
+CREATE TABLE `job_applications` (
+  `ID` int(11) NOT NULL,
+  `Job_ID` int(11) NOT NULL,
+  `Employee_ID` int(11) NOT NULL,
+  `Cover_letter` text DEFAULT NULL,
+  `Status` enum('pending','accepted','rejected','withdrawn') NOT NULL DEFAULT 'pending',
+  `Applied_at` datetime DEFAULT current_timestamp(),
+  `Updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 -- Indexes
 ALTER TABLE `admin` ADD PRIMARY KEY (`ID`), ADD UNIQUE KEY `email` (`email`);
 ALTER TABLE `employee` ADD PRIMARY KEY (`ID`), ADD UNIQUE KEY `email` (`email`), ADD KEY `contact` (`Contact`);
@@ -136,6 +167,8 @@ ALTER TABLE `employer` ADD PRIMARY KEY (`ID`), ADD UNIQUE KEY `email` (`email`),
 ALTER TABLE `bookings` ADD PRIMARY KEY (`ID`), ADD KEY `Homeowner_ID` (`Homeowner_ID`), ADD KEY `Employee_ID` (`Employee_ID`);
 ALTER TABLE `payment` ADD PRIMARY KEY (`ID`), ADD KEY `Booking_ID` (`Booking_ID`);
 ALTER TABLE `review_table` ADD PRIMARY KEY (`ID`), ADD KEY `Booking_ID` (`Booking_ID`);
+ALTER TABLE `jobs` ADD PRIMARY KEY (`ID`), ADD KEY `Employer_ID` (`Employer_ID`), ADD KEY `Status` (`Status`), ADD KEY `Expiry_date` (`Expiry_date`);
+ALTER TABLE `job_applications` ADD PRIMARY KEY (`ID`), ADD KEY `Job_ID` (`Job_ID`), ADD KEY `Employee_ID` (`Employee_ID`), ADD UNIQUE KEY `unique_application` (`Job_ID`, `Employee_ID`);
 
 -- AUTO_INCREMENT
 ALTER TABLE `admin` MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
@@ -144,11 +177,16 @@ ALTER TABLE `employer` MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREME
 ALTER TABLE `bookings` MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 ALTER TABLE `payment` MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 ALTER TABLE `review_table` MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `jobs` MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+ALTER TABLE `job_applications` MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 -- Constraints
 ALTER TABLE `bookings` ADD CONSTRAINT `bookings_ibfk_1` FOREIGN KEY (`Homeowner_ID`) REFERENCES `employer` (`ID`) ON DELETE CASCADE,
                           ADD CONSTRAINT `bookings_ibfk_2` FOREIGN KEY (`Employee_ID`) REFERENCES `employee` (`ID`) ON DELETE CASCADE;
 ALTER TABLE `payment` ADD CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`Booking_ID`) REFERENCES `bookings` (`ID`) ON DELETE CASCADE;
 ALTER TABLE `review_table` ADD CONSTRAINT `review_table_ibfk_1` FOREIGN KEY (`Booking_ID`) REFERENCES `bookings` (`ID`) ON DELETE CASCADE;
+ALTER TABLE `jobs` ADD CONSTRAINT `jobs_ibfk_1` FOREIGN KEY (`Employer_ID`) REFERENCES `employer` (`ID`) ON DELETE CASCADE;
+ALTER TABLE `job_applications` ADD CONSTRAINT `job_applications_ibfk_1` FOREIGN KEY (`Job_ID`) REFERENCES `jobs` (`ID`) ON DELETE CASCADE,
+                                ADD CONSTRAINT `job_applications_ibfk_2` FOREIGN KEY (`Employee_ID`) REFERENCES `employee` (`ID`) ON DELETE CASCADE;
 
 COMMIT;

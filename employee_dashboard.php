@@ -151,6 +151,8 @@ $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <header>
     <h1>Welcome, <?= htmlspecialchars($_SESSION['employee_name']) ?></h1>
     <div class="top-links">
+        <a href="browse_jobs.php">Browse Jobs</a>
+        <a href="my_applications.php">My Applications</a>
         <a href="employee_profile.php">Update Profile</a>
         <a href="employee_logout.php">Logout</a>
         <img src="<?= htmlspecialchars($profile_pic_path) ?>" class="profile-img" alt="Profile Pic">

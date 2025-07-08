@@ -109,6 +109,8 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
   <nav>
     <ul class="nav-links">
       <li>Hello, <?= htmlspecialchars($_SESSION['employer_name']) ?></li>
+      <li><a href="post_job.php">Post Job</a></li>
+      <li><a href="manage_jobs.php">My Jobs</a></li>
       <li><a href="employer_logout.php">Logout</a></li>
     </ul>
   </nav>
