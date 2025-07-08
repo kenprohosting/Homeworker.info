@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <option>Female</option>
         </select>
         <input type="number" name="age" placeholder="Age" min="18" max="60" required>
-        <input type="text" name="contact" placeholder="Phone Number" required>
+        <input type="text" name="contact" placeholder="Phone Number" required>    
         <select name="location" required>
           <option value="" disabled selected>Select your county</option>
           <option value="baringo">Baringo</option>
