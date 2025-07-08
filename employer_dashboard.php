@@ -121,13 +121,64 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
   <form method="GET" class="filter-form">
     <input type="text" name="skill" placeholder="Skill (e.g. Driving)">
     <input type="text" name="location" placeholder="Location">
+    <label for="county">Select your county:</label>
+  <select id="county" name="county" required>
+    <option value="" disabled selected>Select a county</option>
+    <option value="baringo">Baringo</option>
+    <option value="bomet">Bomet</option>
+    <option value="bungoma">Bungoma</option>
+    <option value="busia">Busia</option>
+    <option value="elgeyo_marakwet">Elgeyo-Marakwet</option>
+    <option value="embu">Embu</option>
+    <option value="garissa">Garissa</option>
+    <option value="homa_bay">Homa Bay</option>
+    <option value="isiolo">Isiolo</option>
+    <option value="kajiado">Kajiado</option>
+    <option value="kakamega">Kakamega</option>
+    <option value="kericho">Kericho</option>
+    <option value="kiambu">Kiambu</option>
+    <option value="kilifi">Kilifi</option>
+    <option value="kirinyaga">Kirinyaga</option>
+    <option value="kisii">Kisii</option>
+    <option value="kisumu">Kisumu</option>
+    <option value="kitui">Kitui</option>
+    <option value="kwale">Kwale</option>
+    <option value="laikipia">Laikipia</option>
+    <option value="lamu">Lamu</option>
+    <option value="machakos">Machakos</option>
+    <option value="makueni">Makueni</option>
+    <option value="mandera">Mandera</option>
+    <option value="marsabit">Marsabit</option>
+    <option value="meru">Meru</option>
+    <option value="migori">Migori</option>
+    <option value="mombasa">Mombasa</option>
+    <option value="muranga">Murang'a</option>
+    <option value="nairobi">Nairobi</option>
+    <option value="nakuru">Nakuru</option>
+    <option value="nandi">Nandi</option>
+    <option value="narok">Narok</option>
+    <option value="nyamira">Nyamira</option>
+    <option value="nyandarua">Nyandarua</option>
+    <option value="nyeri">Nyeri</option>
+    <option value="samburu">Samburu</option>
+    <option value="siaya">Siaya</option>
+    <option value="taita_taveta">Taita-Taveta</option>
+    <option value="tana_river">Tana River</option>
+    <option value="tharaka_nithi">Tharaka-Nithi</option>
+    <option value="trans_nzoia">Trans Nzoia</option>
+    <option value="turkana">Turkana</option>
+    <option value="uasin_gishu">Uasin Gishu</option>
+    <option value="vihiga">Vihiga</option>
+    <option value="wajir">Wajir</option>
+    <option value="west_pokot">West Pokot</option>
+  </select>
     <select name="gender">
-      <option value="">Any Gender</option>
+      <option value="">Gender</option>
       <option>Male</option>
       <option>Female</option>
     </select>
     <select name="residence">
-      <option value="">Any Residence</option>
+      <option value="">Residence</option>
       <option value="urban">Urban</option>
       <option value="rural">Rural</option>
     </select>
@@ -149,28 +200,7 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
         <img src="<?= htmlspecialchars($profile) ?>" alt="Profile Picture">
         <h3><?= htmlspecialchars($emp['Name']) ?> (<?= $emp['Age'] ?>)</h3>
         <p><strong>Skill:</strong> <?= htmlspecialchars($emp['Skills']) ?></p>
-        p><strong>Location:</strong>
-    <select name="location">
-        <?php
-        $counties = [
-            "Baringo", "Bomet", "Bungoma", "Busia", "Elgeyo-Marakwet", "Embu", "Garissa", "Homa Bay",
-            "Isiolo", "Kajiado", "Kakamega", "Kericho", "Kiambu", "Kilifi", "Kirinyaga", "Kisii", "Kisumu",
-            "Kitui", "Kwale", "Laikipia", "Lamu", "Machakos", "Makueni", "Mandera", "Marsabit", "Meru",
-            "Migori", "Mombasa", "Murang’a", "Nairobi", "Nakuru", "Nandi", "Narok", "Nyamira", "Nyandarua",
-            "Nyeri", "Samburu", "Siaya", "Taita-Taveta", "Tana River", "Tharaka-Nithi", "Trans Nzoia",
-            "Turkana", "Uasin Gishu", "Vihiga", "Wajir", "West Pokot"
-        ];
-
-        sort($counties); // alphabetic order
-
-        foreach ($counties as $county) {
-            $selected = ($emp['Location'] === $county) ? 'selected' : '';
-            echo "<option value=\"" . htmlspecialchars($county) . "\" $selected>" . htmlspecialchars($county) . "</option>";
-        }
-        ?>
-    </select>
-</p>
-
+        <p><strong>Location:</strong> <?=htmlspecialchars($emp['Location']) ?></p>
         <p><strong>Language:</strong> <?= htmlspecialchars($emp['Language']) ?></p>
         <p><strong>Education:</strong> <?= htmlspecialchars($emp['Education_level']) ?></p>
         <a href="employer_booking.php?eid=<?= $emp['ID'] ?>" class="btn">Book Now</a>
