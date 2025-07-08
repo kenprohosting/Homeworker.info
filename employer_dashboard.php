@@ -119,7 +119,7 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
   <!-- Filter Form -->
   <form method="GET" class="filter-form">
-    <input type="text" name="skill" placeholder="Skill (e.g. Cleaning)">
+    <input type="text" name="skill" placeholder="Skill (e.g. Driving)">
     <input type="text" name="location" placeholder="Location">
     <select name="gender">
       <option value="">Any Gender</option>
@@ -149,7 +149,28 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
         <img src="<?= htmlspecialchars($profile) ?>" alt="Profile Picture">
         <h3><?= htmlspecialchars($emp['Name']) ?> (<?= $emp['Age'] ?>)</h3>
         <p><strong>Skill:</strong> <?= htmlspecialchars($emp['Skills']) ?></p>
-        <p><strong>Location:</strong> <?= htmlspecialchars($emp['Location']) ?></p>
+        p><strong>Location:</strong>
+    <select name="location">
+        <?php
+        $counties = [
+            "Baringo", "Bomet", "Bungoma", "Busia", "Elgeyo-Marakwet", "Embu", "Garissa", "Homa Bay",
+            "Isiolo", "Kajiado", "Kakamega", "Kericho", "Kiambu", "Kilifi", "Kirinyaga", "Kisii", "Kisumu",
+            "Kitui", "Kwale", "Laikipia", "Lamu", "Machakos", "Makueni", "Mandera", "Marsabit", "Meru",
+            "Migori", "Mombasa", "Murang’a", "Nairobi", "Nakuru", "Nandi", "Narok", "Nyamira", "Nyandarua",
+            "Nyeri", "Samburu", "Siaya", "Taita-Taveta", "Tana River", "Tharaka-Nithi", "Trans Nzoia",
+            "Turkana", "Uasin Gishu", "Vihiga", "Wajir", "West Pokot"
+        ];
+
+        sort($counties); // alphabetic order
+
+        foreach ($counties as $county) {
+            $selected = ($emp['Location'] === $county) ? 'selected' : '';
+            echo "<option value=\"" . htmlspecialchars($county) . "\" $selected>" . htmlspecialchars($county) . "</option>";
+        }
+        ?>
+    </select>
+</p>
+
         <p><strong>Language:</strong> <?= htmlspecialchars($emp['Language']) ?></p>
         <p><strong>Education:</strong> <?= htmlspecialchars($emp['Education_level']) ?></p>
         <a href="employer_booking.php?eid=<?= $emp['ID'] ?>" class="btn">Book Now</a>
