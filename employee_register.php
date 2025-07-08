@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <option>Male</option>
             <option>Female</option>
         </select>
-        <input type="number" name="age" placeholder="Age" required>
+        <input type="number" name="age" placeholder="Age" min="18" max="60" required>
         <input type="text" name="contact" placeholder="Phone Number" required>
         <select name="location" required>
           <option value="" disabled selected>Select your county</option>
@@ -115,16 +115,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           <option value="wajir">Wajir</option>
           <option value="west-pokot">West Pokot</option>
         </select>
-        <input type="text" name="skills" placeholder="Skills (e.g. Cleaning)" required>
-        <input type="text" name="education" placeholder="Education Level" required>
-        <input type="text" name="referee" placeholder="Social Referee Name" required>
+        <input type="text" name="skills" placeholder="Skills (e.g. Baby Sitting)" required>
+        <select name="education" required>
+            <option value="">--Select Education Level--</option>
+            <option>Primary</option>
+            <option>Secondary</option>
+            <option>Tertiary</option>
+        <input type="text" name="referee" placeholder="Social Referee Contact" required>
+        <input type="text" name="referee" placeholder="Professional Referee Contact" required>
        <select name="language" required>
        <option value="">-- Select Language --</option>
        <option value="English">English</option>
        <option value="Kiswahili">Kiswahili</option>
        <option value="Both">Both</option>
-       </select><br><br>
-
+       </select><br>
         <select name="residence" required>
             <option value="">Residence Type</option>
             <option value="urban">Urban</option>
@@ -133,6 +137,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="email" name="email" placeholder="Email" required>
         <input type="password" name="password" placeholder="Password" required>
         <button type="submit" class="btn">Register</button>
+        <script>
+    document.getElementById("age").addEventListener("input", function () {
+      const age = parseInt(this.value, 10);
+      if (age <= 18 || age >= 60) {
+        this.setCustomValidity("Age must be more than 18 and less than 60.");
+      } else {
+        this.setCustomValidity("");
+      }
+    });
+  </script>
     </form>
 
     <p style="text-align:center; margin-top:15px;">
