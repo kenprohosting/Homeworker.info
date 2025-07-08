@@ -182,7 +182,7 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
       <option value="urban">Urban</option>
       <option value="rural">Rural</option>
     </select>
-    <button type="submit" class="btn">Filter</button>
+    <button type="submit" class="btn">Search</button>
   </form>
 
   <!-- Employee Cards -->
