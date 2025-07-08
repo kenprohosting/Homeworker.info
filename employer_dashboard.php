@@ -120,8 +120,8 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
   <!-- Filter Form -->
   <form method="GET" class="filter-form">
     <input type="text" name="skill" placeholder="Skill (e.g. Driving)">
-    <input type="text" name="location" placeholder="Location">
-    <label for="county">Select your county:</label>
+    <input type="text" name="county" placeholder="County">
+    
   <select id="county" name="county" required>
     <option value="" disabled selected>Select a county</option>
     <option value="baringo">Baringo</option>
