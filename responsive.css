@@ -33,7 +33,7 @@ nav {
   display: flex;
   align-items: center;
   flex: 1;
-  justify-content: flex-end;
+  justify-content: flex-start;
   position: relative;
 }
 
@@ -48,8 +48,9 @@ nav {
 .nav-links {
   display: flex;
   list-style: none;
-  gap: 20px;
+  gap: 40px;
   align-items: center;
+  justify-content: flex-start;
 }
 
 .nav-links a {
@@ -68,7 +69,7 @@ nav {
   display: none;
   position: absolute;
   top: 100%;
-  left: 0;
+  left: -100px;
   background: white;
   color: black;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -87,6 +88,13 @@ nav {
 
 .dropdown:hover .dropdown-menu {
   display: block;
+}
+
+.register-dropdown .dropdown-menu {
+  left: auto;
+  right: 0;
+  min-width: 200px;
+  white-space: nowrap;
 }
 
 /* MOBILE STYLES */

@@ -6,7 +6,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>About Us - Houselp Connect</title>
+  <title>About Us - Homeworker Connect</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="responsive.css">
   <script src="hamburger.js" defer></script>
@@ -67,7 +67,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
 <header>
   <div class="logo">
     <img src="logo.jpg" alt="Logo" style="height: 40px; margin-right: 10px;">
-    Houselp Connect
+    Homeworker Connect
   </div>
 
   <nav>
@@ -75,23 +75,8 @@ $isLoggedIn = isset($_SESSION['employer_name']);
     <ul class="nav-links">
       <li><a href="index.php">Home</a></li>
       <li><a href="about.php">About</a></li>
-
-      <li class="dropdown">
-        <a href="#">Login ▼</a>
-        <ul class="dropdown-menu">
-          <li><a href="employer_login.php">Employer</a></li>
-          <li><a href="employee_login.php">Employee</a></li>
-        </ul>
-      </li>
-
-      <li class="dropdown">
-        <a href="#">Register ▼</a>
-        <ul class="dropdown-menu">
-          <li><a href="employer_register.php">Employer</a></li>
-          <li><a href="employee_register.php">Employee</a></li>
-        </ul>
-      </li>
-
+      <li><a href="contact.php">Contact Us</a></li>
+      <li><a href="faq.php">FAQ</a></li>
       <?php if ($isLoggedIn): ?>
         <li><a href="employer_dashboard.php">Welcome, <?= htmlspecialchars($_SESSION['employer_name']) ?></a></li>
         <li><a href="logout.php">Logout</a></li>
@@ -103,25 +88,22 @@ $isLoggedIn = isset($_SESSION['employer_name']);
 <!-- About Page Content -->
 <div class="container">
   <h2>About Us</h2>
-  <p><strong>Houselp Connect</strong> is a Kenyan-based platform created to bridge the gap between families seeking trusted domestic support and hardworking individuals in search of verified household employment. We aim to bring dignity, professionalism, and convenience to domestic work.</p>
+  <p><strong>Homeworker Connect</strong> is a Kenyan-based platform created to bridge the gap between families seeking trusted domestic support and hardworking individuals in search of verified household employment. We aim to bring dignity, professionalism, and convenience to domestic work.</p>
 
   <h2>Our Mission</h2>
   <p>To connect employers with verified and reliable househelps, while empowering domestic workers with opportunities, visibility, and safety through a transparent platform.</p>
 
-  <h2>Why Choose Us?</h2>
+  <h2>Our Values</h2>
   <ul>
-    <li>✅ Verified househelps and employers</li>
-    <li>✅ Easy-to-use registration and booking system</li>
-    <li>✅ Reviews and ratings for accountability</li>
-    <li>✅ Admin monitoring and support</li>
+    <li>Integrity: We are committed to honest and transparent practices for both employers and workers.</li>
+    <li>Empowerment: We provide opportunities and resources for domestic workers to grow and succeed.</li>
+    <li>Trust: We verify all users to ensure a safe and reliable experience for everyone.</li>
+    <li>Support: Our team is dedicated to helping both employers and workers every step of the way.</li>
   </ul>
-
-  <h2>Contact Us</h2>
-  <p>If you have questions or feedback, email us at <a href="mailto:support@househelpconnect.co.ke">support@househelpconnect.co.ke</a>.</p>
 </div>
 
 <footer>
-  <p>&copy; <?= date("Y") ?> Houselp Connect. All rights reserved.</p>
+  <p>&copy; <?= date("Y") ?> Homeworker Connect. All rights reserved.</p>
 </footer>
 
 </body>
