@@ -6,7 +6,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Houselp Connect</title>
+  <title>Homewoker Connect</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="responsive.css">
   <script src="hamburger.js" defer></script>
@@ -95,7 +95,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
 <header>
   <div class="logo">
     <img src="logo.jpg" alt="Logo" style="height: 40px; margin-right: 10px;">
-    Houselp Connect
+    Homeworker Connect
   </div>
 
   <nav>
@@ -130,7 +130,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
 
 <section class="hero">
   <div class="hero-content">
-    <h1>Find Trusted Househelps Easily</h1>
+    <h1>Find Trusted Homeworkers Easily</h1>
     <p>Connecting employers with verified domestic professionals across Kenya.</p>
 
     <!-- Get Started Dropdown Button -->
@@ -166,7 +166,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
 </section>
 
 <footer>
-  <p>&copy; <?= date("Y") ?> Houselp Connect. All rights reserved.</p>
+  <p>&copy; <?= date("Y") ?> Homeworker Connect. All rights reserved.</p>
 </footer>
 
 </body>
