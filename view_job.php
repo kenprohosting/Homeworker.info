@@ -206,16 +206,20 @@ if (!$job) {
             border-left: 4px solid #ffc107;
         }
     </style>
+    <link rel="stylesheet" href="responsive.css?v=2">
+    <script src="hamburger.js" defer></script>
 </head>
 <body>
 
 <header>
     <div class="logo">Houselp Connect</div>
-    <nav>
-        <a href="employee_dashboard.php">Dashboard</a>
-        <a href="browse_jobs.php">Browse Jobs</a>
-        <a href="my_applications.php">My Applications</a>
-        <a href="employee_logout.php">Logout</a>
+    <nav class="main-nav">
+        <ul class="nav-links">
+            <li><a href="index.php">Home</a></li>
+            <li><a href="about.php">About</a></li>
+            <li><a href="contact.php">Contact Us</a></li>
+            <li><a href="faq.php">FAQ</a></li>
+        </ul>
     </nav>
 </header>
 

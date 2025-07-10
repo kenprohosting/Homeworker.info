@@ -8,7 +8,8 @@ $isLoggedIn = isset($_SESSION['employer_name']);
   <meta charset="UTF-8">
   <title>Contact Us - Homeworker Connect</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="responsive.css">
+  <link rel="stylesheet" href="responsive.css?v=2">
+  <script src="hamburger.js" defer></script>
   <style>
     .contact-container {
       max-width: 700px;
@@ -66,6 +67,13 @@ $isLoggedIn = isset($_SESSION['employer_name']);
     .contact-form button:hover {
       background: linear-gradient(90deg, #17606e 0%, #1ec8c8 100%);
     }
+    footer {
+      background-color: rgb(24, 123, 136);
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      margin-top: 60px;
+    }
     @media (max-width: 600px) {
       .contact-container {
         padding: 18px 8px;
@@ -82,17 +90,12 @@ $isLoggedIn = isset($_SESSION['employer_name']);
     <img src="logo.jpg" alt="Logo" style="height: 40px; margin-right: 10px;">
     Homeworker Connect
   </div>
-  <nav>
-    <div class="nav-toggle">☰</div>
+  <nav class="main-nav">
     <ul class="nav-links">
       <li><a href="index.php">Home</a></li>
       <li><a href="about.php">About</a></li>
       <li><a href="contact.php">Contact Us</a></li>
       <li><a href="faq.php">FAQ</a></li>
-      <?php if ($isLoggedIn): ?>
-        <li><a href="employer_dashboard.php">Welcome, <?= htmlspecialchars($_SESSION['employer_name']) ?></a></li>
-        <li><a href="logout.php">Logout</a></li>
-      <?php endif; ?>
     </ul>
   </nav>
 </header>

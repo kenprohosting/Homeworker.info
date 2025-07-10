@@ -11,9 +11,27 @@ $isLoggedIn = isset($_SESSION['employer_name']);
   <meta charset="UTF-8">
   <title>Homeworker Connect</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="responsive.css">
+  <link rel="stylesheet" href="responsive.css?v=2">
   <script src="hamburger.js" defer></script>
   <style>
+    header {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+    }
+    nav {
+      display: flex !important;
+      align-items: center !important;
+      margin-left: auto !important;
+      position: relative !important;
+    }
+    .nav-links {
+      display: flex !important;
+      list-style: none !important;
+      gap: 40px !important;
+      align-items: center !important;
+      justify-content: flex-end !important;
+    }
     .register-btn {
       display: block;
       margin: 10px 0;
@@ -100,18 +118,12 @@ $isLoggedIn = isset($_SESSION['employer_name']);
     <img src="logo.jpg" alt="Logo" style="height: 40px; margin-right: 10px;">
     Homeworker Connect
   </div>
-
-  <nav>
-    <div class="nav-toggle">☰</div>
+  <nav class="main-nav">
     <ul class="nav-links">
       <li><a href="index.php">Home</a></li>
       <li><a href="about.php">About</a></li>
       <li><a href="contact.php">Contact Us</a></li>
       <li><a href="faq.php">FAQ</a></li>
-      <?php if ($isLoggedIn): ?>
-        <li><a href="employer_dashboard.php">Welcome, <?= htmlspecialchars($_SESSION['employer_name']) ?></a></li>
-        <li><a href="logout.php">Logout</a></li>
-      <?php endif; ?>
     </ul>
   </nav>
 </header>

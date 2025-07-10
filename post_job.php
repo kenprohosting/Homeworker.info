@@ -154,15 +154,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin-top: 5px;
         }
     </style>
+    <link rel="stylesheet" href="responsive.css?v=2">
+    <script src="hamburger.js" defer></script>
 </head>
 <body>
 
 <header>
     <div class="logo">Houselp Connect</div>
-    <nav>
-        <a href="employer_dashboard.php">Dashboard</a>
-        <a href="manage_jobs.php">My Jobs</a>
-        <a href="employer_logout.php">Logout</a>
+    <nav class="main-nav">
+        <ul class="nav-links">
+            <li><a href="index.php">Home</a></li>
+            <li><a href="about.php">About</a></li>
+            <li><a href="contact.php">Contact Us</a></li>
+            <li><a href="faq.php">FAQ</a></li>
+        </ul>
     </nav>
 </header>
 
