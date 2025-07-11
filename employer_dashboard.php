@@ -136,6 +136,27 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     #countryList li:hover {
       background: #f0f0f0;
     }
+    .nav-btn {
+      background: linear-gradient(90deg, #197b88 0%, #1ec8c8 100%);
+      color: #fff !important;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      margin: 0 6px;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s, border 0.2s;
+      box-shadow: 0 2px 8px rgba(24,123,136,0.10);
+      border: 2px solid #197b88;
+      display: inline-block;
+      cursor: pointer;
+    }
+    .nav-btn:hover, .nav-btn:focus {
+      background: linear-gradient(90deg, #17606e 0%, #1ec8c8 100%);
+      color: #ffd700 !important;
+      box-shadow: 0 4px 16px rgba(24,123,136,0.16);
+      outline: none;
+      border-color: #125a66;
+    }
 
     @media (max-width: 768px) {
       header {
@@ -155,6 +176,7 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 <body>
 
 <header>
+  <button class="nav-btn" onclick="window.history.back()">← Back</button>
   <div class="logo">Homewoker Connect</div>
   <nav>
     <ul class="nav-links">
@@ -361,7 +383,7 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
   { name: "Japan", flag: "🇯🇵" },
   { name: "Jordan", flag: "🇯🇴" },
   { name: "Kazakhstan", flag: "🇰🇿" },
-  { name: "Kenya", flag: "🇰🇪" },
+  { name: "Kenya", flag: "🇰🇲" },
   { name: "Kiribati", flag: "🇰🇮" },
   { name: "Kuwait", flag: "🇰🇼" },
   { name: "Kyrgyzstan", flag: "🇰🇬" },

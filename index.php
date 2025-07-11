@@ -18,6 +18,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
       display: flex !important;
       justify-content: space-between !important;
       align-items: center !important;
+      background-color: #0b5b81 !important;
     }
     nav {
       display: flex !important;
@@ -104,10 +105,30 @@ $isLoggedIn = isset($_SESSION['employer_name']);
     }
 
     footer {
-      background-color: rgb(24, 123, 136);
+      background-color: #0b5b81 !important;
       color: white;
       text-align: center;
       padding: 15px 0;
+    }
+    .nav-btn {
+      background: linear-gradient(90deg, #197b88 0%, #1ec8c8 100%);
+      color: #fff !important;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      margin: 0 6px;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s, border 0.2s;
+      box-shadow: 0 2px 8px rgba(24,123,136,0.10);
+      border: 2px solid #197b88;
+      display: inline-block;
+    }
+    .nav-btn:hover, .nav-btn:focus {
+      background: linear-gradient(90deg, #17606e 0%, #1ec8c8 100%);
+      color: #ffd700 !important;
+      box-shadow: 0 4px 16px rgba(24,123,136,0.16);
+      outline: none;
+      border-color: #125a66;
     }
   </style>
 </head>
@@ -115,15 +136,14 @@ $isLoggedIn = isset($_SESSION['employer_name']);
 
 <header>
   <div class="logo">
-    <img src="logo.jpg" alt="Logo" style="height: 40px; margin-right: 10px;">
-    Homeworker Connect
+    <img src="home-worker-header.png" alt="Logo" style="height: 40px; margin-right: 10px;">
   </div>
   <nav class="main-nav">
     <ul class="nav-links">
-      <li><a href="index.php">Home</a></li>
-      <li><a href="about.php">About</a></li>
-      <li><a href="contact.php">Contact Us</a></li>
-      <li><a href="faq.php">FAQ</a></li>
+      <li><a class="nav-btn" href="index.php">Home</a></li>
+      <li><a class="nav-btn" href="about.php">About</a></li>
+      <li><a class="nav-btn" href="contact.php">Contact Us</a></li>
+      <li><a class="nav-btn" href="faq.php">FAQ</a></li>
     </ul>
   </nav>
 </header>
@@ -131,7 +151,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
 <section class="hero">
   <div class="hero-content">
     <h1>Find Trusted Homeworkers Easily</h1>
-    <p>Connecting employers with verified domestic professionals across Kenya.</p>
+    <p>Connecting employers with verified domestic workers across the world.</p>
 
     <!-- Hero Action Card -->
     <div class="hero-action-card horizontal-card">

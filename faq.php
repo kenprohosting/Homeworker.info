@@ -9,6 +9,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
   <title>FAQ - Homeworker Connect</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="responsive.css?v=2">
+  <link rel="stylesheet" href="styles.css">
   <script src="hamburger.js" defer></script>
   <style>
     html, body {
@@ -25,7 +26,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
       flex: 1 0 auto;
     }
     footer {
-      background-color: rgb(24, 123, 136);
+      background-color: #0b5b81 !important;
       color: white;
       text-align: center;
       padding: 15px 0;
@@ -35,6 +36,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
       display: flex !important;
       justify-content: space-between !important;
       align-items: center !important;
+      background-color: #0b5b81 !important;
     }
     nav {
       display: flex !important;
@@ -109,8 +111,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
 <body>
 <header>
   <div class="logo">
-    <img src="logo.jpg" alt="Logo" style="height: 40px; margin-right: 10px;">
-    Homeworker Connect
+    <img src="home-worker-header.png" alt="Logo" style="height: 40px; margin-right: 10px;">
   </div>
   <nav class="main-nav">
     <ul class="nav-links">

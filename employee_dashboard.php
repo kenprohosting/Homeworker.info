@@ -151,6 +151,7 @@ $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <header>
     <h1>Welcome, <?= htmlspecialchars($_SESSION['employee_name']) ?></h1>
     <div class="top-links">
+        <button class="nav-btn" onclick="window.history.back()">← Back</button>
         <a href="browse_jobs.php">Browse Jobs</a>
         <a href="my_applications.php">My Applications</a>
         <a href="employee_profile.php">Update Profile</a>

@@ -265,11 +265,15 @@ $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <body>
 
 <header>
+    <button class="nav-btn" onclick="window.history.back()">← Back</button>
     <div class="logo">Houselp Connect</div>
-    <nav>
-        <a href="employer_dashboard.php">Dashboard</a>
-        <a href="post_job.php">Post New Job</a>
-        <a href="employer_logout.php">Logout</a>
+    <nav class="main-nav">
+        <ul class="nav-links">
+            <li><a href="index.php">Home</a></li>
+            <li><a href="about.php">About</a></li>
+            <li><a href="contact.php">Contact Us</a></li>
+            <li><a href="faq.php">FAQ</a></li>
+        </ul>
     </nav>
 </header>
 

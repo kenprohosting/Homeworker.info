@@ -160,6 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
 <header>
+    <button class="nav-btn" onclick="window.history.back()">← Back</button>
     <div class="logo">Houselp Connect</div>
     <nav class="main-nav">
         <ul class="nav-links">

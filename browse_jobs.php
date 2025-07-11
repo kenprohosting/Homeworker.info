@@ -250,6 +250,7 @@ $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </style>
 </head>
 <body>
+    <button class="nav-btn" onclick="window.history.back()">← Back</button>
 
 <header>
     <div class="logo">Houselp Connect</div>

@@ -9,6 +9,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
   <title>Contact Us - Homeworker Connect</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="responsive.css?v=2">
+  <link rel="stylesheet" href="styles.css">
   <script src="hamburger.js" defer></script>
   <style>
     .contact-container {
@@ -68,11 +69,17 @@ $isLoggedIn = isset($_SESSION['employer_name']);
       background: linear-gradient(90deg, #17606e 0%, #1ec8c8 100%);
     }
     footer {
-      background-color: rgb(24, 123, 136);
+      background-color: #0b5b81 !important;
       color: white;
       text-align: center;
       padding: 15px 0;
       margin-top: 60px;
+    }
+    header {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      background-color: #0b5b81 !important;
     }
     @media (max-width: 600px) {
       .contact-container {
@@ -87,8 +94,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
 <body>
 <header>
   <div class="logo">
-    <img src="logo.jpg" alt="Logo" style="height: 40px; margin-right: 10px;">
-    Homeworker Connect
+    <img src="home-worker-header.png" alt="Logo" style="height: 40px; margin-right: 10px;">
   </div>
   <nav class="main-nav">
     <ul class="nav-links">
