@@ -14,6 +14,10 @@ if (!empty($_GET['skill'])) {
     $filter_sql .= " AND Skills LIKE ?";
     $params[] = '%' . $_GET['skill'] . '%';
 }
+if (!empty($_GET['country'])) {
+    $filter_sql .= " AND Country LIKE ?";
+    $params[] = '%' . $_GET['country'] . '%';
+}
 if (!empty($_GET['location'])) {
     $filter_sql .= " AND Location LIKE ?";
     $params[] = '%' . $_GET['location'] . '%';
@@ -50,9 +54,18 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; margin: 0; }
-    header { background: rgb(24, 123, 136); color: white; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; }
+    header {
+      background: rgb(24, 123, 136);
+      color: white;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      position: relative;
+    }
     .logo { font-size: 1.5em; font-weight: bold; }
-    nav ul { list-style: none; display: flex; gap: 20px; margin: 0; }
+    nav ul { list-style: none; display: flex; gap: 20px; margin: 0; padding: 0; }
     nav a { color: white; text-decoration: none; }
     .form-container { padding: 30px; }
     .filter-form input, .filter-form select, .filter-form button {
@@ -90,90 +103,78 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     }
     table {
       width: 100%;
-      margin-top: 30px;
+      margin-top: 20px;
       border-collapse: collapse;
       background: white;
+      display: none;
     }
+    table.show { display: table; }
     th, td {
       padding: 12px;
       border: 1px solid #ccc;
       text-align: center;
     }
     th { background: #eeeeee; }
+
+    #countryList {
+      list-style: none;
+      background: white;
+      position: absolute;
+      z-index: 999;
+      border: 1px solid #ccc;
+      max-height: 150px;
+      overflow-y: auto;
+      display: none;
+      width: 200px;
+      padding: 0;
+      margin: 0;
+    }
+    #countryList li {
+      padding: 8px 10px;
+      cursor: pointer;
+    }
+    #countryList li:hover {
+      background: #f0f0f0;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      nav ul {
+        flex-direction: column;
+        width: 100%;
+      }
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">Houselp Connect</div>
+  <div class="logo">Homewoker Connect</div>
   <nav>
     <ul class="nav-links">
       <li>Hello, <?= htmlspecialchars($_SESSION['employer_name']) ?></li>
       <li><a href="post_job.php">Post Job</a></li>
       <li><a href="manage_jobs.php">My Jobs</a></li>
+      <li><a href="#" id="toggleBookings">My Bookings</a></li>
       <li><a href="employer_logout.php">Logout</a></li>
     </ul>
   </nav>
 </header>
 
 <div class="form-container">
-  <h2>Find a Househelp</h2>
+  <h2>Find a Homewoker</h2>
 
-  <!-- Filter Form -->
   <form method="GET" class="filter-form">
     <input type="text" name="skill" placeholder="Skill (e.g. Driving)">
-    
-    
-  <select id="county" name="county" required>
-    <option value="" disabled selected>Select a county</option>
-    <option value="baringo">Baringo</option>
-    <option value="bomet">Bomet</option>
-    <option value="bungoma">Bungoma</option>
-    <option value="busia">Busia</option>
-    <option value="elgeyo_marakwet">Elgeyo-Marakwet</option>
-    <option value="embu">Embu</option>
-    <option value="garissa">Garissa</option>
-    <option value="homa_bay">Homa Bay</option>
-    <option value="isiolo">Isiolo</option>
-    <option value="kajiado">Kajiado</option>
-    <option value="kakamega">Kakamega</option>
-    <option value="kericho">Kericho</option>
-    <option value="kiambu">Kiambu</option>
-    <option value="kilifi">Kilifi</option>
-    <option value="kirinyaga">Kirinyaga</option>
-    <option value="kisii">Kisii</option>
-    <option value="kisumu">Kisumu</option>
-    <option value="kitui">Kitui</option>
-    <option value="kwale">Kwale</option>
-    <option value="laikipia">Laikipia</option>
-    <option value="lamu">Lamu</option>
-    <option value="machakos">Machakos</option>
-    <option value="makueni">Makueni</option>
-    <option value="mandera">Mandera</option>
-    <option value="marsabit">Marsabit</option>
-    <option value="meru">Meru</option>
-    <option value="migori">Migori</option>
-    <option value="mombasa">Mombasa</option>
-    <option value="muranga">Murang'a</option>
-    <option value="nairobi">Nairobi</option>
-    <option value="nakuru">Nakuru</option>
-    <option value="nandi">Nandi</option>
-    <option value="narok">Narok</option>
-    <option value="nyamira">Nyamira</option>
-    <option value="nyandarua">Nyandarua</option>
-    <option value="nyeri">Nyeri</option>
-    <option value="samburu">Samburu</option>
-    <option value="siaya">Siaya</option>
-    <option value="taita_taveta">Taita-Taveta</option>
-    <option value="tana_river">Tana River</option>
-    <option value="tharaka_nithi">Tharaka-Nithi</option>
-    <option value="trans_nzoia">Trans Nzoia</option>
-    <option value="turkana">Turkana</option>
-    <option value="uasin_gishu">Uasin Gishu</option>
-    <option value="vihiga">Vihiga</option>
-    <option value="wajir">Wajir</option>
-    <option value="west_pokot">West Pokot</option>
-  </select>
+    <input type="text" id="countryInput" name="country" placeholder="Country" autocomplete="off" required>
+    <ul id="countryList" class="country-dropdown"></ul>
+    <input type="text" name="location" placeholder="County or Province">
     <select name="gender">
       <option value="">Gender</option>
       <option>Male</option>
@@ -187,21 +188,63 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     <button type="submit" class="btn">Search</button>
   </form>
 
+  <!-- My Bookings Table (hidden by default) -->
+  <div id="bookingsTableContainer">
+    <h2>My Bookings</h2>
+    <?php if (count($bookings) == 0): ?>
+      <p>You have no bookings yet.</p>
+    <?php else: ?>
+      <table id="bookingsTable">
+        <thead>
+          <tr>
+            <th>Employee</th>
+            <th>Service</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>Payment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($bookings as $b): ?>
+          <tr>
+            <td><?= htmlspecialchars($b['employee_name']) ?></td>
+            <td><?= htmlspecialchars($b['Service_type']) ?></td>
+            <td><?= htmlspecialchars($b['Booking_date']) ?></td>
+            <td><?= $b['Start_time'] ?> - <?= $b['End_time'] ?></td>
+            <td><?= htmlspecialchars($b['Status']) ?></td>
+            <td>
+              <?php if ($b['Status'] === 'confirmed'): ?>
+                  <a href="employer_payment.php?bid=<?= $b['ID'] ?>" class="btn">Make Payment</a>
+              <?php elseif ($b['Status'] === 'completed'): ?>
+                  <span style="color:green;">Paid</span>
+              <?php elseif ($b['Status'] === 'cancelled'): ?>
+                  <span style="color:red;">Cancelled</span>
+              <?php else: ?>
+                  <span style="color:gray;">Pending</span>
+              <?php endif; ?>
+            </td>
+          </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    <?php endif; ?>
+  </div>
+
   <!-- Employee Cards -->
   <div class="card-grid">
     <?php foreach ($employees as $emp): ?>
       <div class="card">
         <?php
           $profile = 'uploads/default.jpg';
-          if (!empty($emp['profile_pic'])) {
-              if (file_exists(__DIR__ . '/' . $emp['profile_pic'])) {
-                  $profile = $emp['profile_pic'];
-              }
+          if (!empty($emp['profile_pic']) && file_exists(__DIR__ . '/' . $emp['profile_pic'])) {
+              $profile = $emp['profile_pic'];
           }
         ?>
         <img src="<?= htmlspecialchars($profile) ?>" alt="Profile Picture">
         <h3><?= htmlspecialchars($emp['Name']) ?> (<?= $emp['Age'] ?>)</h3>
         <p><strong>Skill:</strong> <?= htmlspecialchars($emp['Skills']) ?></p>
+        <p><strong>Country:</strong> <?= htmlspecialchars($emp['Country']) ?></p>
         <p><strong>Location:</strong> <?=htmlspecialchars($emp['Location']) ?></p>
         <p><strong>Language:</strong> <?= htmlspecialchars($emp['Language']) ?></p>
         <p><strong>Education:</strong> <?= htmlspecialchars($emp['Education_level']) ?></p>
@@ -209,48 +252,255 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
       </div>
     <?php endforeach; ?>
   </div>
-
-  <h2 style="margin-top: 50px;">My Bookings</h2>
-
-  <?php if (count($bookings) == 0): ?>
-    <p>You have no bookings yet.</p>
-  <?php else: ?>
-    <table>
-      <thead>
-        <tr>
-          <th>Employee</th>
-          <th>Service</th>
-          <th>Date</th>
-          <th>Time</th>
-          <th>Status</th>
-          <th>Payment</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php foreach ($bookings as $b): ?>
-        <tr>
-          <td><?= htmlspecialchars($b['employee_name']) ?></td>
-          <td><?= htmlspecialchars($b['Service_type']) ?></td>
-          <td><?= htmlspecialchars($b['Booking_date']) ?></td>
-          <td><?= $b['Start_time'] ?> - <?= $b['End_time'] ?></td>
-          <td><?= htmlspecialchars($b['Status']) ?></td>
-          <td>
-            <?php if ($b['Status'] === 'confirmed'): ?>
-                <a href="employer_payment.php?bid=<?= $b['ID'] ?>" class="btn">Make Payment</a>
-            <?php elseif ($b['Status'] === 'completed'): ?>
-                <span style="color:green;">Paid</span>
-            <?php elseif ($b['Status'] === 'cancelled'): ?>
-                <span style="color:red;">Cancelled</span>
-            <?php else: ?>
-                <span style="color:gray;">Pending</span>
-            <?php endif; ?>
-          </td>
-        </tr>
-        <?php endforeach; ?>
-      </tbody>
-    </table>
-  <?php endif; ?>
 </div>
 
+<!-- JS for Toggle + Country Flags -->
+<script>
+  const toggleBookings = document.getElementById("toggleBookings");
+  const bookingsTable = document.getElementById("bookingsTable");
+  const bookingsContainer = document.getElementById("bookingsTableContainer");
+
+  toggleBookings.addEventListener("click", function(e) {
+    e.preventDefault();
+    bookingsTable.classList.toggle("show");
+  });
+
+  document.addEventListener("click", function(e) {
+    if (!toggleBookings.contains(e.target) && !bookingsTable.contains(e.target)) {
+      bookingsTable.classList.remove("show");
+    }
+  });
+
+  // Country List Script
+  const countryInput = document.getElementById("countryInput");
+  const countryList = document.getElementById("countryList");
+  const countries = [
+      { name: "Afghanistan", flag: "🇦🇫" },
+  { name: "Albania", flag: "🇦🇱" },
+  { name: "Algeria", flag: "🇩🇿" },
+  { name: "Andorra", flag: "🇦🇩" },
+  { name: "Angola", flag: "🇦🇴" },
+  { name: "Antigua and Barbuda", flag: "🇦🇬" },
+  { name: "Argentina", flag: "🇦🇷" },
+  { name: "Armenia", flag: "🇦🇲" },
+  { name: "Australia", flag: "🇦🇺" },
+  { name: "Austria", flag: "🇦🇹" },
+  { name: "Azerbaijan", flag: "🇦🇿" },
+  { name: "Bahamas", flag: "🇧🇸" },
+  { name: "Bahrain", flag: "🇧🇭" },
+  { name: "Bangladesh", flag: "🇧🇩" },
+  { name: "Barbados", flag: "🇧🇧" },
+  { name: "Belarus", flag: "🇧🇾" },
+  { name: "Belgium", flag: "🇧🇪" },
+  { name: "Belize", flag: "🇧🇿" },
+  { name: "Benin", flag: "🇧🇯" },
+  { name: "Bhutan", flag: "🇧🇹" },
+  { name: "Bolivia", flag: "🇧🇴" },
+  { name: "Bosnia and Herzegovina", flag: "🇧🇦" },
+  { name: "Botswana", flag: "🇧🇼" },
+  { name: "Brazil", flag: "🇧🇷" },
+  { name: "Brunei", flag: "🇧🇳" },
+  { name: "Bulgaria", flag: "🇧🇬" },
+  { name: "Burkina Faso", flag: "🇧🇫" },
+  { name: "Burundi", flag: "🇧🇮" },
+  { name: "Cabo Verde", flag: "🇨🇻" },
+  { name: "Cambodia", flag: "🇰🇭" },
+  { name: "Cameroon", flag: "🇨🇲" },
+  { name: "Canada", flag: "🇨🇦" },
+  { name: "Central African Republic", flag: "🇨🇫" },
+  { name: "Chad", flag: "🇹🇩" },
+  { name: "Chile", flag: "🇨🇱" },
+  { name: "China", flag: "🇨🇳" },
+  { name: "Colombia", flag: "🇨🇴" },
+  { name: "Comoros", flag: "🇰🇲" },
+  { name: "Congo (Brazzaville)", flag: "🇨🇬" },
+  { name: "Congo (Kinshasa)", flag: "🇨🇩" },
+  { name: "Costa Rica", flag: "🇨🇷" },
+  { name: "Croatia", flag: "🇭🇷" },
+  { name: "Cuba", flag: "🇨🇺" },
+  { name: "Cyprus", flag: "🇨🇾" },
+  { name: "Czech Republic", flag: "🇨🇿" },
+  { name: "Denmark", flag: "🇩🇰" },
+  { name: "Djibouti", flag: "🇩🇯" },
+  { name: "Dominica", flag: "🇩🇲" },
+  { name: "Dominican Republic", flag: "🇩🇴" },
+  { name: "Ecuador", flag: "🇪🇨" },
+  { name: "Egypt", flag: "🇪🇬" },
+  { name: "El Salvador", flag: "🇸🇻" },
+  { name: "Equatorial Guinea", flag: "🇬🇶" },
+  { name: "Eritrea", flag: "🇪🇷" },
+  { name: "Estonia", flag: "🇪🇪" },
+  { name: "Eswatini", flag: "🇸🇿" },
+  { name: "Ethiopia", flag: "🇪🇹" },
+  { name: "Fiji", flag: "🇫🇯" },
+  { name: "Finland", flag: "🇫🇮" },
+  { name: "France", flag: "🇫🇷" },
+  { name: "Gabon", flag: "🇬🇦" },
+  { name: "Gambia", flag: "🇬🇲" },
+  { name: "Georgia", flag: "🇬🇪" },
+  { name: "Germany", flag: "🇩🇪" },
+  { name: "Ghana", flag: "🇬🇭" },
+  { name: "Greece", flag: "🇬🇷" },
+  { name: "Grenada", flag: "🇬🇩" },
+  { name: "Guatemala", flag: "🇬🇹" },
+  { name: "Guinea", flag: "🇬🇳" },
+  { name: "Guinea-Bissau", flag: "🇬🇼" },
+  { name: "Guyana", flag: "🇬🇾" },
+  { name: "Haiti", flag: "🇭🇹" },
+  { name: "Honduras", flag: "🇭🇳" },
+  { name: "Hungary", flag: "🇭🇺" },
+  { name: "Iceland", flag: "🇮🇸" },
+  { name: "India", flag: "🇮🇳" },
+  { name: "Indonesia", flag: "🇮🇩" },
+  { name: "Iran", flag: "🇮🇷" },
+  { name: "Iraq", flag: "🇮🇶" },
+  { name: "Ireland", flag: "🇮🇪" },
+  { name: "Israel", flag: "🇮🇱" },
+  { name: "Italy", flag: "🇮🇹" },
+  { name: "Jamaica", flag: "🇯🇲" },
+  { name: "Japan", flag: "🇯🇵" },
+  { name: "Jordan", flag: "🇯🇴" },
+  { name: "Kazakhstan", flag: "🇰🇿" },
+  { name: "Kenya", flag: "🇰🇪" },
+  { name: "Kiribati", flag: "🇰🇮" },
+  { name: "Kuwait", flag: "🇰🇼" },
+  { name: "Kyrgyzstan", flag: "🇰🇬" },
+  { name: "Laos", flag: "🇱🇦" },
+  { name: "Latvia", flag: "🇱🇻" },
+  { name: "Lebanon", flag: "🇱🇧" },
+  { name: "Lesotho", flag: "🇱🇸" },
+  { name: "Liberia", flag: "🇱🇷" },
+  { name: "Libya", flag: "🇱🇾" },
+  { name: "Liechtenstein", flag: "🇱🇮" },
+  { name: "Lithuania", flag: "🇱🇹" },
+  { name: "Luxembourg", flag: "🇱🇺" },
+  { name: "Madagascar", flag: "🇲🇬" },
+  { name: "Malawi", flag: "🇲🇼" },
+  { name: "Malaysia", flag: "🇲🇾" },
+  { name: "Maldives", flag: "🇲🇻" },
+  { name: "Mali", flag: "🇲🇱" },
+  { name: "Malta", flag: "🇲🇹" },
+  { name: "Marshall Islands", flag: "🇲🇭" },
+  { name: "Mauritania", flag: "🇲🇷" },
+  { name: "Mauritius", flag: "🇲🇺" },
+  { name: "Mexico", flag: "🇲🇽" },
+  { name: "Micronesia", flag: "🇫🇲" },
+  { name: "Moldova", flag: "🇲🇩" },
+  { name: "Monaco", flag: "🇲🇨" },
+  { name: "Mongolia", flag: "🇲🇳" },
+  { name: "Montenegro", flag: "🇲🇪" },
+  { name: "Morocco", flag: "🇲🇦" },
+  { name: "Mozambique", flag: "🇲🇿" },
+  { name: "Myanmar", flag: "🇲🇲" },
+  { name: "Namibia", flag: "🇳🇦" },
+  { name: "Nauru", flag: "🇳🇷" },
+  { name: "Nepal", flag: "🇳🇵" },
+  { name: "Netherlands", flag: "🇳🇱" },
+  { name: "New Zealand", flag: "🇳🇿" },
+  { name: "Nicaragua", flag: "🇳🇮" },
+  { name: "Niger", flag: "🇳🇪" },
+  { name: "Nigeria", flag: "🇳🇬" },
+  { name: "North Korea", flag: "🇰🇵" },
+  { name: "North Macedonia", flag: "🇲🇰" },
+  { name: "Norway", flag: "🇳🇴" },
+  { name: "Oman", flag: "🇴🇲" },
+  { name: "Pakistan", flag: "🇵🇰" },
+  { name: "Palau", flag: "🇵🇼" },
+  { name: "Panama", flag: "🇵🇦" },
+  { name: "Papua New Guinea", flag: "🇵🇬" },
+  { name: "Paraguay", flag: "🇵🇾" },
+  { name: "Peru", flag: "🇵🇪" },
+  { name: "Philippines", flag: "🇵🇭" },
+  { name: "Poland", flag: "🇵🇱" },
+  { name: "Portugal", flag: "🇵🇹" },
+  { name: "Qatar", flag: "🇶🇦" },
+  { name: "Romania", flag: "🇷🇴" },
+  { name: "Russia", flag: "🇷🇺" },
+  { name: "Rwanda", flag: "🇷🇼" },
+  { name: "Saint Kitts and Nevis", flag: "🇰🇳" },
+  { name: "Saint Lucia", flag: "🇱🇨" },
+  { name: "Saint Vincent and the Grenadines", flag: "🇻🇨" },
+  { name: "Samoa", flag: "🇼🇸" },
+  { name: "San Marino", flag: "🇸🇲" },
+  { name: "Sao Tome and Principe", flag: "🇸🇹" },
+  { name: "Saudi Arabia", flag: "🇸🇦" },
+  { name: "Senegal", flag: "🇸🇳" },
+  { name: "Serbia", flag: "🇷🇸" },
+  { name: "Seychelles", flag: "🇸🇨" },
+  { name: "Sierra Leone", flag: "🇸🇱" },
+  { name: "Singapore", flag: "🇸🇬" },
+  { name: "Slovakia", flag: "🇸🇰" },
+  { name: "Slovenia", flag: "🇸🇮" },
+  { name: "Solomon Islands", flag: "🇸🇧" },
+  { name: "Somalia", flag: "🇸🇴" },
+  { name: "South Africa", flag: "🇿🇦" },
+  { name: "South Korea", flag: "🇰🇷" },
+  { name: "South Sudan", flag: "🇸🇸" },
+  { name: "Spain", flag: "🇪🇸" },
+  { name: "Sri Lanka", flag: "🇱🇰" },
+  { name: "Sudan", flag: "🇸🇩" },
+  { name: "Suriname", flag: "🇸🇷" },
+  { name: "Sweden", flag: "🇸🇪" },
+  { name: "Switzerland", flag: "🇨🇭" },
+  { name: "Syria", flag: "🇸🇾" },
+  { name: "Taiwan", flag: "🇹🇼" },
+  { name: "Tajikistan", flag: "🇹🇯" },
+  { name: "Tanzania", flag: "🇹🇿" },
+  { name: "Thailand", flag: "🇹🇭" },
+  { name: "Timor-Leste", flag: "🇹🇱" },
+  { name: "Togo", flag: "🇹🇬" },
+  { name: "Tonga", flag: "🇹🇴" },
+  { name: "Trinidad and Tobago", flag: "🇹🇹" },
+  { name: "Tunisia", flag: "🇹🇳" },
+  { name: "Turkey", flag: "🇹🇷" },
+  { name: "Turkmenistan", flag: "🇹🇲" },
+  { name: "Tuvalu", flag: "🇹🇻" },
+  { name: "Uganda", flag: "🇺🇬" },
+  { name: "Ukraine", flag: "🇺🇦" },
+  { name: "United Arab Emirates", flag: "🇦🇪" },
+  { name: "United Kingdom", flag: "🇬🇧" },
+  { name: "United States", flag: "🇺🇸" },
+  { name: "Uruguay", flag: "🇺🇾" },
+  { name: "Uzbekistan", flag: "🇺🇿" },
+  { name: "Vanuatu", flag: "🇻🇺" },
+  { name: "Vatican City", flag: "🇻🇦" },
+  { name: "Venezuela", flag: "🇻🇪" },
+  { name: "Vietnam", flag: "🇻🇳" },
+  { name: "Yemen", flag: "🇾🇪" },
+  { name: "Zambia", flag: "🇿🇲" },
+  { name: "Zimbabwe", flag: "🇿🇼" }
+];
+
+  countryInput.addEventListener("input", function () {
+    const input = this.value.toLowerCase();
+    countryList.innerHTML = "";
+
+    if (input.length === 0) {
+      countryList.style.display = "none";
+      return;
+    }
+
+    const filtered = countries.filter(c => c.name.toLowerCase().startsWith(input));
+
+    filtered.forEach(c => {
+      const li = document.createElement("li");
+      li.textContent = `${c.flag} ${c.name}`;
+      li.addEventListener("click", () => {
+        countryInput.value = c.name;
+        countryList.innerHTML = "";
+        countryList.style.display = "none";
+      });
+      countryList.appendChild(li);
+    });
+
+    countryList.style.display = filtered.length ? "block" : "none";
+  });
+  
+  document.addEventListener("click", function (e) {
+    if (!countryList.contains(e.target) && e.target !== countryInput) {
+      countryList.style.display = "none";
+    }
+  });
+</script>
 </body>
 </html>
