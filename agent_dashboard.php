@@ -13,25 +13,21 @@ $agent_name = $_SESSION['agent_name'];
 
 // Get employee statistics
 $stmt = $conn->prepare("SELECT COUNT(*) as total_employees FROM employees WHERE agent_id = ?");
-$stmt->bind_param("i", $agent_id);
-$stmt->execute();
-$total_employees = $stmt->get_result()->fetch_assoc()['total_employees'];
+$stmt->execute([$agent_id]);
+$total_employees = $stmt->fetch(PDO::FETCH_ASSOC)['total_employees'];
 
 $stmt = $conn->prepare("SELECT COUNT(*) as active_employees FROM employees WHERE agent_id = ? AND status = 'active'");
-$stmt->bind_param("i", $agent_id);
-$stmt->execute();
-$active_employees = $stmt->get_result()->fetch_assoc()['active_employees'];
+$stmt->execute([$agent_id]);
+$active_employees = $stmt->fetch(PDO::FETCH_ASSOC)['active_employees'];
 
 $stmt = $conn->prepare("SELECT COUNT(*) as pending_employees FROM employees WHERE agent_id = ? AND status = 'pending'");
-$stmt->bind_param("i", $agent_id);
-$stmt->execute();
-$pending_employees = $stmt->get_result()->fetch_assoc()['pending_employees'];
+$stmt->execute([$agent_id]);
+$pending_employees = $stmt->fetch(PDO::FETCH_ASSOC)['pending_employees'];
 
 // Get recent employees
 $stmt = $conn->prepare("SELECT id, name, email, phone, status, created_at FROM employees WHERE agent_id = ? ORDER BY created_at DESC LIMIT 10");
-$stmt->bind_param("i", $agent_id);
-$stmt->execute();
-$recent_employees = $stmt->get_result();
+$stmt->execute([$agent_id]);
+$recent_employees = $stmt;
 ?>
 
 <!DOCTYPE html>
@@ -174,15 +170,15 @@ $recent_employees = $stmt->get_result();
         </div>
 
         <div class="action-buttons">
-            <a href="register_employee.php" class="btn">Register New Employee</a>
+            <a href="employee_register.php" class="btn">Register New Employee</a>
             <a href="manage_employees.php" class="btn">Manage Employees</a>
             <a href="employee_reports.php" class="btn">View Reports</a>
         </div>
 
         <div class="employees-section">
             <h2>Recent Employees</h2>
-            <?php if ($recent_employees->num_rows > 0): ?>
-                <?php while ($employee = $recent_employees->fetch_assoc()): ?>
+            <?php if ($recent_employees->rowCount() > 0): ?>
+                <?php while ($employee = $recent_employees->fetch(PDO::FETCH_ASSOC)): ?>
                     <div class="employee-item">
                         <div class="employee-info">
                             <h4><?= htmlspecialchars($employee['name']) ?></h4>

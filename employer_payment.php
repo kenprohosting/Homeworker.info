@@ -14,7 +14,7 @@ $success = '';
 
 // Fetch booking, employer, and employee details
 if ($booking_id) {
-    $stmt = $conn->prepare("SELECT b.*, emp.Name AS employee_name, emp.Contact AS employee_contact, emp.Location AS employee_location, emp.email AS employee_email, emp.Skills AS employee_skills, emp.Education_level AS employee_education, emp.Gender AS employee_gender, emp.Age AS employee_age, emp.Social_referee AS employee_referee FROM bookings b JOIN employee emp ON b.Employee_ID = emp.ID WHERE b.ID = ? AND b.Homeowner_ID = ?");
+    $stmt = $conn->prepare("SELECT b.*, emp.Name AS employee_name, emp.phone AS employee_phone, emp.country AS employee_country, emp.county_province AS employee_county_province, emp.email AS employee_email, emp.Skills AS employee_skills, emp.Education_level AS employee_education, emp.Gender AS employee_gender, emp.Age AS employee_age, emp.Social_referee AS employee_referee FROM bookings b JOIN employees emp ON b.Employee_ID = emp.ID WHERE b.ID = ? AND b.Homeowner_ID = ?");
     $stmt->execute([$booking_id, $employer_id]);
     $booking = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$booking) {

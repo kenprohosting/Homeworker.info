@@ -7,7 +7,7 @@ if (!isset($_SESSION['employer_id'])) {
 require_once('db_connect.php');
 
 // Fetch employees with filters
-$filter_sql = "SELECT * FROM employee WHERE 1";
+$filter_sql = "SELECT * FROM employees WHERE 1";
 $params = [];
 
 if (!empty($_GET['skill'])) {
@@ -15,12 +15,12 @@ if (!empty($_GET['skill'])) {
     $params[] = '%' . $_GET['skill'] . '%';
 }
 if (!empty($_GET['country'])) {
-    $filter_sql .= " AND Country LIKE ?";
+    $filter_sql .= " AND country LIKE ?";
     $params[] = '%' . $_GET['country'] . '%';
 }
-if (!empty($_GET['location'])) {
-    $filter_sql .= " AND Location LIKE ?";
-    $params[] = '%' . $_GET['location'] . '%';
+if (!empty($_GET['county_province'])) {
+    $filter_sql .= " AND county_province LIKE ?";
+    $params[] = '%' . $_GET['county_province'] . '%';
 }
 if (!empty($_GET['gender'])) {
     $filter_sql .= " AND Gender = ?";
@@ -39,7 +39,7 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $stmt2 = $conn->prepare("
     SELECT b.*, emp.Name AS employee_name 
     FROM bookings b 
-    JOIN employee emp ON b.Employee_ID = emp.ID 
+    JOIN employees emp ON b.Employee_ID = emp.ID 
     WHERE b.Homeowner_ID = ?
     ORDER BY b.Booking_date DESC
 ");
@@ -196,7 +196,7 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     <input type="text" name="skill" placeholder="Skill (e.g. Driving)">
     <input type="text" id="countryInput" name="country" placeholder="Country" autocomplete="off" required>
     <ul id="countryList" class="country-dropdown"></ul>
-    <input type="text" name="location" placeholder="County or Province">
+    <input type="text" name="county_province" placeholder="County or Province">
     <select name="gender">
       <option value="">Gender</option>
       <option>Male</option>
@@ -266,8 +266,8 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
         <img src="<?= htmlspecialchars($profile) ?>" alt="Profile Picture">
         <h3><?= htmlspecialchars($emp['Name']) ?> (<?= $emp['Age'] ?>)</h3>
         <p><strong>Skill:</strong> <?= htmlspecialchars($emp['Skills']) ?></p>
-        <p><strong>Country:</strong> <?= htmlspecialchars($emp['Country']) ?></p>
-        <p><strong>Location:</strong> <?=htmlspecialchars($emp['Location']) ?></p>
+        <p><strong>Country:</strong> <?= htmlspecialchars($emp['country']) ?></p>
+        <p><strong>County/Province:</strong> <?= htmlspecialchars($emp['county_province']) ?></p>
         <p><strong>Language:</strong> <?= htmlspecialchars($emp['Language']) ?></p>
         <p><strong>Education:</strong> <?= htmlspecialchars($emp['Education_level']) ?></p>
         <a href="employer_booking.php?eid=<?= $emp['ID'] ?>" class="btn">Book Now</a>

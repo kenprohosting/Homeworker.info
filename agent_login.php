@@ -12,12 +12,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error = 'Please enter both email and password';
     } else {
         $stmt = $conn->prepare("SELECT id, name, email, password FROM agents WHERE email = ?");
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
+        $stmt->execute([$email]);
+        $result = $stmt;
         
-        if ($result->num_rows == 1) {
-            $agent = $result->fetch_assoc();
+        if ($result->rowCount() == 1) {
+            $agent = $result->fetch(PDO::FETCH_ASSOC);
             if (password_verify($password, $agent['password'])) {
                 $_SESSION['agent_id'] = $agent['id'];
                 $_SESSION['agent_name'] = $agent['name'];

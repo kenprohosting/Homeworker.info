@@ -6,8 +6,8 @@ $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['name'];
-    $location = $_POST['location'];
     $country = $_POST['country'];
+    $location = $_POST['location'];
     $residence = $_POST['residence'];
     $contact = $_POST['contact'];
     $gender = $_POST['gender'];

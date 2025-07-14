@@ -19,11 +19,10 @@ if (isset($_POST['action']) && isset($_POST['employee_id'])) {
     
     // Verify the employee belongs to this agent
     $stmt = $conn->prepare("SELECT id FROM employees WHERE id = ? AND agent_id = ?");
-    $stmt->bind_param("ii", $employee_id, $agent_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $stmt->execute([$employee_id, $agent_id]);
+    $result = $stmt;
     
-    if ($result->num_rows > 0) {
+    if ($result->rowCount() > 0) {
         $new_status = '';
         switch ($action) {
             case 'activate':
@@ -34,8 +33,7 @@ if (isset($_POST['action']) && isset($_POST['employee_id'])) {
                 break;
             case 'delete':
                 $stmt = $conn->prepare("DELETE FROM employees WHERE id = ? AND agent_id = ?");
-                $stmt->bind_param("ii", $employee_id, $agent_id);
-                if ($stmt->execute()) {
+                if ($stmt->execute([$employee_id, $agent_id])) {
                     $success = 'Employee deleted successfully';
                 } else {
                     $error = 'Failed to delete employee';
@@ -45,8 +43,7 @@ if (isset($_POST['action']) && isset($_POST['employee_id'])) {
         
         if ($new_status) {
             $stmt = $conn->prepare("UPDATE employees SET status = ? WHERE id = ? AND agent_id = ?");
-            $stmt->bind_param("sii", $new_status, $employee_id, $agent_id);
-            if ($stmt->execute()) {
+            if ($stmt->execute([$new_status, $employee_id, $agent_id])) {
                 $success = 'Employee status updated successfully';
             } else {
                 $error = 'Failed to update employee status';
@@ -58,10 +55,9 @@ if (isset($_POST['action']) && isset($_POST['employee_id'])) {
 }
 
 // Get all employees for this agent
-$stmt = $conn->prepare("SELECT id, name, email, phone, age, gender, skills, experience, location, status, created_at FROM employees WHERE agent_id = ? ORDER BY created_at DESC");
-$stmt->bind_param("i", $agent_id);
-$stmt->execute();
-$employees = $stmt->get_result();
+$stmt = $conn->prepare("SELECT id, name, email, phone, age, gender, skills, experience, country, county_province, status, created_at FROM employees WHERE agent_id = ? ORDER BY created_at DESC");
+$stmt->execute([$agent_id]);
+$employees = $stmt;
 ?>
 
 <!DOCTYPE html>
@@ -162,7 +158,7 @@ $employees = $stmt->get_result();
         <nav class="main-nav">
             <ul class="nav-links">
                 <li><a href="agent_dashboard.php">Dashboard</a></li>
-                <li><a href="register_employee.php">Register Employee</a></li>
+                <li><a href="employee_register.php">Register Employee</a></li>
                 <li><a href="agent_logout.php" class="logout-btn">Logout</a></li>
             </ul>
         </nav>
@@ -171,7 +167,7 @@ $employees = $stmt->get_result();
     <div class="container">
         <div class="page-header">
             <h1>Manage Employees</h1>
-            <a href="register_employee.php" class="btn">Register New Employee</a>
+            <a href="employee_register.php" class="btn">Register New Employee</a>
         </div>
 
         <?php if ($success): ?>
@@ -198,8 +194,8 @@ $employees = $stmt->get_result();
         </div>
 
         <div class="employees-grid">
-            <?php if ($employees->num_rows > 0): ?>
-                <?php while ($employee = $employees->fetch_assoc()): ?>
+            <?php if ($employees->rowCount() > 0): ?>
+                <?php while ($employee = $employees->fetch(PDO::FETCH_ASSOC)): ?>
                     <div class="employee-card">
                         <div class="employee-header">
                             <h3 class="employee-name"><?= htmlspecialchars($employee['name']) ?></h3>
@@ -212,7 +208,7 @@ $employees = $stmt->get_result();
                             <p><strong>Email:</strong> <?= htmlspecialchars($employee['email']) ?></p>
                             <p><strong>Phone:</strong> <?= htmlspecialchars($employee['phone']) ?></p>
                             <p><strong>Age:</strong> <?= htmlspecialchars($employee['age']) ?> | <strong>Gender:</strong> <?= ucfirst($employee['gender']) ?></p>
-                            <p><strong>Location:</strong> <?= htmlspecialchars($employee['location']) ?></p>
+                            <p><strong>Location:</strong> <?= htmlspecialchars($employee['country']) ?>, <?= htmlspecialchars($employee['county_province']) ?></p>
                             <p><strong>Skills:</strong> <?= htmlspecialchars($employee['skills']) ?></p>
                             <p><strong>Experience:</strong> <?= htmlspecialchars($employee['experience']) ?></p>
                             <p><strong>Registered:</strong> <?= date('M j, Y', strtotime($employee['created_at'])) ?></p>
@@ -244,7 +240,7 @@ $employees = $stmt->get_result();
             <?php else: ?>
                 <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
                     <p>No employees found.</p>
-                    <a href="register_employee.php" class="btn">Register Your First Employee</a>
+                    <a href="employee_register.php" class="btn">Register Your First Employee</a>
                 </div>
             <?php endif; ?>
         </div>

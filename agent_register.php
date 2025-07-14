@@ -28,14 +28,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         // Verify registration code from database
         $stmt = $conn->prepare("SELECT agent_id, status FROM agent_registration_codes WHERE code = ? AND status = 'active'");
-        $stmt->bind_param("s", $registration_code);
-        $stmt->execute();
-        $result = $stmt->get_result();
+        $stmt->execute([$registration_code]);
+        $code_data = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        if ($result->num_rows == 0) {
+        if (!$code_data) {
             $error = 'Invalid or inactive registration code. Please contact the company for authorization.';
         } else {
-            $code_data = $result->fetch_assoc();
             $expected_agent_id = $code_data['agent_id'];
             
             if ($agent_id != $expected_agent_id) {
@@ -43,20 +41,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
                 // Check if agent ID already exists
                 $stmt = $conn->prepare("SELECT id FROM agents WHERE id = ?");
-                $stmt->bind_param("i", $agent_id);
-                $stmt->execute();
-                $result = $stmt->get_result();
+                $stmt->execute([$agent_id]);
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
                 
-                if ($result->num_rows > 0) {
+                if ($result) {
                     $error = 'Agent ID already exists. Please contact the company for a new ID.';
                 } else {
                     // Check if email already exists
                     $stmt = $conn->prepare("SELECT id FROM agents WHERE email = ?");
-                    $stmt->bind_param("s", $email);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
+                    $stmt->execute([$email]);
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
                     
-                    if ($result->num_rows > 0) {
+                    if ($result) {
                         $error = 'Email already registered';
                     } else {
                         // Hash password
@@ -64,13 +60,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         
                         // Insert agent with specific ID
                         $stmt = $conn->prepare("INSERT INTO agents (id, name, phone, email, password) VALUES (?, ?, ?, ?, ?)");
-                        $stmt->bind_param("issss", $agent_id, $name, $phone, $email, $hashed_password);
+                        $success_insert = $stmt->execute([$agent_id, $name, $phone, $email, $hashed_password]);
                         
-                        if ($stmt->execute()) {
+                        if ($success_insert) {
                             // Mark the registration code as used
                             $stmt = $conn->prepare("UPDATE agent_registration_codes SET status = 'used', used_at = CURRENT_TIMESTAMP WHERE code = ?");
-                            $stmt->bind_param("s", $registration_code);
-                            $stmt->execute();
+                            $stmt->execute([$registration_code]);
                             
                             $success = 'Agent registered successfully! You can now login.';
                         } else {

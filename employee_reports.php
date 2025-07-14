@@ -13,36 +13,30 @@ $agent_name = $_SESSION['agent_name'];
 
 // Get employee statistics
 $stmt = $conn->prepare("SELECT COUNT(*) as total FROM employees WHERE agent_id = ?");
-$stmt->bind_param("i", $agent_id);
-$stmt->execute();
-$total_employees = $stmt->get_result()->fetch_assoc()['total'];
+$stmt->execute([$agent_id]);
+$total_employees = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 
 $stmt = $conn->prepare("SELECT COUNT(*) as active FROM employees WHERE agent_id = ? AND status = 'active'");
-$stmt->bind_param("i", $agent_id);
-$stmt->execute();
-$active_employees = $stmt->get_result()->fetch_assoc()['active'];
+$stmt->execute([$agent_id]);
+$active_employees = $stmt->fetch(PDO::FETCH_ASSOC)['active'];
 
 $stmt = $conn->prepare("SELECT COUNT(*) as pending FROM employees WHERE agent_id = ? AND status = 'pending'");
-$stmt->bind_param("i", $agent_id);
-$stmt->execute();
-$pending_employees = $stmt->get_result()->fetch_assoc()['pending'];
+$stmt->execute([$agent_id]);
+$pending_employees = $stmt->fetch(PDO::FETCH_ASSOC)['pending'];
 
 $stmt = $conn->prepare("SELECT COUNT(*) as inactive FROM employees WHERE agent_id = ? AND status = 'inactive'");
-$stmt->bind_param("i", $agent_id);
-$stmt->execute();
-$inactive_employees = $stmt->get_result()->fetch_assoc()['inactive'];
+$stmt->execute([$agent_id]);
+$inactive_employees = $stmt->fetch(PDO::FETCH_ASSOC)['inactive'];
 
 // Get employees by gender
 $stmt = $conn->prepare("SELECT gender, COUNT(*) as count FROM employees WHERE agent_id = ? GROUP BY gender");
-$stmt->bind_param("i", $agent_id);
-$stmt->execute();
-$gender_stats = $stmt->get_result();
+$stmt->execute([$agent_id]);
+$gender_stats = $stmt;
 
 // Get recent registrations
 $stmt = $conn->prepare("SELECT name, email, status, created_at FROM employees WHERE agent_id = ? ORDER BY created_at DESC LIMIT 10");
-$stmt->bind_param("i", $agent_id);
-$stmt->execute();
-$recent_registrations = $stmt->get_result();
+$stmt->execute([$agent_id]);
+$recent_registrations = $stmt;
 ?>
 
 <!DOCTYPE html>
@@ -190,7 +184,7 @@ $recent_registrations = $stmt->get_result();
                 <?php 
                 $male_count = 0;
                 $female_count = 0;
-                while ($row = $gender_stats->fetch_assoc()) {
+                while ($row = $gender_stats->fetch(PDO::FETCH_ASSOC)) {
                     if ($row['gender'] == 'male') {
                         $male_count = $row['count'];
                     } else {
@@ -211,7 +205,7 @@ $recent_registrations = $stmt->get_result();
 
         <div class="report-section">
             <h2>Recent Registrations</h2>
-            <?php if ($recent_registrations->num_rows > 0): ?>
+            <?php if ($recent_registrations->rowCount() > 0): ?>
                 <table class="recent-table">
                     <thead>
                         <tr>
@@ -222,7 +216,7 @@ $recent_registrations = $stmt->get_result();
                         </tr>
                     </thead>
                     <tbody>
-                        <?php while ($employee = $recent_registrations->fetch_assoc()): ?>
+                        <?php while ($employee = $recent_registrations->fetch(PDO::FETCH_ASSOC)): ?>
                             <tr>
                                 <td><?= htmlspecialchars($employee['name']) ?></td>
                                 <td><?= htmlspecialchars($employee['email']) ?></td>

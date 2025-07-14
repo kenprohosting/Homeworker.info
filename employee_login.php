@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
 
     // Check if email exists
-    $stmt = $conn->prepare("SELECT * FROM employee WHERE email = ?");
+    $stmt = $conn->prepare("SELECT * FROM employees WHERE email = ?");
     $stmt->execute([$email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 

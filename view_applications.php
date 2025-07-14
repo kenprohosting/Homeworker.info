@@ -57,11 +57,10 @@ if (isset($_GET['action']) && isset($_GET['application_id'])) {
 
 // Fetch all applications for this job
 $stmt = $conn->prepare("
-    SELECT ja.*, emp.Name as employee_name, emp.Age, emp.Skills, emp.Location, 
-           emp.Education_level, emp.Language, emp.Contact, emp.email,
-           emp.profile_pic
+    SELECT ja.*, emp.Name as employee_name, emp.Age, emp.Skills, emp.Education_level, emp.Language, emp.phone, emp.email,
+           emp.profile_pic, emp.country, emp.county_province
     FROM job_applications ja 
-    JOIN employee emp ON ja.Employee_ID = emp.ID
+    JOIN employees emp ON ja.Employee_ID = emp.ID
     WHERE ja.Job_ID = ?
     ORDER BY ja.Applied_at DESC
 ");
@@ -374,7 +373,8 @@ $applications = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     
                     <div class="application-details">
                         <p><strong>Skills:</strong> <?= htmlspecialchars($app['Skills']) ?></p>
-                        <p><strong>Location:</strong> <?= htmlspecialchars($app['Location']) ?></p>
+                        <p><strong>Country:</strong> <?= htmlspecialchars($app['country']) ?></p>
+                        <p><strong>County/Province:</strong> <?= htmlspecialchars($app['county_province']) ?></p>
                         <p><strong>Education:</strong> <?= htmlspecialchars($app['Education_level']) ?></p>
                         <p><strong>Languages:</strong> <?= htmlspecialchars($app['Language']) ?></p>
                     </div>
@@ -385,7 +385,7 @@ $applications = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                     
                     <div class="contact-info">
-                        <strong>Contact:</strong> <?= htmlspecialchars($app['Contact']) ?><br>
+                        <strong>Phone:</strong> <?= htmlspecialchars($app['phone']) ?><br>
                         <strong>Email:</strong> <?= htmlspecialchars($app['email']) ?>
                     </div>
                     

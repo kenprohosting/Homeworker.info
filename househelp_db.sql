@@ -32,7 +32,8 @@ CREATE TABLE `employee` (
   `Gender` varchar(10) NOT NULL,
   `Age` int(2) NOT NULL,
   `Contact` varchar(20) NOT NULL,
-  `Location` text NOT NULL,
+  `country` varchar(100) NOT NULL,
+  `county_province` varchar(100) NOT NULL,
   `Skills` varchar(20) NOT NULL,
   `Education_level` varchar(20) NOT NULL,
   `Social_referee` varchar(40) NOT NULL,
@@ -55,10 +56,13 @@ ALTER TABLE `employee` ADD `agent_id` int(11) NULL AFTER `ID`;
 -- Add status column to employee table
 ALTER TABLE `employee` ADD `status` enum('active','pending','inactive') DEFAULT 'active' AFTER `agent_id`;
 
+-- Add id_passport column to employee table
+ALTER TABLE `employee` ADD `id_passport` VARCHAR(255) DEFAULT NULL AFTER `status`;
+
 -- Dumping data for table `employee`
-INSERT INTO `employee` (`ID`, `Name`, `Gender`, `Age`, `Contact`, `Location`, `Skills`, `Education_level`, `Social_referee`, `Language`, `email`, `password_hash`, `residence_type`, `verification_status`, `created_at`) VALUES
-(1, 'Kate', 'Female', 33, '1234567', 'Nairobi', 'Cleaning', 'High School', 'John Doe', 'English, Swahili', 'kate@example.com', '$2y$10$hashedpassword', 'urban', 'verified', '2025-06-17 10:00:00'),
-(2, 'Jane', 'Female', 28, '7654321', 'Mombasa', 'Cooking', 'College', 'Mary Smith', 'English, Swahili', 'jane@example.com', '$2y$10$hashedpassword', 'urban', 'verified', '2025-06-17 10:00:00');
+INSERT INTO `employee` (`ID`, `Name`, `Gender`, `Age`, `Contact`, `country`, `county_province`, `Skills`, `Education_level`, `Social_referee`, `Language`, `email`, `password_hash`, `residence_type`, `verification_status`, `created_at`) VALUES
+(1, 'Kate', 'Female', 33, '1234567', 'Nairobi', 'Nairobi', 'Cleaning', 'High School', 'John Doe', 'English, Swahili', 'kate@example.com', '$2y$10$hashedpassword', 'urban', 'verified', '2025-06-17 10:00:00'),
+(2, 'Jane', 'Female', 28, '7654321', 'Mombasa', 'Mombasa', 'Cooking', 'College', 'Mary Smith', 'English, Swahili', 'jane@example.com', '$2y$10$hashedpassword', 'urban', 'verified', '2025-06-17 10:00:00');
 
 -- Table structure for table `employer`
 CREATE TABLE `employer` (

@@ -11,7 +11,7 @@ $success = '';
 $errors = [];
 
 // Get employee data
-$stmt = $conn->prepare("SELECT * FROM employee WHERE ID = ?");
+$stmt = $conn->prepare("SELECT * FROM employees WHERE ID = ?");
 $stmt->execute([$employee_id]);
 $employee = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -20,7 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['name'];
     $age = $_POST['age'];
     $skills = $_POST['skills'];
-    $location = $_POST['location'];
+    $country = $_POST['country'];
+    $county_province = $_POST['county_province'];
     $language = $_POST['language'];
     $education = $_POST['education'];
     $residence = $_POST['residence_type'];
@@ -45,8 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (empty($errors)) {
-        $update = $conn->prepare("UPDATE employee SET Name = ?, Age = ?, Skills = ?, Location = ?, Language = ?, Education_level = ?, residence_type = ?, Profile_pic = ? WHERE ID = ?");
-        $result = $update->execute([$name, $age, $skills, $location, $language, $education, $residence, $profile_pic, $employee_id]);
+        $update = $conn->prepare("UPDATE employees SET Name = ?, Age = ?, Skills = ?, country = ?, county_province = ?, Language = ?, Education_level = ?, residence_type = ?, Profile_pic = ? WHERE ID = ?");
+        $result = $update->execute([$name, $age, $skills, $country, $county_province, $language, $education, $residence, $profile_pic, $employee_id]);
 
         if ($result) {
             $success = "Profile updated successfully!";
@@ -107,8 +108,10 @@ if (!empty($profilePath) && file_exists($profilePath)):
     <label>Skills:</label>
     <textarea name="skills" required><?= htmlspecialchars($employee['Skills']) ?></textarea>
 
-    <label>Location:</label>
-    <input name="location" value="<?= htmlspecialchars($employee['Location']) ?>" required>
+    <label>Country:</label>
+    <input name="country" value="<?= htmlspecialchars($employee['country']) ?>" required>
+    <label>County/Province:</label>
+    <input name="county_province" value="<?= htmlspecialchars($employee['county_province']) ?>" required>
 
     <label>Languages:</label>
     <select name="language" required>

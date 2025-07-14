@@ -10,7 +10,7 @@ require_once("db_connect.php");
 $employee_id = $_SESSION['employee_id'];
 
 // Fetch employee profile picture
-$profile_sql = "SELECT Profile_pic FROM employee WHERE ID = ?";
+$profile_sql = "SELECT Profile_pic FROM employees WHERE ID = ?";
 $profile_stmt = $conn->prepare($profile_sql);
 $profile_stmt->execute([$employee_id]);
 $profile_data = $profile_stmt->fetch(PDO::FETCH_ASSOC);

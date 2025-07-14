@@ -44,7 +44,7 @@ if ($booking_id) {
 
     // 2. If payment is successful, fetch employee details
     if ($payment_success) {
-        $stmt = $conn->prepare("SELECT emp.* FROM bookings b JOIN employee emp ON b.Employee_ID = emp.ID WHERE b.ID = ? AND b.Homeowner_ID = ?");
+        $stmt = $conn->prepare("SELECT emp.* FROM bookings b JOIN employees emp ON b.Employee_ID = emp.ID WHERE b.ID = ? AND b.Homeowner_ID = ?");
         $stmt->execute([$booking_id, $employer_id]);
         $employee = $stmt->fetch(PDO::FETCH_ASSOC);
         if (!$employee) {
@@ -80,9 +80,10 @@ if ($booking_id) {
         <p><strong>Name:</strong> <?= htmlspecialchars($employee['Name']) ?></p>
         <p><strong>Gender:</strong> <?= htmlspecialchars($employee['Gender']) ?></p>
         <p><strong>Age:</strong> <?= htmlspecialchars($employee['Age']) ?></p>
-        <p><strong>Contact:</strong> <?= htmlspecialchars($employee['Contact']) ?></p>
+        <p><strong>Phone:</strong> <?= htmlspecialchars($employee['phone']) ?></p>
         <p><strong>Email:</strong> <?= htmlspecialchars($employee['email']) ?></p>
-        <p><strong>Location:</strong> <?= htmlspecialchars($employee['Location']) ?></p>
+        <p><strong>Country:</strong> <?= htmlspecialchars($employee['country']) ?></p>
+        <p><strong>County/Province:</strong> <?= htmlspecialchars($employee['county_province']) ?></p>
         <p><strong>Skills:</strong> <?= htmlspecialchars($employee['Skills']) ?></p>
         <p><strong>Education Level:</strong> <?= htmlspecialchars($employee['Education_level']) ?></p>
         <p><strong>Social Referee:</strong> <?= htmlspecialchars($employee['Social_referee']) ?></p>
