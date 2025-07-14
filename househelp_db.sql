@@ -49,6 +49,12 @@ CREATE TABLE `employee` (
 -- Add missing column after table creation
 ALTER TABLE `employee` ADD `profile_pic` VARCHAR(255) NULL;
 
+-- Add agent_id column to employee table
+ALTER TABLE `employee` ADD `agent_id` int(11) NULL AFTER `ID`;
+
+-- Add status column to employee table
+ALTER TABLE `employee` ADD `status` enum('active','pending','inactive') DEFAULT 'active' AFTER `agent_id`;
+
 -- Dumping data for table `employee`
 INSERT INTO `employee` (`ID`, `Name`, `Gender`, `Age`, `Contact`, `Location`, `Skills`, `Education_level`, `Social_referee`, `Language`, `email`, `password_hash`, `residence_type`, `verification_status`, `created_at`) VALUES
 (1, 'Kate', 'Female', 33, '1234567', 'Nairobi', 'Cleaning', 'High School', 'John Doe', 'English, Swahili', 'kate@example.com', '$2y$10$hashedpassword', 'urban', 'verified', '2025-06-17 10:00:00'),
@@ -160,6 +166,41 @@ CREATE TABLE `job_applications` (
   `Updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- Table structure for table `agents`
+CREATE TABLE `agents` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `email` varchar(255) NOT NULL UNIQUE,
+  `password` varchar(255) NOT NULL,
+  `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Table structure for table `agent_registration_codes`
+CREATE TABLE `agent_registration_codes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(50) NOT NULL UNIQUE,
+  `agent_id` int(11) NOT NULL,
+  `description` text DEFAULT NULL,
+  `status` enum('active','used','revoked') DEFAULT 'active',
+  `assigned_to` varchar(255) DEFAULT NULL,
+  `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
+  `used_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code` (`code`),
+  UNIQUE KEY `agent_id` (`agent_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Sample agent registration codes
+INSERT INTO `agent_registration_codes` (`code`, `agent_id`, `description`, `status`, `assigned_to`) VALUES
+('AGENT2024', 1001, 'Primary agent code for John Doe', 'active', 'John Doe'),
+('HOUSEHELP2024', 1002, 'Secondary agent code for Jane Smith', 'active', 'Jane Smith'),
+('CONNECT2024', 1003, 'Agent code for regional manager', 'active', 'Mike Johnson'),
+('SECURE2024', 1004, 'Agent code for security team', 'active', 'Sarah Wilson'),
+('TRUST2024', 1005, 'Agent code for trusted partner', 'active', 'David Brown');
+
 -- Indexes
 ALTER TABLE `admin` ADD PRIMARY KEY (`ID`), ADD UNIQUE KEY `email` (`email`);
 ALTER TABLE `employee` ADD PRIMARY KEY (`ID`), ADD UNIQUE KEY `email` (`email`), ADD KEY `contact` (`Contact`);
@@ -169,6 +210,7 @@ ALTER TABLE `payment` ADD PRIMARY KEY (`ID`), ADD KEY `Booking_ID` (`Booking_ID`
 ALTER TABLE `review_table` ADD PRIMARY KEY (`ID`), ADD KEY `Booking_ID` (`Booking_ID`);
 ALTER TABLE `jobs` ADD PRIMARY KEY (`ID`), ADD KEY `Employer_ID` (`Employer_ID`), ADD KEY `Status` (`Status`), ADD KEY `Expiry_date` (`Expiry_date`);
 ALTER TABLE `job_applications` ADD PRIMARY KEY (`ID`), ADD KEY `Job_ID` (`Job_ID`), ADD KEY `Employee_ID` (`Employee_ID`), ADD UNIQUE KEY `unique_application` (`Job_ID`, `Employee_ID`);
+ALTER TABLE `agents` ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `email` (`email`);
 
 -- AUTO_INCREMENT
 ALTER TABLE `admin` MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
@@ -188,5 +230,6 @@ ALTER TABLE `review_table` ADD CONSTRAINT `review_table_ibfk_1` FOREIGN KEY (`Bo
 ALTER TABLE `jobs` ADD CONSTRAINT `jobs_ibfk_1` FOREIGN KEY (`Employer_ID`) REFERENCES `employer` (`ID`) ON DELETE CASCADE;
 ALTER TABLE `job_applications` ADD CONSTRAINT `job_applications_ibfk_1` FOREIGN KEY (`Job_ID`) REFERENCES `jobs` (`ID`) ON DELETE CASCADE,
                                 ADD CONSTRAINT `job_applications_ibfk_2` FOREIGN KEY (`Employee_ID`) REFERENCES `employee` (`ID`) ON DELETE CASCADE;
+ALTER TABLE `employee` ADD CONSTRAINT `fk_employee_agent` FOREIGN KEY (`agent_id`) REFERENCES `agents` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 COMMIT;

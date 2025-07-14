@@ -154,8 +154,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin-top: 5px;
         }
     </style>
-    <link rel="stylesheet" href="responsive.css?v=2">
-    <script src="hamburger.js" defer></script>
+    
+  
 </head>
 <body>
 
