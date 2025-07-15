@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email']);
     $password = $_POST['password'];
     $residence_type = $_POST['residence_type'];
+    $status = 'active';
     $verification_status = 'pending';
     $created_at = date('Y-m-d H:i:s');
 
@@ -57,12 +58,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif (!move_uploaded_file($fileTmp, $uploadFile)) {
             $error = 'Failed to upload ID/Passport document.';
         } else {
+            $profile_pic_path = null;
+            // Handle profile picture upload
+            if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] === UPLOAD_ERR_OK) {
+                $profilePicDir = 'uploads/';
+                if (!is_dir($profilePicDir)) {
+                    mkdir($profilePicDir, 0777, true);
+                }
+                $profilePicTmp = $_FILES['profile_pic']['tmp_name'];
+                $profilePicName = uniqid('profile_') . '_' . basename($_FILES['profile_pic']['name']);
+                $profilePicFile = $profilePicDir . $profilePicName;
+                $allowedPicTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+                $profilePicType = mime_content_type($profilePicTmp);
+                if (in_array($profilePicType, $allowedPicTypes) && move_uploaded_file($profilePicTmp, $profilePicFile)) {
+                    $profile_pic_path = $profilePicFile;
+                }
+            }
             // Hash password
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
             // Insert into database
-            $stmt = $conn->prepare("INSERT INTO employees (name, gender, age, phone, country, county_province, skills, experience, education_level, social_referee, language, email, password_hash, residence_type, verification_status, created_at, agent_id, id_passport) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO employees (name, gender, age, phone, country, county_province, skills, experience, education_level, social_referee, language, email, password_hash, residence_type, verification_status, created_at, agent_id, id_passport, Profile_pic, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $result = $stmt->execute([
-                $name, $gender, $age, $phone, $country, $county_province, $skills, $experience, $education_level, $social_referee, $language, $email, $password_hash, $residence_type, $verification_status, $created_at, $agent_id, $fileName
+                $name, $gender, $age, $phone, $country, $county_province, $skills, $experience, $education_level, $social_referee, $language, $email, $password_hash, $residence_type, $verification_status, $created_at, $agent_id, $fileName, $profile_pic_path, $status
             ]);
             if ($result) {
                 $success = 'Employee registered successfully!';
@@ -308,6 +325,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="id_passport">ID/Passport (Upload or Take Photo)</label>
                 <input type="file" name="id_passport" id="id_passport" accept="image/*,.pdf" capture="environment" required>
             </div>
+            <div class="form-group">
+                <label for="profile_pic">Profile Picture (optional)</label>
+                <input type="file" name="profile_pic" id="profile_pic" accept="image/*">
+            </div>
+            <input type="hidden" name="status" value="active">
+            <input type="hidden" name="verification_status" value="pending">
             <button type="submit" class="btn-pro">Register Employee</button>
         </form>
     </div>

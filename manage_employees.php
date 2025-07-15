@@ -214,27 +214,7 @@ $employees = $stmt;
                             <p><strong>Registered:</strong> <?= date('M j, Y', strtotime($employee['created_at'])) ?></p>
                         </div>
                         
-                        <div class="employee-actions">
-                            <?php if ($employee['status'] == 'active'): ?>
-                                <form method="POST" style="display: inline;">
-                                    <input type="hidden" name="employee_id" value="<?= $employee['id'] ?>">
-                                    <input type="hidden" name="action" value="deactivate">
-                                    <button type="submit" class="btn btn-warning btn-small" onclick="return confirm('Deactivate this employee?')">Deactivate</button>
-                                </form>
-                            <?php else: ?>
-                                <form method="POST" style="display: inline;">
-                                    <input type="hidden" name="employee_id" value="<?= $employee['id'] ?>">
-                                    <input type="hidden" name="action" value="activate">
-                                    <button type="submit" class="btn btn-success btn-small">Activate</button>
-                                </form>
-                            <?php endif; ?>
-                            
-                            <form method="POST" style="display: inline;">
-                                <input type="hidden" name="employee_id" value="<?= $employee['id'] ?>">
-                                <input type="hidden" name="action" value="delete">
-                                <button type="submit" class="btn btn-danger btn-small" onclick="return confirm('Are you sure you want to delete this employee? This action cannot be undone.')">Delete</button>
-                            </form>
-                        </div>
+                        <!-- Removed employee-actions for view-only access -->
                     </div>
                 <?php endwhile; ?>
             <?php else: ?>

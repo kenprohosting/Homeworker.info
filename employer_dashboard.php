@@ -264,13 +264,13 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
           }
         ?>
         <img src="<?= htmlspecialchars($profile) ?>" alt="Profile Picture">
-        <h3><?= htmlspecialchars($emp['Name']) ?> (<?= $emp['Age'] ?>)</h3>
-        <p><strong>Skill:</strong> <?= htmlspecialchars($emp['Skills']) ?></p>
-        <p><strong>Country:</strong> <?= htmlspecialchars($emp['country']) ?></p>
-        <p><strong>County/Province:</strong> <?= htmlspecialchars($emp['county_province']) ?></p>
-        <p><strong>Language:</strong> <?= htmlspecialchars($emp['Language']) ?></p>
-        <p><strong>Education:</strong> <?= htmlspecialchars($emp['Education_level']) ?></p>
-        <a href="employer_booking.php?eid=<?= $emp['ID'] ?>" class="btn">Book Now</a>
+        <h3><?= htmlspecialchars($emp['name'] ?? 'N/A') ?> (<?= $emp['age'] ?? 'N/A' ?>)</h3>
+        <p><strong>Skill:</strong> <?= htmlspecialchars($emp['skills'] ?? 'N/A') ?></p>
+        <p><strong>Country:</strong> <?= htmlspecialchars($emp['country'] ?? 'N/A') ?></p>
+        <p><strong>County/Province:</strong> <?= htmlspecialchars($emp['county_province'] ?? 'N/A') ?></p>
+        <p><strong>Language:</strong> <?= htmlspecialchars($emp['language'] ?? 'N/A') ?></p>
+        <p><strong>Education:</strong> <?= htmlspecialchars($emp['education_level'] ?? 'N/A') ?></p>
+        <a href="employer_booking.php?eid=<?= $emp['id'] ?? '' ?>" class="btn">Book Now</a>
       </div>
     <?php endforeach; ?>
   </div>

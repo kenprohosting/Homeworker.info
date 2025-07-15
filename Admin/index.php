@@ -186,6 +186,8 @@ $recent_codes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <ul>
                 <li><a href="index.php" class="active">Dashboard</a></li>
                 <li><a href="manage_agents.php">Manage Agents</a></li>
+                <li><a href="manage_employees.php">Manage Employees</a></li>
+                <li><a href="manage_employers.php">Manage Employers</a></li>
                 <li><a href="manage_codes.php">Registration Codes</a></li>
                 <li><a href="reports.php">Reports</a></li>
                 <li><a href="settings.php">Settings</a></li>

@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['employee_id'])) {
-    header("Location: employee_login.php");
+    header("Location: employee_access.php");
     exit();
 }
 require_once("db_connect.php");
@@ -100,33 +100,33 @@ if (!empty($profilePath) && file_exists($profilePath)):
 
 <form method="POST" enctype="multipart/form-data">
     <label>Name:</label>
-    <input name="name" value="<?= htmlspecialchars($employee['Name']) ?>" required>
+    <input name="name" value="<?= htmlspecialchars($employee['name'] ?? '') ?>" required>
 
     <label>Age:</label>
-    <input type="number" name="age" value="<?= htmlspecialchars($employee['Age']) ?>" required>
+    <input type="number" name="age" value="<?= htmlspecialchars($employee['age'] ?? '') ?>" required>
 
     <label>Skills:</label>
-    <textarea name="skills" required><?= htmlspecialchars($employee['Skills']) ?></textarea>
+    <textarea name="skills" required><?= htmlspecialchars($employee['skills'] ?? '') ?></textarea>
 
     <label>Country:</label>
-    <input name="country" value="<?= htmlspecialchars($employee['country']) ?>" required>
+    <input name="country" value="<?= htmlspecialchars($employee['country'] ?? '') ?>" required>
     <label>County/Province:</label>
-    <input name="county_province" value="<?= htmlspecialchars($employee['county_province']) ?>" required>
+    <input name="county_province" value="<?= htmlspecialchars($employee['county_province'] ?? '') ?>" required>
 
     <label>Languages:</label>
     <select name="language" required>
-        <option <?= $employee['Language'] == 'English' ? 'selected' : '' ?>>English</option>
-        <option <?= $employee['Language'] == 'Kiswahili' ? 'selected' : '' ?>>Kiswahili</option>
-        <option <?= $employee['Language'] == 'Both' ? 'selected' : '' ?>>Both</option>
+        <option <?= (isset($employee['language']) && $employee['language'] == 'English') ? 'selected' : '' ?>>English</option>
+        <option <?= (isset($employee['language']) && $employee['language'] == 'Kiswahili') ? 'selected' : '' ?>>Kiswahili</option>
+        <option <?= (isset($employee['language']) && $employee['language'] == 'Both') ? 'selected' : '' ?>>Both</option>
     </select>
 
     <label>Education Level:</label>
-    <input name="education" value="<?= htmlspecialchars($employee['Education_level']) ?>" required>
+    <input name="education" value="<?= htmlspecialchars($employee['education_level'] ?? '') ?>" required>
 
     <label>Residence Type:</label>
     <select name="residence_type" required>
-        <option <?= $employee['residence_type'] == 'urban' ? 'selected' : '' ?>>urban</option>
-        <option <?= $employee['residence_type'] == 'rural' ? 'selected' : '' ?>>rural</option>
+        <option <?= (isset($employee['residence_type']) && $employee['residence_type'] == 'urban') ? 'selected' : '' ?>>urban</option>
+        <option <?= (isset($employee['residence_type']) && $employee['residence_type'] == 'rural') ? 'selected' : '' ?>>rural</option>
     </select>
 
     <label>Profile Picture:</label>
