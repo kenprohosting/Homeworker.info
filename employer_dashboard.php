@@ -7,7 +7,7 @@ if (!isset($_SESSION['employer_id'])) {
 require_once('db_connect.php');
 
 // Fetch employees with filters
-$filter_sql = "SELECT * FROM employee WHERE 1";
+$filter_sql = "SELECT * FROM employees WHERE 1";
 $params = [];
 
 if (!empty($_GET['skill'])) {
@@ -39,7 +39,7 @@ $employee = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $stmt2 = $conn->prepare("
     SELECT b.*, emp.Name AS employee_name 
     FROM bookings b 
-    JOIN employee emp ON b.Employee_ID = emp.ID 
+    JOIN employees emp ON b.Employee_ID = emp.ID 
     WHERE b.Homeowner_ID = ?
     ORDER BY b.Booking_date DESC
 ");

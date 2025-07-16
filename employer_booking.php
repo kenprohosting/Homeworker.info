@@ -14,7 +14,7 @@ if (!$employee_id) {
 }
 
 // Fetch employee details
-$stmt = $conn->prepare("SELECT Name, Skills FROM employee WHERE ID = ?");
+$stmt = $conn->prepare("SELECT Name, Skills FROM employees WHERE ID = ?");
 $stmt->execute([$employee_id]);
 $employee = $stmt->fetch(PDO::FETCH_ASSOC);
 
