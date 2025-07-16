@@ -80,6 +80,7 @@ CREATE TABLE `employer` (
   `reset_token` VARCHAR(255) DEFAULT NULL,
   `reset_token_expiry` DATETIME DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+ALTER TABLE employer ADD COLUMN Country VARCHAR(100);
 
 -- Dumping data for table `employer`
 INSERT INTO `employer` (`ID`, `Name`, `Location`, `Residence_type`, `Contact`, `Gender`, `email`, `password_hash`, `address`, `verification_status`, `created_at`) VALUES

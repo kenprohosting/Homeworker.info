@@ -7,7 +7,7 @@ if (!isset($_SESSION['employer_id'])) {
 require_once('db_connect.php');
 
 // Fetch employees with filters
-$filter_sql = "SELECT * FROM employees WHERE 1";
+$filter_sql = "SELECT * FROM employee WHERE 1";
 $params = [];
 
 if (!empty($_GET['skill'])) {
@@ -33,13 +33,13 @@ if (!empty($_GET['residence'])) {
 
 $stmt = $conn->prepare($filter_sql);
 $stmt->execute($params);
-$employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$employee = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Fetch employer's bookings
 $stmt2 = $conn->prepare("
     SELECT b.*, emp.Name AS employee_name 
     FROM bookings b 
-    JOIN employees emp ON b.Employee_ID = emp.ID 
+    JOIN employee emp ON b.Employee_ID = emp.ID 
     WHERE b.Homeowner_ID = ?
     ORDER BY b.Booking_date DESC
 ");
@@ -193,7 +193,7 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
   <h2>Find a Homewoker</h2>
 
   <form method="GET" class="filter-form">
-    <input type="text" name="skill" placeholder="Skill (e.g. Driving)">
+    <input type="text" name="skill" placeholder="Job Title (e.g. Driver)">
     <input type="text" id="countryInput" name="country" placeholder="Country" autocomplete="off" required>
     <ul id="countryList" class="country-dropdown"></ul>
     <input type="text" name="county_province" placeholder="County or Province">
@@ -211,12 +211,12 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
   </form>
 
   <!-- My Bookings Table (hidden by default) -->
-  <div id="bookingsTableContainer">
+  <div id="bookingsContainer">
     <h2>My Bookings</h2>
     <?php if (count($bookings) == 0): ?>
       <p>You have no bookings yet.</p>
     <?php else: ?>
-      <table id="bookingsTable">
+      <table id="bookings">
         <thead>
           <tr>
             <th>Employee</th>
@@ -255,7 +255,7 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
   <!-- Employee Cards -->
   <div class="card-grid">
-    <?php foreach ($employees as $emp): ?>
+    <?php foreach ($employee as $emp): ?>
       <div class="card">
         <?php
           $profile = 'uploads/default.jpg';
@@ -279,17 +279,17 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 <!-- JS for Toggle + Country Flags -->
 <script>
   const toggleBookings = document.getElementById("toggleBookings");
-  const bookingsTable = document.getElementById("bookingsTable");
-  const bookingsContainer = document.getElementById("bookingsTableContainer");
+  const bookingsTable = document.getElementById("bookings");
+  const bookingsContainer = document.getElementById("bookingsContainer");
 
   toggleBookings.addEventListener("click", function(e) {
     e.preventDefault();
-    bookingsTable.classList.toggle("show");
+    bookings.classList.toggle("show");
   });
 
   document.addEventListener("click", function(e) {
-    if (!toggleBookings.contains(e.target) && !bookingsTable.contains(e.target)) {
-      bookingsTable.classList.remove("show");
+    if (!toggleBookings.contains(e.target) && !bookings.contains(e.target)) {
+      bookings.classList.remove("show");
     }
   });
 
