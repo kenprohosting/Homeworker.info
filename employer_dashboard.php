@@ -74,8 +74,8 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
       padding: 10px;
       border: 1px solid #ddd;
       border-radius: 5px;
-      flex: 1;
-      min-width: 150px;
+      flex: 0 1 170px;
+      min-width: 140px;
       font-size: 14px;
     }
     .filter-form button {
@@ -89,6 +89,16 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
       font-size: 1.1rem;
       flex-shrink: 0;
       transition: all 0.3s ease;
+    }
+    .filter-form .search-btn {
+      padding: 10px 0 !important;
+      font-size: 1.05rem !important;
+      width: 135px !important;
+      min-width: 0 !important;
+      border-radius: 30px !important;
+      flex: none !important;
+      text-align: center;
+      align-self: flex-start;
     }
     .filter-form button:hover {
       background: linear-gradient(90deg, #17606e 0%, #1ec8c8 100%);
@@ -239,7 +249,7 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
       <option value="urban">Urban</option>
       <option value="rural">Rural</option>
     </select>
-    <button type="submit" class="btn">Search</button>
+    <button type="submit" class="btn search-btn">Search</button>
   </form>
 
 
