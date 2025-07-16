@@ -48,216 +48,23 @@ $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Browse Jobs - Houselp Connect</title>
+    <title>Browse Jobs - Homeworker Connect</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #f5f5f5;
-            margin: 0;
-            padding: 0;
-        }
-        
-        header {
-            background: rgb(24, 123, 136);
-            color: white;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 1.5em;
-            font-weight: bold;
-        }
-        
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-        
-        h1 {
-            color: rgb(24, 123, 136);
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        
-        .filter-section {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .filter-form {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            align-items: end;
-        }
-        
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        label {
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #333;
-        }
-        
-        input, select {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-        
-        .btn {
-            background: rgb(24, 123, 136);
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        
-        .btn:hover {
-            background: rgb(20, 100, 110);
-        }
-        
-        .btn-secondary {
-            background: #6c757d;
-        }
-        
-        .btn-secondary:hover {
-            background: #5a6268;
-        }
-        
-        .btn-success {
-            background: #28a745;
-        }
-        
-        .btn-success:hover {
-            background: #218838;
-        }
-        
-        .btn-disabled {
-            background: #6c757d;
-            cursor: not-allowed;
-        }
-        
-        .job-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 20px;
-        }
-        
-        .job-card {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            border-left: 4px solid rgb(24, 123, 136);
-            transition: transform 0.2s;
-        }
-        
-        .job-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        }
-        
-        .job-header {
-            margin-bottom: 15px;
-        }
-        
-        .job-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            margin: 0 0 5px 0;
-        }
-        
-        .employer-name {
-            color: #666;
-            font-size: 14px;
-        }
-        
-        .job-details {
-            margin-bottom: 15px;
-        }
-        
-        .job-details p {
-            margin: 5px 0;
-            color: #666;
-        }
-        
-        .job-details strong {
-            color: #333;
-        }
-        
-        .salary {
-            color: #28a745;
-            font-weight: bold;
-        }
-        
-        .job-description {
-            background: #f8f9fa;
-            padding: 10px;
-            border-radius: 5px;
-            margin: 15px 0;
-            font-size: 14px;
-            line-height: 1.4;
-        }
-        
-        .job-actions {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .applied-badge {
-            background: #28a745;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            display: inline-block;
-        }
-        
-        .no-jobs {
-            text-align: center;
-            padding: 50px;
-            color: #666;
-        }
-        
-        .clear-filters {
-            text-align: center;
-            margin-top: 15px;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <button class="nav-btn" onclick="window.history.back()">← Back</button>
+    <a href="javascript:history.back()" class="back-btn">← Back</a>
 
 <header>
-    <div class="logo">Houselp Connect</div>
-    <nav>
-        <a href="employee_dashboard.php">Dashboard</a>
-        <a href="my_applications.php">My Applications</a>
-        <a href="employee_logout.php">Logout</a>
+    <div class="logo">
+        <img src="bghse.png" alt="Logo" style="height: 40px;">
+    </div>
+    <nav class="main-nav">
+        <ul class="nav-links">
+            <li><a class="nav-btn" href="employee_dashboard.php">Dashboard</a></li>
+            <li><a class="nav-btn" href="my_applications.php">My Applications</a></li>
+            <li><a class="nav-btn" href="employee_logout.php">Logout</a></li>
+        </ul>
     </nav>
 </header>
 
@@ -367,6 +174,10 @@ $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     <?php endif; ?>
 </div>
+
+<footer>
+    <p>&copy; <?= date("Y") ?> Homeworker Connect. All rights reserved.</p>
+</footer>
 
 </body>
 </html> 

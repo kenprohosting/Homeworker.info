@@ -49,36 +49,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Post a Job - Houselp Connect</title>
+    <title>Post a Job - Homeworker Connect</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
     <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #f5f5f5;
-            margin: 0;
-            padding: 0;
-        }
-        
-        header {
-            background: rgb(24, 123, 136);
-            color: white;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 1.5em;
-            font-weight: bold;
-        }
-        
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 20px;
-        }
-        
         .container {
             max-width: 800px;
             margin: 30px auto;
@@ -129,21 +103,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             flex: 1;
         }
         
-        .btn {
-            background: rgb(24, 123, 136);
-            color: white;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            width: 100%;
-        }
-        
-        .btn:hover {
-            background: rgb(20, 100, 110);
-        }
-        
         .required {
             color: red;
         }
@@ -153,21 +112,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             color: #666;
             margin-top: 5px;
         }
+        
+        .user-greeting {
+            color: white;
+            font-weight: 500;
+            padding: 10px 16px;
+        }
+        
+        /* Ensure navigation buttons remain visible and functional */
+        .nav-links {
+            display: flex !important;
+            list-style: none !important;
+            gap: 20px;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-btn {
+            display: inline-block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
     </style>
-    
-  
 </head>
 <body>
 
 <header>
-    <button class="nav-btn" onclick="window.history.back()">← Back</button>
-    <div class="logo">Houselp Connect</div>
+    <div class="logo">
+        <img src="bghse.png" alt="Logo" style="height: 40px;">
+    </div>
     <nav class="main-nav">
         <ul class="nav-links">
-            <li><a href="index.php">Home</a></li>
-            <li><a href="about.php">About</a></li>
-            <li><a href="contact.php">Contact Us</a></li>
-            <li><a href="faq.php">FAQ</a></li>
+            <li><span class="user-greeting">Hello, <?= htmlspecialchars($_SESSION['employer_name']) ?></span></li>
+            <li><a class="nav-btn" href="employer_dashboard.php">Dashboard</a></li>
+            <li><a class="nav-btn" href="manage_jobs.php">My Jobs</a></li>
+            <li><a class="nav-btn" href="employer_logout.php">Logout</a></li>
         </ul>
     </nav>
 </header>
@@ -253,6 +233,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit" class="btn">Post Job</button>
     </form>
 </div>
+
+<footer>
+    <p>&copy; <?= date("Y") ?> Homeworker Connect. All rights reserved.</p>
+</footer>
 
 </body>
 </html> 

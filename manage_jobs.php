@@ -68,36 +68,10 @@ $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Manage Jobs - Houselp Connect</title>
+    <title>Manage Jobs - Homeworker Connect</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
     <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #f5f5f5;
-            margin: 0;
-            padding: 0;
-        }
-        
-        header {
-            background: rgb(24, 123, 136);
-            color: white;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 1.5em;
-            font-weight: bold;
-        }
-        
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 20px;
-        }
-        
         .container {
             max-width: 1200px;
             margin: 30px auto;
@@ -116,36 +90,12 @@ $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
             margin: 0;
         }
         
-        .btn {
-            background: rgb(24, 123, 136);
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            display: inline-block;
-            margin: 2px;
-            font-size: 14px;
-        }
-        
-        .btn:hover {
-            background: rgb(20, 100, 110);
-        }
-        
         .btn-danger {
             background: #dc3545;
         }
         
         .btn-danger:hover {
             background: #c82333;
-        }
-        
-        .btn-success {
-            background: #28a745;
-        }
-        
-        .btn-success:hover {
-            background: #218838;
         }
         
         .btn-warning {
@@ -260,19 +210,42 @@ $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
             padding: 50px;
             color: #666;
         }
+        
+        .user-greeting {
+            color: white;
+            font-weight: 500;
+            padding: 10px 16px;
+        }
+        
+        /* Ensure navigation buttons remain visible and functional */
+        .nav-links {
+            display: flex !important;
+            list-style: none !important;
+            gap: 20px;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-btn {
+            display: inline-block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <button class="nav-btn" onclick="window.history.back()">← Back</button>
-    <div class="logo">Houselp Connect</div>
+    <div class="logo">
+        <img src="bghse.png" alt="Logo" style="height: 40px;">
+    </div>
     <nav class="main-nav">
         <ul class="nav-links">
-            <li><a href="index.php">Home</a></li>
-            <li><a href="about.php">About</a></li>
-            <li><a href="contact.php">Contact Us</a></li>
-            <li><a href="faq.php">FAQ</a></li>
+            <li><span class="user-greeting">Hello, <?= htmlspecialchars($_SESSION['employer_name']) ?></span></li>
+            <li><a class="nav-btn" href="employer_dashboard.php">Dashboard</a></li>
+            <li><a class="nav-btn" href="post_job.php">Post Job</a></li>
+            <li><a class="nav-btn" href="employer_logout.php">Logout</a></li>
         </ul>
     </nav>
 </header>
@@ -340,6 +313,10 @@ $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     <?php endif; ?>
 </div>
+
+<footer>
+    <p>&copy; <?= date("Y") ?> Homeworker Connect. All rights reserved.</p>
+</footer>
 
 </body>
 </html> 

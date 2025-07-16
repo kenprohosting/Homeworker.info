@@ -39,10 +39,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Employer Registration</title>
+    <title>Employer Registration - Homeworker Connect</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+<header>
+    <div class="logo">
+        <img src="bghse.png" alt="Logo" style="height: 40px;">
+    </div>
+    <nav class="main-nav">
+        <ul class="nav-links">
+            <li><a class="nav-btn" href="index.php">Home</a></li>
+            <li><a class="nav-btn" href="about.php">About</a></li>
+            <li><a class="nav-btn" href="contact.php">Contact Us</a></li>
+            <li><a class="nav-btn" href="faq.php">FAQ</a></li>
+        </ul>
+    </nav>
+</header>
 
 <div class="form-container">
     <h2>Register as Employer</h2>
@@ -313,6 +328,10 @@ countryInput.addEventListener("input", function () {
     }
   });
 </script>
+
+<footer>
+  <p>&copy; <?= date("Y") ?> Homeworker Connect. All rights reserved.</p>
+</footer>
 
 </body>
 </html>

@@ -50,56 +50,106 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Employer Dashboard</title>
+  <title>Employer Dashboard - Homeworker Connect</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
   <style>
-    body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; margin: 0; }
-    header {
-      background: rgb(24, 123, 136);
-      color: white;
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      position: relative;
+    /* Force full width for the dashboard content */
+    .form-container { 
+      padding: 30px;
+      width: 100vw;
+      max-width: none;
+      margin-left: calc(50% - 50vw);
+      box-sizing: border-box;
+      background: #f8f9fa;
     }
-    .logo { font-size: 1.5em; font-weight: bold; }
-    nav ul { list-style: none; display: flex; gap: 20px; margin: 0; padding: 0; }
-    nav a { color: white; text-decoration: none; }
-    .form-container { padding: 30px; }
-    .filter-form input, .filter-form select, .filter-form button {
-      padding: 10px; margin-right: 10px; margin-top: 10px;
+    .filter-form {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 15px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .filter-form input, .filter-form select {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      flex: 1;
+      min-width: 150px;
+      font-size: 14px;
+    }
+    .filter-form button {
+      padding: 12px 25px;
+      background: linear-gradient(90deg, #197b88 0%, #1ec8c8 100%);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+    }
+    .filter-form button:hover {
+      background: linear-gradient(90deg, #17606e 0%, #1ec8c8 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(24,123,136,0.3);
     }
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+      gap: 30px;
       margin-top: 30px;
+      padding: 0 20px;
     }
     .card {
       background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
       text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid #e0e0e0;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
     .card img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      border-radius: 8px;
       object-fit: cover;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
+      border: 4px solid #197b88;
+      box-shadow: 0 4px 15px rgba(24,123,136,0.2);
     }
-    .btn {
-      display: inline-block;
-      padding: 10px 16px;
-      background: #00695c;
-      color: white;
+    .card h3 {
+      font-size: 1.4rem;
+      color: #197b88;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+    .card p {
+      font-size: 1rem;
+      margin: 10px 0;
+      line-height: 1.5;
+      color: #555;
+    }
+    .card .btn {
+      margin-top: 20px;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      background: linear-gradient(90deg, #197b88 0%, #1ec8c8 100%);
       border: none;
-      border-radius: 5px;
-      margin-top: 10px;
-      text-decoration: none;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+    }
+    .card .btn:hover {
+      background: linear-gradient(90deg, #17606e 0%, #1ec8c8 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(24,123,136,0.3);
     }
     table {
       width: 100%;
@@ -115,60 +165,41 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
       text-align: center;
     }
     th { background: #eeeeee; }
-
-    #countryList {
-      list-style: none;
-      background: white;
-      position: absolute;
-      z-index: 999;
-      border: 1px solid #ccc;
-      max-height: 150px;
-      overflow-y: auto;
-      display: none;
-      width: 200px;
-      padding: 0;
+    .user-greeting {
+      color: white;
+      font-weight: 500;
+      padding: 10px 16px;
+    }
+    
+    /* Ensure navigation buttons remain visible and functional */
+    .nav-links {
+      display: flex !important;
+      list-style: none !important;
+      gap: 20px;
+      align-items: center;
       margin: 0;
+      padding: 0;
     }
-    #countryList li {
-      padding: 8px 10px;
-      cursor: pointer;
-    }
-    #countryList li:hover {
-      background: #f0f0f0;
-    }
+    
     .nav-btn {
-      background: linear-gradient(90deg, #197b88 0%, #1ec8c8 100%);
-      color: #fff !important;
-      padding: 10px 22px;
-      border-radius: 8px;
-      font-weight: 600;
-      text-decoration: none;
-      margin: 0 6px;
-      transition: background 0.2s, color 0.2s, box-shadow 0.2s, border 0.2s;
-      box-shadow: 0 2px 8px rgba(24,123,136,0.10);
-      border: 2px solid #197b88;
-      display: inline-block;
-      cursor: pointer;
+      display: inline-block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
     }
-    .nav-btn:hover, .nav-btn:focus {
-      background: linear-gradient(90deg, #17606e 0%, #1ec8c8 100%);
-      color: #ffd700 !important;
-      box-shadow: 0 4px 16px rgba(24,123,136,0.16);
-      outline: none;
-      border-color: #125a66;
-    }
-
+    
+    /* Fix for mobile responsiveness */
     @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      nav ul {
+      .nav-links {
         flex-direction: column;
         width: 100%;
+        gap: 10px;
       }
-      .card-grid {
-        grid-template-columns: 1fr;
+      
+      .nav-btn {
+        width: 100%;
+        text-align: center;
+        margin: 0;
+        padding: 12px 20px;
       }
     }
   </style>
@@ -176,15 +207,16 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 <body>
 
 <header>
-  <button class="nav-btn" onclick="window.history.back()">← Back</button>
-  <div class="logo">Homewoker Connect</div>
-  <nav>
+  <div class="logo">
+    <img src="bghse.png" alt="Logo" style="height: 40px;">
+  </div>
+  <nav class="main-nav">
     <ul class="nav-links">
-      <li>Hello, <?= htmlspecialchars($_SESSION['employer_name']) ?></li>
-      <li><a href="post_job.php">Post Job</a></li>
-      <li><a href="manage_jobs.php">My Jobs</a></li>
-      <li><a href="#" id="toggleBookings">My Bookings</a></li>
-      <li><a href="employer_logout.php">Logout</a></li>
+      <li><span class="user-greeting">Hello, <?= htmlspecialchars($_SESSION['employer_name']) ?></span></li>
+      <li><a class="nav-btn" href="post_job.php">Post Job</a></li>
+      <li><a class="nav-btn" href="manage_jobs.php">My Jobs</a></li>
+      <li><a class="nav-btn" href="employer_bookings.php">My Bookings</a></li>
+      <li><a class="nav-btn" href="employer_logout.php">Logout</a></li>
     </ul>
   </nav>
 </header>
@@ -210,60 +242,13 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     <button type="submit" class="btn">Search</button>
   </form>
 
-  <!-- My Bookings Table (hidden by default) -->
-  <div id="bookingsContainer">
-    <h2>My Bookings</h2>
-    <?php if (count($bookings) == 0): ?>
-      <p>You have no bookings yet.</p>
-    <?php else: ?>
-      <table id="bookings">
-        <thead>
-          <tr>
-            <th>Employee</th>
-            <th>Service</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Status</th>
-            <th>Payment</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($bookings as $b): ?>
-          <tr>
-            <td><?= htmlspecialchars($b['employee_name']) ?></td>
-            <td><?= htmlspecialchars($b['Service_type']) ?></td>
-            <td><?= htmlspecialchars($b['Booking_date']) ?></td>
-            <td><?= $b['Start_time'] ?> - <?= $b['End_time'] ?></td>
-            <td><?= htmlspecialchars($b['Status']) ?></td>
-            <td>
-              <?php if ($b['Status'] === 'confirmed'): ?>
-                  <a href="employer_payment.php?bid=<?= $b['ID'] ?>" class="btn">Make Payment</a>
-              <?php elseif ($b['Status'] === 'completed'): ?>
-                  <span style="color:green;">Paid</span>
-              <?php elseif ($b['Status'] === 'cancelled'): ?>
-                  <span style="color:red;">Cancelled</span>
-              <?php else: ?>
-                  <span style="color:gray;">Pending</span>
-              <?php endif; ?>
-            </td>
-          </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
-    <?php endif; ?>
-  </div>
+
 
   <!-- Employee Cards -->
   <div class="card-grid">
     <?php foreach ($employee as $emp): ?>
       <div class="card">
-        <?php
-          $profile = 'uploads/default.jpg';
-          if (!empty($emp['profile_pic']) && file_exists(__DIR__ . '/' . $emp['profile_pic'])) {
-              $profile = $emp['profile_pic'];
-          }
-        ?>
-        <img src="<?= htmlspecialchars($profile) ?>" alt="Profile Picture">
+        <img src="placeholder-profile.svg" alt="Profile Picture">
         <h3><?= htmlspecialchars($emp['name'] ?? 'N/A') ?> (<?= $emp['age'] ?? 'N/A' ?>)</h3>
         <p><strong>Skill:</strong> <?= htmlspecialchars($emp['skills'] ?? 'N/A') ?></p>
         <p><strong>Country:</strong> <?= htmlspecialchars($emp['country'] ?? 'N/A') ?></p>
@@ -276,22 +261,8 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
   </div>
 </div>
 
-<!-- JS for Toggle + Country Flags -->
+<!-- JS for Country Flags -->
 <script>
-  const toggleBookings = document.getElementById("toggleBookings");
-  const bookingsTable = document.getElementById("bookings");
-  const bookingsContainer = document.getElementById("bookingsContainer");
-
-  toggleBookings.addEventListener("click", function(e) {
-    e.preventDefault();
-    bookings.classList.toggle("show");
-  });
-
-  document.addEventListener("click", function(e) {
-    if (!toggleBookings.contains(e.target) && !bookings.contains(e.target)) {
-      bookings.classList.remove("show");
-    }
-  });
 
   // Country List Script
   const countryInput = document.getElementById("countryInput");
@@ -524,5 +495,10 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     }
   });
 </script>
+
+<footer>
+  <p>&copy; <?= date("Y") ?> Homeworker Connect. All rights reserved.</p>
+</footer>
+
 </body>
 </html>

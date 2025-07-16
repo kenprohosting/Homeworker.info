@@ -1,0 +1,8 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <rect width="120" height="120" fill="#197b88" rx="8"/>
+  <g fill="#ffffff" opacity="0.8">
+    <!-- Person silhouette -->
+    <circle cx="60" cy="40" r="18"/>
+    <path d="M30 100 C30 85, 42 75, 60 75 C78 75, 90 85, 90 100 L30 100 Z"/>
+  </g>
+</svg>

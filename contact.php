@@ -16,14 +16,14 @@ $isLoggedIn = isset($_SESSION['employer_name']);
 <body>
 <header>
   <div class="logo">
-    <img src="bghse.png" alt="Logo" style="height: 40px; margin-right: 10px;">
+    <img src="bghse.png" alt="Logo" style="height: 40px;">
   </div>
   <nav class="main-nav">
     <ul class="nav-links">
-      <li><a href="index.php">Home</a></li>
-      <li><a href="about.php">About</a></li>
-      <li><a href="contact.php">Contact Us</a></li>
-      <li><a href="faq.php">FAQ</a></li>
+      <li><a class="nav-btn" href="index.php">Home</a></li>
+      <li><a class="nav-btn" href="about.php">About</a></li>
+      <li><a class="nav-btn" href="contact.php">Contact Us</a></li>
+      <li><a class="nav-btn" href="faq.php">FAQ</a></li>
     </ul>
   </nav>
 </header>

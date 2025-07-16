@@ -19,7 +19,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
 
 <header>
   <div class="logo">
-    <img src="bghse.png" alt="Logo" style="height: 40px; margin-right: 10px;">
+    <img src="bghse.png" alt="Logo" style="height: 40px;">
   </div>
   <nav class="main-nav">
     <ul class="nav-links">
