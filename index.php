@@ -54,7 +54,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
         </button>
         <div id="loginDropdown" class="pro-dropdown">
           <a href="employer_login.php" class="pro-dropdown-link">Login as Employer</a>
-          <a href="employee_login.php" class="pro-dropdown-link">Login as Employee</a>
+          <a href="employee_access.php" class="pro-dropdown-link">Login as Employee</a>
           <a href="agent_login.php" class="pro-dropdown-link">Login as Agent</a>
         </div>
       </div>

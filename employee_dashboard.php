@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['employee_id'])) {
-    header("Location:employee_login.php");
+    header("Location:employee_access.php");
     exit();
 }
 
