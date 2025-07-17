@@ -119,7 +119,6 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
       box-shadow: 0 6px 20px rgba(0,0,0,0.15);
       text-align: center;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      border: 1px solid #e0e0e0;
     }
     .card:hover {
       transform: translateY(-5px);
@@ -260,7 +259,15 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
   <div class="card-grid">
     <?php foreach ($employee as $emp): ?>
       <div class="card">
-        <img src="placeholder-profile.svg" alt="Profile Picture">
+        <?php
+          $profilePic = $emp['Profile_pic'] ?? '';
+          if (!empty($profilePic) && file_exists($profilePic)) {
+              $imgSrc = htmlspecialchars($profilePic);
+          } else {
+              $imgSrc = 'placeholder-profile.svg';
+          }
+        ?>
+        <img src="<?= $imgSrc ?>" alt="Profile Picture">
         <h3><?= htmlspecialchars($emp['name'] ?? 'N/A') ?> (<?= $emp['age'] ?? 'N/A' ?>)</h3>
         <p><strong>Skill:</strong> <?= htmlspecialchars($emp['skills'] ?? 'N/A') ?></p>
         <p><strong>Country:</strong> <?= htmlspecialchars($emp['country'] ?? 'N/A') ?></p>
