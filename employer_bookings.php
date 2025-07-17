@@ -7,6 +7,16 @@ if (!isset($_SESSION['employer_id'])) {
 
 require_once('db_connect.php');
 
+$message = '';
+
+// Handle unbook action
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'unbook') {
+    $booking_id = $_POST['booking_id'];
+    $stmt = $conn->prepare("UPDATE bookings SET Status = 'cancelled' WHERE ID = ? AND Homeowner_ID = ?");
+    $stmt->execute([$booking_id, $_SESSION['employer_id']]);
+    $message = "<div style='background: #fff3cd; color: #856404; padding: 10px; border-radius: 5px; margin-bottom: 20px;'>🔄 Booking cancelled successfully!</div>";
+}
+
 // Fetch employer's bookings
 $stmt = $conn->prepare("
     SELECT b.*, emp.Name AS employee_name 
@@ -94,6 +104,22 @@ $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
             visibility: visible !important;
             opacity: 1 !important;
         }
+        
+        .unbook-btn {
+            background-color: #d32f2f;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .unbook-btn:hover {
+            background-color: #b71c1c;
+            transform: translateY(-1px);
+        }
     </style>
 </head>
 <body>
@@ -116,6 +142,8 @@ $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="container">
     <h1>My Bookings</h1>
     
+    <?= $message ?>
+    
     <?php if (count($bookings) == 0): ?>
         <div class="no-bookings">
             <h3>No bookings yet</h3>
@@ -133,6 +161,7 @@ $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <th>Time</th>
                         <th>Status</th>
                         <th>Payment</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -152,6 +181,23 @@ $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <span style="color:red;">Cancelled</span>
                             <?php else: ?>
                                 <span style="color:gray;">Pending</span>
+                            <?php endif; ?>
+                        </td>
+                        <td>
+                            <?php if ($b['Status'] === 'pending'): ?>
+                                <form method="POST" style="display:inline;">
+                                    <input type="hidden" name="booking_id" value="<?= $b['ID'] ?>">
+                                    <button type="submit" name="action" value="unbook" class="unbook-btn" 
+                                            onclick="return confirm('Are you sure you want to cancel this booking?')">
+                                        Cancel
+                                    </button>
+                                </form>
+                            <?php elseif ($b['Status'] === 'cancelled'): ?>
+                                <a href="employer_booking.php?eid=<?= $b['Employee_ID'] ?>" class="btn" style="font-size:12px; padding:6px 12px;">
+                                    Rebook
+                                </a>
+                            <?php else: ?>
+                                <span style="color:gray;">-</span>
                             <?php endif; ?>
                         </td>
                     </tr>

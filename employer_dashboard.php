@@ -6,6 +6,16 @@ if (!isset($_SESSION['employer_id'])) {
 }
 require_once('db_connect.php');
 
+$message = '';
+
+// Handle unbook action from dashboard
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'unbook') {
+    $booking_id = $_POST['booking_id'];
+    $stmt = $conn->prepare("UPDATE bookings SET Status = 'cancelled' WHERE ID = ? AND Homeowner_ID = ?");
+    $stmt->execute([$booking_id, $_SESSION['employer_id']]);
+    $message = "<div style='background: #fff3cd; color: #856404; padding: 10px; border-radius: 5px; margin-bottom: 20px; text-align: center;'>🔄 Booking cancelled successfully!</div>";
+}
+
 // Fetch employees with filters
 $filter_sql = "SELECT * FROM employees WHERE 1";
 $params = [];
@@ -28,6 +38,39 @@ if (!empty($_GET['gender'])) {
 }
 if (!empty($_GET['residence'])) {
     $filter_sql .= " AND residence_type = ?";
+    $params[] = $_GET['residence'];
+}
+
+// Modify query to include booking status
+$filter_sql = "SELECT e.*, 
+               b.Status as booking_status,
+               b.ID as booking_id
+               FROM employees e 
+               LEFT JOIN bookings b ON e.ID = b.Employee_ID AND b.Homeowner_ID = ? AND b.Status = 'pending'
+               WHERE 1";
+
+// Add the employer ID as the first parameter
+$params = [$_SESSION['employer_id']];
+
+// Re-add the filter conditions
+if (!empty($_GET['skill'])) {
+    $filter_sql .= " AND e.Skills LIKE ?";
+    $params[] = '%' . $_GET['skill'] . '%';
+}
+if (!empty($_GET['country'])) {
+    $filter_sql .= " AND e.country LIKE ?";
+    $params[] = '%' . $_GET['country'] . '%';
+}
+if (!empty($_GET['county_province'])) {
+    $filter_sql .= " AND e.county_province LIKE ?";
+    $params[] = '%' . $_GET['county_province'] . '%';
+}
+if (!empty($_GET['gender'])) {
+    $filter_sql .= " AND e.Gender = ?";
+    $params[] = $_GET['gender'];
+}
+if (!empty($_GET['residence'])) {
+    $filter_sql .= " AND e.residence_type = ?";
     $params[] = $_GET['residence'];
 }
 
@@ -383,6 +426,28 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
       text-decoration: none;
     }
     
+    /* Disabled button styling */
+    .card .btn-disabled {
+      margin-top: 20px;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      background: #6c757d;
+      border: none;
+      border-radius: 25px;
+      color: white;
+      display: inline-block;
+      font-family: 'Segoe UI', sans-serif;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+    
+    .card .btn-disabled:hover {
+      background: #6c757d;
+      transform: none;
+      box-shadow: none;
+    }
+    
     /* User greeting */
     .user-greeting {
       color: white;
@@ -443,6 +508,8 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
 <div class="form-container">
   <h2>Find a Homewoker</h2>
+  
+  <?= $message ?>
 
   <form method="GET" class="filter-form">
     <input type="text" name="skill" placeholder="Job Title (e.g. Driver)">
@@ -485,7 +552,21 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
         <p><strong>County/Province:</strong> <?= htmlspecialchars($emp['county_province'] ?? 'N/A') ?></p>
         <p><strong>Language:</strong> <?= htmlspecialchars($emp['language'] ?? 'N/A') ?></p>
         <p><strong>Education:</strong> <?= htmlspecialchars($emp['education_level'] ?? 'N/A') ?></p>
-        <a href="employer_booking.php?eid=<?= $emp['id'] ?? '' ?>" class="btn">Book Now</a>
+        <?php if ($emp['booking_status'] === 'pending'): ?>
+          <div style="margin-top: 20px;">
+            <p style="color: #00695c; font-weight: bold; margin-bottom: 10px;">✅ Booked</p>
+            <form method="POST" style="display:inline;">
+              <input type="hidden" name="booking_id" value="<?= $emp['booking_id'] ?>">
+              <button type="submit" name="action" value="unbook" 
+                      onclick="return confirm('Are you sure you want to cancel this booking?')"
+                      style="background-color: #d32f2f; color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.9rem; transition: all 0.3s ease;">
+                Cancel Booking
+              </button>
+            </form>
+          </div>
+        <?php else: ?>
+          <a href="employer_booking.php?eid=<?= $emp['id'] ?? '' ?>" class="btn">Book Now</a>
+        <?php endif; ?>
       </div>
     <?php endforeach; ?>
   </div>
