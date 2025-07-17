@@ -40,34 +40,138 @@ $applications = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My Applications - Houselp Connect</title>
+    <title>My Applications - Homeworker Connect</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        /* Completely override body styling */
         body {
+            border: none !important;
+            outline: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            min-height: 100vh !important;
+            display: flex !important;
+            flex-direction: column !important;
+            background-color: #f8f9fa !important;
+            font-family: 'Segoe UI', sans-serif !important;
+        }
+        
+        html {
+            border: none !important;
+            outline: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        
+        /* Remove any viewport or container borders */
+        * {
+            box-sizing: border-box;
+        }
+        
+        /* Override main CSS borders */
+        .container, main, section, div {
+            border: none !important;
+        }
+        
+        /* Remove header borders */
+        header {
+            border: none !important;
+        }
+        
+        /* Remove footer borders */
+        footer {
+            border: none !important;
+        }
+        
+        /* Add essential header and navigation styling */
+        header {
+            background-color: #0A4A70 !important;
+            color: white !important;
+            padding: 15px 20px !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            flex-wrap: wrap !important;
+            position: relative !important;
+        }
+        
+        .logo {
+            font-size: 1.5rem !important;
+            font-weight: bold !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+        
+        .main-nav {
+            margin-left: auto !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(90deg, #197b88 0%, #1ec8c8 100%) !important;
+            color: #fff !important;
+            padding: 10px 22px !important;
+            border-radius: 8px !important;
+            font-weight: 600 !important;
+            text-decoration: none !important;
+            margin: 0 6px !important;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s, border 0.2s !important;
+            box-shadow: 0 2px 8px rgba(24,123,136,0.10) !important;
+            border: 2px solid #197b88 !important;
+            display: inline-block !important;
+            cursor: pointer !important;
+        }
+        
+        .nav-btn:hover, .nav-btn:focus {
+            background: linear-gradient(90deg, #17606e 0%, #1ec8c8 100%) !important;
+            color: #ffd700 !important;
+            box-shadow: 0 4px 16px rgba(24,123,136,0.16) !important;
+            outline: none !important;
+            border-color: #125a66 !important;
+        }
+        
+        /* Footer styling */
+        footer {
+            background-color: #0A4A70 !important;
+            color: white !important;
+            text-align: center !important;
+            padding: 15px 0 !important;
+            margin-top: auto !important;
+        }
+        
+        /* User greeting */
+        .user-greeting {
+            color: white;
+            font-weight: 500;
+            padding: 10px 16px;
             font-family: 'Segoe UI', sans-serif;
-            background: #f5f5f5;
+        }
+        
+        /* Profile image styling */
+        .profile-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+            margin-left: 15px;
+        }
+        
+        /* Ensure navigation buttons remain visible and functional */
+        .nav-links {
+            display: flex !important;
+            list-style: none !important;
+            gap: 20px;
+            align-items: center;
             margin: 0;
             padding: 0;
         }
         
-        header {
-            background: rgb(24, 123, 136);
-            color: white;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            font-size: 1.5em;
-            font-weight: bold;
-        }
-        
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 20px;
+        .nav-btn {
+            display: inline-block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
         }
         
         .container {
@@ -262,16 +366,48 @@ $applications = $stmt->fetchAll(PDO::FETCH_ASSOC);
             margin-top: 10px;
             font-size: 14px;
         }
+        
+        /* Fix for mobile responsiveness */
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                width: 100%;
+                gap: 10px;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                text-align: center;
+                margin: 0;
+                padding: 12px 20px;
+            }
+            
+            .stats {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .applications-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo">Houselp Connect</div>
-    <nav>
-        <a href="employee_dashboard.php">Dashboard</a>
-        <a href="browse_jobs.php">Browse Jobs</a>
-        <a href="employee_logout.php">Logout</a>
+    <div class="logo">
+        <img src="bghse.png" alt="Logo" style="height: 40px;">
+    </div>
+    <nav class="main-nav">
+        <ul class="nav-links">
+            <li><span class="user-greeting">Hello, <?= htmlspecialchars($_SESSION['employee_name']) ?></span></li>
+            <li><a class="nav-btn" href="employee_dashboard.php">Dashboard</a></li>
+            <li><a class="nav-btn" href="browse_jobs.php">Browse Jobs</a></li>
+            <li><a class="nav-btn" href="employee_profile.php">Update Profile</a></li>
+            <li><a class="nav-btn" href="employee_logout.php">Logout</a></li>
+        </ul>
     </nav>
 </header>
 
@@ -359,6 +495,10 @@ $applications = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     <?php endif; ?>
 </div>
+
+<footer>
+    <p>&copy; <?= date("Y") ?> Homeworker Connect. All rights reserved.</p>
+</footer>
 
 </body>
 </html> 

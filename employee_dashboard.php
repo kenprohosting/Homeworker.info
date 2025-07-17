@@ -42,103 +42,277 @@ $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Employee Dashboard</title>
+    <title>Employee Dashboard - Homeworker Connect</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        /* Completely override body styling */
         body {
-            font-family: 'Segoe UI', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f5f5f5;
+            border: none !important;
+            outline: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            min-height: 100vh !important;
+            display: flex !important;
+            flex-direction: column !important;
+            background-color: #f8f9fa !important;
+            font-family: 'Segoe UI', sans-serif !important;
         }
-
+        
+        html {
+            border: none !important;
+            outline: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        
+        /* Remove any viewport or container borders */
+        * {
+            box-sizing: border-box;
+        }
+        
+        /* Override main CSS borders */
+        .container, main, section, div {
+            border: none !important;
+        }
+        
+        /* Remove header borders */
         header {
-            background: rgb(24, 123, 136);
+            border: none !important;
+        }
+        
+        /* Remove footer borders */
+        footer {
+            border: none !important;
+        }
+        
+        /* Add essential header and navigation styling */
+        header {
+            background-color: #0A4A70 !important;
+            color: white !important;
+            padding: 15px 20px !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            flex-wrap: wrap !important;
+            position: relative !important;
+        }
+        
+        .logo {
+            font-size: 1.5rem !important;
+            font-weight: bold !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+        
+        .main-nav {
+            margin-left: auto !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(90deg, #197b88 0%, #1ec8c8 100%) !important;
+            color: #fff !important;
+            padding: 10px 22px !important;
+            border-radius: 8px !important;
+            font-weight: 600 !important;
+            text-decoration: none !important;
+            margin: 0 6px !important;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s, border 0.2s !important;
+            box-shadow: 0 2px 8px rgba(24,123,136,0.10) !important;
+            border: 2px solid #197b88 !important;
+            display: inline-block !important;
+            cursor: pointer !important;
+        }
+        
+        .nav-btn:hover, .nav-btn:focus {
+            background: linear-gradient(90deg, #17606e 0%, #1ec8c8 100%) !important;
+            color: #ffd700 !important;
+            box-shadow: 0 4px 16px rgba(24,123,136,0.16) !important;
+            outline: none !important;
+            border-color: #125a66 !important;
+        }
+        
+        /* Footer styling */
+        footer {
+            background-color: #0A4A70 !important;
+            color: white !important;
+            text-align: center !important;
+            padding: 15px 0 !important;
+            margin-top: auto !important;
+        }
+        
+        /* Main content area styling */
+        .form-container { 
+            padding: 30px;
+            width: 100vw;
+            max-width: none;
+            margin-left: calc(50% - 50vw);
+            box-sizing: border-box;
+            background: #f8f9fa;
+            border: none !important;
+            flex: 1;
+        }
+        
+        /* Page title styling */
+        h2 {
+            color: #197b88;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        /* User greeting */
+        .user-greeting {
             color: white;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            font-weight: 500;
+            padding: 10px 16px;
+            font-family: 'Segoe UI', sans-serif;
         }
-
-        h1 {
-            margin: 0;
-        }
-
-        .top-links {
-            display: flex;
-            align-items: center;
-        }
-
-        .top-links a {
-            color: white;
-            margin-left: 20px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
+        
+        /* Profile image styling */
         .profile-img {
             width: 45px;
             height: 45px;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid white;
-            margin-left: 20px;
+            margin-left: 15px;
         }
-
-        .container {
-            padding: 30px;
+        
+        /* Ensure navigation buttons remain visible and functional */
+        .nav-links {
+            display: flex !important;
+            list-style: none !important;
+            gap: 20px;
+            align-items: center;
+            margin: 0;
+            padding: 0;
         }
-
+        
+        .nav-btn {
+            display: inline-block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        /* Bookings table styling */
+        .bookings-table {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        
         table {
             width: 100%;
             border-collapse: collapse;
-            background: white;
             margin-top: 20px;
         }
-
+        
         th, td {
-            border: 1px solid #ccc;
             padding: 12px;
+            border: 1px solid #ddd;
             text-align: center;
         }
-
+        
         th {
-            background: #e0e0e0;
+            background-color: #f3f3f3;
+            font-weight: bold;
+            color: #333;
         }
-
+        
+        .no-bookings {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        /* Action buttons styling */
         .btn {
-            padding: 6px 12px;
+            padding: 8px 16px;
             text-decoration: none;
             border-radius: 5px;
-            font-weight: bold;
+            font-weight: 600;
+            font-size: 12px;
+            margin: 2px;
+            display: inline-block;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
         }
-
+        
         .btn.confirm {
-            background: #4caf50;
+            background: linear-gradient(90deg, #4caf50 0%, #66bb6a 100%);
             color: white;
         }
-
+        
+        .btn.confirm:hover {
+            background: linear-gradient(90deg, #388e3c 0%, #4caf50 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(76,175,80,0.3);
+        }
+        
         .btn.cancel {
-            background: #e53935;
+            background: linear-gradient(90deg, #d32f2f 0%, #f44336 100%);
             color: white;
         }
-
+        
+        .btn.cancel:hover {
+            background: linear-gradient(90deg, #b71c1c 0%, #d32f2f 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(211,47,47,0.3);
+        }
+        
         .btn.disabled {
-            background: gray;
+            background: #6c757d;
             color: white;
             pointer-events: none;
+            opacity: 0.7;
         }
-
+        
+        /* Status styling */
+        .status-pending {
+            color: #ff9800;
+            font-weight: bold;
+        }
+        
+        .status-confirmed {
+            color: #4caf50;
+            font-weight: bold;
+        }
+        
+        .status-cancelled {
+            color: #f44336;
+            font-weight: bold;
+        }
+        
+        .status-completed {
+            color: #2196f3;
+            font-weight: bold;
+        }
+        
+        /* Fix for mobile responsiveness */
         @media (max-width: 768px) {
-            .top-links {
+            .nav-links {
                 flex-direction: column;
-                align-items: flex-end;
+                width: 100%;
+                gap: 10px;
             }
-
-            .top-links a {
-                margin: 5px 0;
+            
+            .nav-btn {
+                width: 100%;
+                text-align: center;
+                margin: 0;
+                padding: 12px 20px;
             }
-
+            
             .profile-img {
                 margin-left: 0;
                 margin-top: 10px;
@@ -149,56 +323,82 @@ $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <body>
 
 <header>
-    <h1>Welcome, <?= htmlspecialchars($_SESSION['employee_name']) ?></h1>
-    <div class="top-links">
-        <button class="nav-btn" onclick="window.history.back()">← Back</button>
-        <a href="browse_jobs.php">Browse Jobs</a>
-        <a href="my_applications.php">My Applications</a>
-        <a href="employee_profile.php">Update Profile</a>
-        <a href="employee_logout.php">Logout</a>
-        <img src="<?= htmlspecialchars($profile_pic_path) ?>" class="profile-img" alt="Profile Pic">
+    <div class="logo">
+        <img src="bghse.png" alt="Logo" style="height: 40px;">
     </div>
+    <nav class="main-nav">
+        <ul class="nav-links">
+            <li><span class="user-greeting">Hello, <?= htmlspecialchars($_SESSION['employee_name']) ?></span></li>
+            <li><a class="nav-btn" href="browse_jobs.php">Browse Jobs</a></li>
+            <li><a class="nav-btn" href="my_applications.php">My Applications</a></li>
+            <li><a class="nav-btn" href="employee_profile.php">Update Profile</a></li>
+            <li><a class="nav-btn" href="employee_logout.php">Logout</a></li>
+            <li><img src="<?= htmlspecialchars($profile_pic_path) ?>" class="profile-img" alt="Profile Pic"></li>
+        </ul>
+    </nav>
 </header>
 
-<div class="container">
+<div class="form-container">
     <h2>My Bookings</h2>
 
     <?php if (empty($bookings)): ?>
-        <p>You have no bookings yet.</p>
+        <div class="no-bookings">
+            <h3>No bookings yet</h3>
+            <p>You have no bookings at the moment. Start by browsing available jobs and applying.</p>
+            <a href="browse_jobs.php" class="nav-btn">Browse Jobs</a>
+        </div>
     <?php else: ?>
-        <table>
-            <thead>
-                <tr>
-                    <th>Employer</th>
-                    <th>Service</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($bookings as $b): ?>
-                <tr>
-                    <td><?= htmlspecialchars($b['employer_name']) ?></td>
-                    <td><?= htmlspecialchars($b['Service_type']) ?></td>
-                    <td><?= htmlspecialchars($b['Booking_date']) ?></td>
-                    <td><?= htmlspecialchars($b['Start_time']) ?> - <?= htmlspecialchars($b['End_time']) ?></td>
-                    <td><?= htmlspecialchars($b['Status']) ?></td>
-                    <td>
-                        <?php if ($b['Status'] === 'pending'): ?>
-                            <a href="?action=confirm&bid=<?= $b['ID'] ?>" class="btn confirm">Confirm</a>
-                            <a href="?action=cancel&bid=<?= $b['ID'] ?>" class="btn cancel">Cancel</a>
-                        <?php else: ?>
-                            <span class="btn disabled">No Action</span>
-                        <?php endif; ?>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+        <div class="bookings-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Employer</th>
+                        <th>Service</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($bookings as $b): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($b['employer_name']) ?></td>
+                        <td><?= htmlspecialchars($b['Service_type']) ?></td>
+                        <td><?= htmlspecialchars($b['Booking_date']) ?></td>
+                        <td><?= htmlspecialchars($b['Start_time']) ?> - <?= htmlspecialchars($b['End_time']) ?></td>
+                        <td>
+                            <span class="status-<?= strtolower($b['Status']) ?>">
+                                <?= htmlspecialchars($b['Status']) ?>
+                            </span>
+                        </td>
+                        <td>
+                            <?php if ($b['Status'] === 'pending'): ?>
+                                <a href="?action=confirm&bid=<?= $b['ID'] ?>" 
+                                   class="btn confirm"
+                                   onclick="return confirm('Are you sure you want to confirm this booking?')">
+                                    Confirm
+                                </a>
+                                <a href="?action=cancel&bid=<?= $b['ID'] ?>" 
+                                   class="btn cancel"
+                                   onclick="return confirm('Are you sure you want to cancel this booking?')">
+                                    Cancel
+                                </a>
+                            <?php else: ?>
+                                <span class="btn disabled">No Action</span>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     <?php endif; ?>
 </div>
+
+<footer>
+    <p>&copy; <?= date("Y") ?> Homeworker Connect. All rights reserved.</p>
+</footer>
 
 </body>
 </html>
