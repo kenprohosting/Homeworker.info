@@ -62,17 +62,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   /* Removed .login-header and .logo-centered styles */
   .form-container {
     max-width: 400px;
-    margin: 60px auto 0 auto;
+    margin: 40px auto 0 auto;
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-    padding: 32px 28px 0 28px;
+    border: 2px solid #111;
+    padding: 18px 16px 0 16px;
   }
   .form-container > p:last-of-type {
-    margin-bottom: 0.5em !important;
+    margin-bottom: 0 !important;
   }
-  .form-container > *:not(:last-child) {
-    margin-bottom: 0;
+  .form-container > *:last-child {
+    margin-bottom: 0 !important;
   }
   .form-container h2 {
     text-align: center;

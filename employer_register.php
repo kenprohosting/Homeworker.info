@@ -61,7 +61,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       .country-dropdown li:hover {
         background: #f0f0f0;
       }
-      .form-container { position: relative; }
+      .form-container {
+        max-width: 400px;
+        margin: 40px auto 0 auto;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        border: 2px solid #111;
+        padding: 18px 16px 0 16px;
+        padding-bottom: 0 !important;
+      }
+      .form-container > *:last-child,
+      .form-container p:last-of-type {
+        margin-bottom: 0 !important;
+        margin-top: 0 !important;
+        padding-bottom: 0 !important;
+      }
+      .form-container p {
+        margin-bottom: 0;
+      }
     </style>
     <title>Employer Registration - Homeworker Connect</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -69,21 +87,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
 
-<header>
-    <div class="logo">
-        <img src="bghse.png" alt="Logo" style="height: 40px;">
-    </div>
-    <nav class="main-nav">
-        <ul class="nav-links">
-            <li><a class="nav-btn" href="index.php">Home</a></li>
-            <li><a class="nav-btn" href="about.php">About</a></li>
-            <li><a class="nav-btn" href="contact.php">Contact Us</a></li>
-            <li><a class="nav-btn" href="faq.php">FAQ</a></li>
-        </ul>
-    </nav>
-</header>
+<div style="width:100%;text-align:center;margin:0;padding:0;">
+    <img src="bghse.png" alt="Logo" style="height:48px;display:inline-block;margin:0 auto 0 auto;padding-top:8px;">
+</div>
+<div style="max-width:400px;margin:0 auto 0 auto;">
+</div>
 
 <div class="form-container">
+    <a href="index.php" style="display:inline-block;margin-bottom:10px;color:#197b88;text-decoration:none;font-weight:500;">&larr; Back</a>
     <h2>Register as Employer</h2>
 
     <?php

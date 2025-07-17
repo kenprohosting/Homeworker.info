@@ -103,14 +103,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-family: 'Segoe UI', Arial, sans-serif;
         }
         .form-container {
-            max-width: 500px;
-            margin: 40px auto 30px auto;
+            max-width: 400px;
+            margin: 40px auto 0 auto;
             background: #fff;
             border-radius: 12px;
-            /* Remove all box-shadow and border */
-            box-shadow: none !important;
-            border: none !important;
-            padding: 32px 28px 24px 28px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            border: 2px solid #111;
+            padding: 18px 16px 0 16px;
+            padding-bottom: 0 !important;
+        }
+        .form-container > *:last-child,
+        .form-container p:last-of-type {
+            margin-bottom: 0 !important;
+            margin-top: 0 !important;
+            padding-bottom: 0 !important;
+        }
+        .form-container p {
+            margin-bottom: 0;
         }
         .form-container h2 {
             text-align: center;

@@ -44,16 +44,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       body { background: #f4f8fb; font-family: 'Segoe UI', Arial, sans-serif; }
       .form-container {
         max-width: 400px;
-        margin: 60px auto 0 auto;
+        margin: 40px auto 0 auto;
         background: #fff;
         border-radius: 12px;
         box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-        padding: 32px 28px 0 28px;
+        border: 2.5px solid #111 !important;
+        padding: 18px 16px 0 16px;
+        padding-bottom: 0 !important;
       }
-      .form-container > p:last-of-type {
-        margin-bottom: 0.5em !important;
+      .form-container > *:last-child,
+      .form-container p:last-of-type {
+        margin-bottom: 0 !important;
+        margin-top: 0 !important;
+        padding-bottom: 0 !important;
       }
-      .form-container > *:not(:last-child) {
+      .form-container p {
         margin-bottom: 0;
       }
       .form-container h2 {
@@ -64,6 +69,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       .form-container form {
         display: grid;
         gap: 18px;
+      }
+      .form-container p:last-of-type {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+      }
+      .form-container p {
+        margin-bottom: 0.5em;
       }
       .form-container input[type="email"],
       .form-container input[type="password"] {
