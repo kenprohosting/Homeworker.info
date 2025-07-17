@@ -27,23 +27,25 @@ $isLoggedIn = isset($_SESSION['employer_name']);
     </ul>
   </nav>
 </header>
-<div class="contact-container">
-  <div class="contact-title">Contact Us</div>
-  <div class="contact-details">
-    <div>Email: <a href="mailto:support@homeworkerconnect.co.ke">support@homeworker.info</a></div>
-    <div>Phone: +254 700 000 000</div>
-    <div>Address: Nairobi, Kenya</div>
+<main>
+  <div class="faq-container">
+    <div class="faq-title">Contact Us</div>
+    <div class="contact-details">
+      <div>Email: <a href="mailto:support@homeworkerconnect.co.ke">support@homeworker.info</a></div>
+      <div>Phone: +254 700 000 000</div>
+      <div>Address: Nairobi, Kenya</div>
+    </div>
+    <form class="contact-form" method="post" action="#">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+      <label for="message">Message</label>
+      <textarea id="message" name="message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
   </div>
-  <form class="contact-form" method="post" action="#">
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" required>
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" required>
-    <label for="message">Message</label>
-    <textarea id="message" name="message" required></textarea>
-    <button type="submit">Send Message</button>
-  </form>
-</div>
+</main>
 <footer>
   <p>&copy; <?= date("Y") ?> Homeworker Connect. All rights reserved.</p>
 </footer>
