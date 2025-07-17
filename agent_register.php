@@ -96,6 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="form-container">
         <a href="index.php" style="display:inline-block;margin-bottom:10px;color:#197b88;text-decoration:none;font-weight:500;">&larr; Back</a>
         <h2>Agent Registration</h2>
+        <hr style="border: 1px solid black;">
         <p style="text-align: center; color: #666; margin-bottom: 20px;">
             <strong>Authorized Agents Only</strong><br>
             You must have a valid registration code from the company to register as an agent.
@@ -126,39 +127,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </p>
     </div>
 
-    <!-- Duplicate .form-container removed -->
 
-        <form method="POST" action="">
-            <input type="text" name="registration_code" placeholder="Registration Code" value="<?= isset($_POST['registration_code']) ? htmlspecialchars($_POST['registration_code']) : '' ?>" required>
-            <small style="color: #666; display: block; margin-bottom: 15px;">Enter the registration code provided by the company</small>
-            
-            <input type="number" name="agent_id" placeholder="Agent ID" value="<?= isset($_POST['agent_id']) ? htmlspecialchars($_POST['agent_id']) : '' ?>" required>
-            <small style="color: #666; display: block; margin-bottom: 15px;">Enter the specific agent ID assigned to you</small>
-            
-            <input type="text" name="name" placeholder="Full Name" value="<?= isset($_POST['name']) ? htmlspecialchars($_POST['name']) : '' ?>" required>
-            
-            <input type="tel" name="phone" placeholder="Phone Number" value="<?= isset($_POST['phone']) ? htmlspecialchars($_POST['phone']) : '' ?>" required>
-            
-            <input type="email" name="email" placeholder="Email Address" value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '' ?>" required>
-            
-            <input type="password" name="password" placeholder="Password" required>
-            
-            <input type="password" name="confirm_password" placeholder="Confirm Password" required>
-            
-            <button type="submit" class="btn">Register as Agent</button>
-        </form>
-        
-        <p style="text-align: center; margin-top: 20px;">
-            Already have an account? <a href="agent_login.php">Login here</a>
-        </p>
-        
-        <p style="text-align: center; margin-top: 20px; color: #666; font-size: 0.9rem;">
-            Need to become an agent? Contact the company at <strong>admin@househelp.info</strong>
-        </p>
-    </div>
 
     <footer>
         <p>&copy; <?= date("Y") ?> Homeworker Connect. All rights reserved.</p>
     </footer>
 </body>
-</html> 
+</html>
