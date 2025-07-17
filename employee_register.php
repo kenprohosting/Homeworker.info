@@ -320,7 +320,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password" required>
+        <div style="position:relative;">
+          <input type="password" name="password" id="password" placeholder="Password" required style="padding-right:36px;">
+          <span onclick="togglePassword('password', this)" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);cursor:pointer;font-size:1.2em;">&#128065;</span>
+        </div>
             </div>
             <div class="form-group">
                 <label for="residence_type">Residence Type</label>
@@ -347,6 +350,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <footer>
         <p>&copy; <?= date('Y') ?> Homeworker Connect. All rights reserved.</p>
     </footer>
+<script>
+function togglePassword(id, el) {
+  var input = document.getElementById(id);
+  if (input.type === "password") {
+    input.type = "text";
+    el.innerHTML = "&#128064;";
+  } else {
+    input.type = "password";
+    el.innerHTML = "&#128065;";
+  }
+}
+</script>
     <style>
         .form-card {
             max-width: 500px;

@@ -123,7 +123,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </select>
         <input type="text" name="address" placeholder="Address (e.g. 123 West Street)">
         <input type="email" name="email" placeholder="Email" required>
-        <input type="password" name="password" placeholder="Password" required>
+        <div style="position:relative;">
+          <input type="password" name="password" id="password" placeholder="Password" required style="padding-right:36px;">
+          <span onclick="togglePassword('password', this)" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);cursor:pointer;font-size:1.2em;">&#128065;</span>
+        </div>
         <button type="submit" class="btn">Register</button>
     </form>
 
@@ -368,6 +371,18 @@ countryInput.addEventListener("input", function () {
 
 <footer>
   <p>&copy; <?= date("Y") ?> Homeworker Connect. All rights reserved.</p>
+<script>
+function togglePassword(id, el) {
+  var input = document.getElementById(id);
+  if (input.type === "password") {
+    input.type = "text";
+    el.innerHTML = "&#128064;";
+  } else {
+    input.type = "password";
+    el.innerHTML = "&#128065;";
+  }
+}
+</script>
 </footer>
 
 </body>

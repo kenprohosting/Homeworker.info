@@ -45,7 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <?php if ($errors) foreach ($errors as $e) echo "<p class='error'>$e</p>"; ?>
         <form method="POST" action="employee_login.php">
             <input type="email" name="email" placeholder="Email" value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '' ?>" required>
-            <input type="password" name="password" placeholder="Password" required>
+            <div style="position:relative;">
+              <input type="password" name="password" id="password" placeholder="Password" required style="padding-right:36px;">
+              <span onclick="togglePassword('password', this)" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);cursor:pointer;font-size:1.2em;">
+                &#128065;
+              </span>
+            </div>
             <button type="submit" class="btn">Login</button>
         </form>
         <p style="text-align:center; margin-top:10px;">
@@ -54,7 +59,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
     <footer>
         <p>&copy; <?= date("Y") ?> Homeworker Connect. All rights reserved.</p>
-    </footer>
+<script>
+function togglePassword(id, el) {
+  var input = document.getElementById(id);
+  if (input.type === "password") {
+    input.type = "text";
+    el.innerHTML = "&#128064;";
+  } else {
+    input.type = "password";
+    el.innerHTML = "&#128065;";
+  }
+}
+</script>
+</footer>
 </body>
 </html>
 <style>
