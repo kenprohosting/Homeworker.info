@@ -236,8 +236,10 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
   <form method="GET" class="filter-form">
     <input type="text" name="skill" placeholder="Job Title (e.g. Driver)">
-    <input type="text" id="countryInput" name="country" placeholder="Country" autocomplete="off" required>
-    <ul id="countryList" class="country-dropdown"></ul>
+    <div style="position:relative;">
+      <input type="text" id="countryInput" name="country" placeholder="Country" autocomplete="off" required>
+      <ul id="countryList" class="country-dropdown"></ul>
+    </div>
     <input type="text" name="county_province" placeholder="County or Province">
     <select name="gender">
       <option value="">Gender</option>

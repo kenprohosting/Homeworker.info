@@ -222,6 +222,14 @@ header {
   cursor: pointer;
 }
 
+/* Make the search button same size as Book Now button */
+.form-container .search-btn {
+  width: auto;
+  padding: 7px 18px;
+  font-size: 0.95rem;
+  border-radius: 20px;
+}
+
 .form-container .error {
   color: red;
   margin-bottom: 10px;

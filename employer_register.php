@@ -39,6 +39,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+      .country-dropdown {
+        position: absolute;
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        max-height: 180px;
+        overflow-y: auto;
+        width: 100%;
+        z-index: 9999;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      }
+      .country-dropdown li {
+        padding: 8px 12px;
+        cursor: pointer;
+      }
+      .country-dropdown li:hover {
+        background: #f0f0f0;
+      }
+      .form-container { position: relative; }
+    </style>
     <title>Employer Registration - Homeworker Connect</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
@@ -69,8 +93,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <form method="POST">
         <input type="text" name="name" placeholder="Full Name" required>
-        <input type="text" id="countryInput" name="country" placeholder="Country" autocomplete="off" required>
-        <ul id="countryList" class="country-dropdown"></ul>
+        <div style="position:relative;">
+          <input type="text" id="countryInput" name="country" placeholder="Country" autocomplete="off" required>
+          <ul id="countryList" class="country-dropdown"></ul>
+        </div>
         <input type="text" name="location" placeholder="county or province" required>
         <select name="residence" required>
             <option value="">Residence Type</option>
