@@ -34,7 +34,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
 <main>
   <div class="faq-container">
     <div class="faq-title">About Us</div>
-    <p><strong>Homeworker Connect</strong> is a Kenyan-based platform created to bridge the gap between families seeking trusted domestic support and hardworking individuals in search of verified household employment. We aim to bring dignity, professionalism, and convenience to domestic work.</p>
+    <p><strong>Homeworker Connect</strong> is a Global platform created to bridge the gap between families seeking trusted domestic support and hardworking individuals in search of verified household employment. We aim to bring dignity, professionalism, and convenience to domestic work.</p>
 
     <div class="faq-title" style="font-size:1.5rem; margin-top:32px;">Our Mission</div>
     <p>To connect employers with verified and reliable househelps, while empowering domestic workers with opportunities, visibility, and safety through a transparent platform.</p>
