@@ -52,9 +52,184 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 <head>
   <title>Employer Dashboard - Homeworker Connect</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
+  <!-- Main CSS disabled to remove black borders - essential styles added inline -->
   <style>
-    /* Force full width for the dashboard content */
+    /* Completely override body styling */
+    body {
+      border: none !important;
+      outline: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      min-height: 100vh !important;
+      display: flex !important;
+      flex-direction: column !important;
+      background-color: #f8f9fa !important;
+    }
+    
+    html {
+      border: none !important;
+      outline: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    
+    /* Remove any viewport or container borders */
+    * {
+      box-sizing: border-box;
+    }
+    
+    /* Override main CSS borders */
+    .container, main, section, div {
+      border: none !important;
+    }
+    
+    /* Remove header borders */
+    header {
+      border: none !important;
+    }
+    
+    /* Remove footer borders */
+    footer {
+      border: none !important;
+    }
+    
+    /* Add essential header and navigation styling */
+    header {
+      background-color: #0A4A70 !important;
+      color: white !important;
+      padding: 15px 20px !important;
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      flex-wrap: wrap !important;
+      position: relative !important;
+    }
+    
+    .logo {
+      font-size: 1.5rem !important;
+      font-weight: bold !important;
+      display: flex !important;
+      align-items: center !important;
+    }
+    
+    .main-nav {
+      margin-left: auto !important;
+      display: flex !important;
+      align-items: center !important;
+    }
+    
+    .nav-btn {
+      background: linear-gradient(90deg, #197b88 0%, #1ec8c8 100%) !important;
+      color: #fff !important;
+      padding: 10px 22px !important;
+      border-radius: 8px !important;
+      font-weight: 600 !important;
+      text-decoration: none !important;
+      margin: 0 6px !important;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s, border 0.2s !important;
+      box-shadow: 0 2px 8px rgba(24,123,136,0.10) !important;
+      border: 2px solid #197b88 !important;
+      display: inline-block !important;
+      cursor: pointer !important;
+    }
+    
+    .nav-btn:hover, .nav-btn:focus {
+      background: linear-gradient(90deg, #17606e 0%, #1ec8c8 100%) !important;
+      color: #ffd700 !important;
+      box-shadow: 0 4px 16px rgba(24,123,136,0.16) !important;
+      outline: none !important;
+      border-color: #125a66 !important;
+    }
+    
+    /* Footer styling */
+    footer {
+      background-color: #0A4A70 !important;
+      color: white !important;
+      text-align: center !important;
+      padding: 15px 0 !important;
+      margin-top: auto !important;
+    }
+    
+    /* Force remove any viewport or page borders */
+    html, body {
+      border: 0 !important;
+      outline: 0 !important;
+      box-shadow: none !important;
+    }
+    
+    /* Override any main CSS that might add borders */
+    body::before, body::after {
+      display: none !important;
+    }
+    
+    /* Remove any potential wrapper borders */
+    .wrapper, .page-wrapper, .main-wrapper {
+      border: none !important;
+    }
+    
+    /* Force remove any viewport or page borders */
+    html, body {
+      border: 0 !important;
+      outline: 0 !important;
+      box-shadow: none !important;
+    }
+    
+    /* Override any main CSS that might add borders */
+    body::before, body::after {
+      display: none !important;
+    }
+    
+    /* Remove any potential wrapper borders */
+    .wrapper, .page-wrapper, .main-wrapper {
+      border: none !important;
+    }
+    
+    /* Country dropdown styling */
+    #countryList {
+      list-style: none;
+      background: white;
+      position: absolute;
+      z-index: 999;
+      border: 1px solid #ddd;
+      max-height: 150px;
+      overflow-y: auto;
+      display: none;
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      border-radius: 5px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      top: 100%;
+      left: 0;
+    }
+    #countryList li {
+      padding: 8px 10px;
+      cursor: pointer;
+      border-bottom: 1px solid #f0f0f0;
+      transition: background-color 0.2s;
+    }
+    #countryList li:hover {
+      background: #f0f0f0;
+    }
+    #countryList li:last-child {
+      border-bottom: none;
+    }
+    
+    /* Remove any inherited borders */
+    .form-container * {
+      border: none !important;
+    }
+    
+    /* Restore necessary borders only where needed */
+    .filter-form input, .filter-form select {
+      border: 1px solid #e0e0e0 !important;
+    }
+    
+    .card img {
+      border: none !important;
+    }
+    
+    /* Main content area styling */
     .form-container { 
       padding: 30px;
       width: 100vw;
@@ -62,49 +237,71 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
       margin-left: calc(50% - 50vw);
       box-sizing: border-box;
       background: #f8f9fa;
+      border: none !important;
+      flex: 1;
     }
+    
+    /* Page title styling */
+    h2 {
+      color: #197b88;
+      font-size: 2rem;
+      margin-bottom: 30px;
+      text-align: center;
+      font-weight: 600;
+    }
+    
+    /* Search form styling */
     .filter-form {
       display: flex;
       flex-wrap: nowrap;
-      gap: 15px;
+      gap: 10px;
       align-items: center;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
+      padding: 0;
     }
+    
     .filter-form input, .filter-form select {
-      padding: 10px;
+      padding: 10px 14px;
       border: 1px solid #ddd;
       border-radius: 5px;
-      flex: 0 1 170px;
-      min-width: 140px;
+      flex: 0 1 auto;
+      width: 180px;
       font-size: 14px;
+      outline: none;
+      font-family: 'Segoe UI', sans-serif;
+      height: 40px;
+      box-sizing: border-box;
     }
+    
+    .filter-form input:focus, .filter-form select:focus {
+      border-color: #197b88;
+      box-shadow: 0 0 0 2px rgba(25, 123, 136, 0.1);
+    }
+    
     .filter-form button {
-      padding: 12px 25px;
+      padding: 10px 20px;
       background: linear-gradient(90deg, #197b88 0%, #1ec8c8 100%);
       color: white;
       border: none;
-      border-radius: 25px;
+      border-radius: 5px;
       cursor: pointer;
       font-weight: 600;
-      font-size: 1.1rem;
+      font-size: 14px;
+      height: 40px;
+      width: 100px;
       flex-shrink: 0;
       transition: all 0.3s ease;
+      font-family: 'Segoe UI', sans-serif;
+      box-sizing: border-box;
     }
-    .filter-form .search-btn {
-      padding: 10px 0 !important;
-      font-size: 1.05rem !important;
-      width: 135px !important;
-      min-width: 0 !important;
-      border-radius: 30px !important;
-      flex: none !important;
-      text-align: center;
-      align-self: flex-start;
-    }
+    
     .filter-form button:hover {
       background: linear-gradient(90deg, #17606e 0%, #1ec8c8 100%);
       transform: translateY(-2px);
       box-shadow: 0 5px 15px rgba(24,123,136,0.3);
     }
+    
+    /* Employee cards grid */
     .card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
@@ -112,6 +309,8 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
       margin-top: 30px;
       padding: 0 20px;
     }
+    
+    /* Individual employee card */
     .card {
       background: white;
       padding: 30px;
@@ -119,32 +318,48 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
       box-shadow: 0 6px 20px rgba(0,0,0,0.15);
       text-align: center;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: none;
     }
+    
     .card:hover {
       transform: translateY(-5px);
       box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
+    
+    /* Profile image styling */
     .card img {
       width: 120px;
       height: 120px;
       border-radius: 8px;
       object-fit: cover;
       margin-bottom: 20px;
-      border: 4px solid #197b88;
+      border: none !important;
       box-shadow: 0 4px 15px rgba(24,123,136,0.2);
     }
+    
+    /* Card typography */
     .card h3 {
       font-size: 1.4rem;
       color: #197b88;
       margin-bottom: 15px;
       font-weight: 600;
+      font-family: 'Segoe UI', sans-serif;
     }
+    
     .card p {
       font-size: 1rem;
       margin: 10px 0;
       line-height: 1.5;
       color: #555;
+      font-family: 'Segoe UI', sans-serif;
     }
+    
+    .card p strong {
+      color: #333;
+      font-weight: 600;
+    }
+    
+    /* Book Now button */
     .card .btn {
       margin-top: 20px;
       padding: 12px 25px;
@@ -154,30 +369,26 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
       border: none;
       border-radius: 25px;
       transition: all 0.3s ease;
+      text-decoration: none;
+      color: white;
+      display: inline-block;
+      font-family: 'Segoe UI', sans-serif;
     }
+    
     .card .btn:hover {
       background: linear-gradient(90deg, #17606e 0%, #1ec8c8 100%);
       transform: translateY(-2px);
       box-shadow: 0 5px 15px rgba(24,123,136,0.3);
+      color: white;
+      text-decoration: none;
     }
-    table {
-      width: 100%;
-      margin-top: 20px;
-      border-collapse: collapse;
-      background: white;
-      display: none;
-    }
-    table.show { display: table; }
-    th, td {
-      padding: 12px;
-      border: 1px solid #ccc;
-      text-align: center;
-    }
-    th { background: #eeeeee; }
+    
+    /* User greeting */
     .user-greeting {
       color: white;
       font-weight: 500;
       padding: 10px 16px;
+      font-family: 'Segoe UI', sans-serif;
     }
     
     /* Ensure navigation buttons remain visible and functional */
