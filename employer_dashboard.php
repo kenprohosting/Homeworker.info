@@ -58,11 +58,11 @@ if (!empty($_GET['skill'])) {
     $params[] = '%' . $_GET['skill'] . '%';
 }
 if (!empty($_GET['country'])) {
-    $filter_sql .= " AND e.country LIKE ?";
+    $filter_sql .= " AND e.Country LIKE ?";
     $params[] = '%' . $_GET['country'] . '%';
 }
 if (!empty($_GET['county_province'])) {
-    $filter_sql .= " AND e.county_province LIKE ?";
+    $filter_sql .= " AND e.County_province LIKE ?";
     $params[] = '%' . $_GET['county_province'] . '%';
 }
 if (!empty($_GET['gender'])) {
@@ -70,7 +70,7 @@ if (!empty($_GET['gender'])) {
     $params[] = $_GET['gender'];
 }
 if (!empty($_GET['residence'])) {
-    $filter_sql .= " AND e.residence_type = ?";
+    $filter_sql .= " AND e.Residence_type = ?";
     $params[] = $_GET['residence'];
 }
 
@@ -547,12 +547,12 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
           }
         ?>
         <img src="<?= $imgSrc ?>" alt="Profile Picture">
-        <h3><?= htmlspecialchars($emp['name'] ?? 'N/A') ?> (<?= $emp['age'] ?? 'N/A' ?>)</h3>
-        <p><strong>Job Title:</strong> <?= htmlspecialchars($emp['skills'] ?? 'N/A') ?></p>
-        <p><strong>Country:</strong> <?= htmlspecialchars($emp['country'] ?? 'N/A') ?></p>
-        <p><strong>County/Province:</strong> <?= htmlspecialchars($emp['county_province'] ?? 'N/A') ?></p>
-        <p><strong>Language:</strong> <?= htmlspecialchars($emp['language'] ?? 'N/A') ?></p>
-        <p><strong>Education:</strong> <?= htmlspecialchars($emp['education_level'] ?? 'N/A') ?></p>
+        <h3><?= htmlspecialchars($emp['Name'] ?? 'N/A') ?> (<?= $emp['Age'] ?? 'N/A' ?>)</h3>
+        <p><strong>Job Title:</strong> <?= htmlspecialchars($emp['Skills'] ?? 'N/A') ?></p>
+        <p><strong>Country:</strong> <?= htmlspecialchars($emp['Country'] ?? 'N/A') ?></p>
+        <p><strong>County/Province:</strong> <?= htmlspecialchars($emp['County_province'] ?? 'N/A') ?></p>
+        <p><strong>Language:</strong> <?= htmlspecialchars($emp['Language'] ?? 'N/A') ?></p>
+        <p><strong>Education:</strong> <?= htmlspecialchars($emp['Education_level'] ?? 'N/A') ?></p>
         <?php if ($emp['booking_status'] === 'pending'): ?>
           <div style="margin-top: 20px;">
             <p style="color: #00695c; font-weight: bold; margin-bottom: 10px;">✅ Booked</p>
@@ -566,7 +566,7 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             </form>
           </div>
         <?php else: ?>
-          <a href="employer_booking.php?eid=<?= $emp['id'] ?? '' ?>" class="btn">Book Now</a>
+          <a href="employer_booking.php?eid=<?= $emp['ID'] ?? '' ?>" class="btn">Book Now</a>
         <?php endif; ?>
       </div>
     <?php endforeach; ?>
