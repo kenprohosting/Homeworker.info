@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/png" href="/favicon.png">
     <meta charset="UTF-8">
     <title>Admin Login - Homeworker Connect</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -188,16 +189,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <button type="submit" class="btn-admin-login">Login as Admin</button>
         </form>
         
-        <div class="demo-info">
-            <h4>Admin Credentials:</h4>
-            <div class="credentials">
-                <p><strong>Username:</strong> Admnr</p>
-                <p><strong>Password:</strong> Kenya@254</p>
-            </div>
-            <p class="warning">
-                ⚠️ Change these credentials in production!
-            </p>
-        </div>
+
 
         <div class="back-link">
             <a href="../index.php">← Back to Main Site</a>

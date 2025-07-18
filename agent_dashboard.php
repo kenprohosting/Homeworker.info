@@ -137,7 +137,7 @@ $recent_employees = $stmt;
     <header>
         <div class="logo">
             <img src="bghse.png" alt="Logo" style="height: 40px; margin-right: 10px;">
-            Houselp Connect
+            
         </div>
         <nav class="main-nav">
             <ul class="nav-links">

@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($booking) && $booking) {
 <body>
 
 <header>
-    <div class="logo">Houselp Connect</div>
+    <div class="logo"></div>
     <nav>
         <ul class="nav-links">
             <li><a href="employer_dashboard.php">← Back</a></li>

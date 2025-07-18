@@ -48,6 +48,7 @@ $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="icon" type="image/png" href="/favicon.png">
     <title>Browse Jobs - Homeworker Connect</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>

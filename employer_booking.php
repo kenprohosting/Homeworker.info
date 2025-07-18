@@ -69,6 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="icon" type="image/png" href="/favicon.png">
     <title>Book <?= htmlspecialchars($employee['Name']) ?></title>
     <style>
         body { font-family: Arial; background: #f0f0f0; padding: 30px; }

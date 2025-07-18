@@ -5,6 +5,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/png" href="/favicon.png">
   <meta charset="UTF-8">
   <title>Contact Us - Homeworker Connect</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">

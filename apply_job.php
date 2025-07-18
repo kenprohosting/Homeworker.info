@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Apply for Job - Houselp Connect</title>
+    <title>Apply for Job</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
@@ -224,7 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <button class="nav-btn" onclick="window.history.back()">← Back</button>
 
 <header>
-    <div class="logo">Houselp Connect</div>
+    <div class="logo"></div>
     <nav>
         <a href="employee_dashboard.php">Dashboard</a>
         <a href="browse_jobs.php">Browse Jobs</a>

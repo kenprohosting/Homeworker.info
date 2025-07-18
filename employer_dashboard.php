@@ -93,6 +93,7 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="icon" type="image/png" href="/favicon.png">
   <title>Employer Dashboard - Homeworker Connect</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Main CSS disabled to remove black borders - essential styles added inline -->
@@ -547,7 +548,7 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
         ?>
         <img src="<?= $imgSrc ?>" alt="Profile Picture">
         <h3><?= htmlspecialchars($emp['name'] ?? 'N/A') ?> (<?= $emp['age'] ?? 'N/A' ?>)</h3>
-        <p><strong>Skill:</strong> <?= htmlspecialchars($emp['skills'] ?? 'N/A') ?></p>
+        <p><strong>Job Title:</strong> <?= htmlspecialchars($emp['skills'] ?? 'N/A') ?></p>
         <p><strong>Country:</strong> <?= htmlspecialchars($emp['country'] ?? 'N/A') ?></p>
         <p><strong>County/Province:</strong> <?= htmlspecialchars($emp['county_province'] ?? 'N/A') ?></p>
         <p><strong>Language:</strong> <?= htmlspecialchars($emp['language'] ?? 'N/A') ?></p>
