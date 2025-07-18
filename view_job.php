@@ -35,7 +35,7 @@ if (!$job) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title><?= htmlspecialchars($job['Title']) ?> - Houselp Connect</title>
+    <title><?= htmlspecialchars($job['Title']) ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
@@ -212,7 +212,7 @@ if (!$job) {
 <body>
 
 <header>
-    <div class="logo">Houselp Connect</div>
+    <div class="logo"></div>
     <nav class="main-nav">
         <ul class="nav-links">
             <li><a href="index.php">Home</a></li>
