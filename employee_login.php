@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
     <div style="width:100%;text-align:center;margin:0;padding:0;">
-        <img src="bghse.png" alt="Logo" style="height:48px;display:inline-block;margin:0 auto 0 auto;padding-top:8px;">
+        <img src="bghse.png" alt="Logo" style="height:48px;display:inline-block;margin:16px auto 0 auto;">
     </div>
     <div class="form-container">
         <a href="index.php" style="display:inline-block;margin-bottom:10px;color:#197b88;text-decoration:none;font-weight:500;">&larr; Back</a>
