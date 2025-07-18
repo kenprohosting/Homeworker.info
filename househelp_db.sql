@@ -22,50 +22,51 @@ CREATE TABLE IF NOT EXISTS `admin` (
 
 -- Employee table
 CREATE TABLE IF NOT EXISTS `employees` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
-  `gender` varchar(10) NOT NULL,
-  `age` int(3) NOT NULL,
-  `phone` varchar(20) NOT NULL,
-  `country` varchar(100) NOT NULL,
-  `county_province` varchar(100) NOT NULL,
-  `skills` varchar(100) NOT NULL,
-  `experience` varchar(100) DEFAULT NULL,
-  `education_level` varchar(50) NOT NULL,
-  `social_referee` varchar(100) DEFAULT NULL,
-  `language` varchar(100) DEFAULT NULL,
-  `email` varchar(100) NOT NULL UNIQUE,
-  `password_hash` varchar(255) NOT NULL,
-  `residence_type` enum('urban','rural') DEFAULT NULL,
-  `verification_status` enum('unverified','pending','verified') DEFAULT 'unverified',
-  `created_at` datetime DEFAULT current_timestamp(),
-  `reset_token` varchar(255) DEFAULT NULL,
-  `reset_token_expiry` datetime DEFAULT NULL,
-  `agent_id` int(11) DEFAULT NULL,
-  `status` enum('active','pending','inactive') DEFAULT 'active',
-  `id_passport` varchar(255) DEFAULT NULL,
-  `profile_pic` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `agent_id` (`agent_id`),
-  CONSTRAINT `fk_employee_agent` FOREIGN KEY (`agent_id`) REFERENCES `agents` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) NOT NULL,
+  `Gender` varchar(10) NOT NULL,
+  `Age` int(3) NOT NULL,
+  `Phone` varchar(20) NOT NULL,
+  `Country` varchar(100) NOT NULL,
+  `County_province` varchar(100) NOT NULL,
+  `Skills` varchar(100) NOT NULL,
+  `Experience` varchar(100) DEFAULT NULL,
+  `Education_level` varchar(50) NOT NULL,
+  `Social_referee` varchar(100) DEFAULT NULL,
+  `Language` varchar(100) DEFAULT NULL,
+  `Email` varchar(100) NOT NULL UNIQUE,
+  `Password_hash` varchar(255) NOT NULL,
+  `Residence_type` enum('urban','rural') DEFAULT NULL,
+  `Verification_status` enum('unverified','pending','verified') DEFAULT 'unverified',
+  `Created_at` datetime DEFAULT current_timestamp(),
+  `Reset_token` varchar(255) DEFAULT NULL,
+  `Reset_token_expiry` datetime DEFAULT NULL,
+  `Agent_id` int(11) DEFAULT NULL,
+  `Status` enum('active','pending','inactive') DEFAULT 'active',
+  `ID_passport` varchar(255) DEFAULT NULL,
+  `Profile_pic` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `agent_id` (`Agent_id`),
+  CONSTRAINT `fk_employee_agent` FOREIGN KEY (`Agent_id`) REFERENCES `agents` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Employer table
 CREATE TABLE IF NOT EXISTS `employer` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) NOT NULL,
-  `location` text NOT NULL,
-  `residence_type` enum('urban','rural') NOT NULL,
-  `contact` varchar(20) NOT NULL,
-  `gender` enum('male','female','other') NOT NULL,
-  `email` varchar(100) NOT NULL UNIQUE,
-  `password_hash` varchar(255) NOT NULL,
-  `address` text DEFAULT NULL,
-  `verification_status` enum('unverified','pending','verified') DEFAULT 'unverified',
-  `created_at` datetime DEFAULT current_timestamp(),
-  `reset_token` varchar(255) DEFAULT NULL,
-  `reset_token_expiry` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) NOT NULL,
+  `Location` text NOT NULL,
+  `Residence_type` enum('urban','rural') NOT NULL,
+  `Contact` varchar(20) NOT NULL,
+  `Gender` enum('male','female','other') NOT NULL,
+  `Email` varchar(100) NOT NULL UNIQUE,
+  `Password_hash` varchar(255) NOT NULL,
+  `Address` text DEFAULT NULL,
+  `Country` varchar(100) DEFAULT NULL,
+  `Verification_status` enum('unverified','pending','verified') DEFAULT 'unverified',
+  `Created_at` datetime DEFAULT current_timestamp(),
+  `Reset_token` varchar(255) DEFAULT NULL,
+  `Reset_token_expiry` datetime DEFAULT NULL,
+  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Agents table
@@ -97,22 +98,22 @@ CREATE TABLE IF NOT EXISTS `agent_registration_codes` (
 
 -- Bookings table
 CREATE TABLE IF NOT EXISTS `bookings` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `homeowner_id` int(11) NOT NULL,
-  `employee_id` int(11) NOT NULL,
-  `service_type` varchar(40) NOT NULL,
-  `booking_date` date NOT NULL,
-  `status` enum('pending','confirmed','completed','cancelled') NOT NULL,
-  `start_time` time NOT NULL,
-  `end_time` time NOT NULL,
-  `special_requirements` text DEFAULT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Homeowner_ID` int(11) NOT NULL,
+  `Employee_ID` int(11) NOT NULL,
+  `Service_type` varchar(40) NOT NULL,
+  `Booking_date` date NOT NULL,
+  `Status` enum('pending','confirmed','completed','cancelled') NOT NULL,
+  `Start_time` time DEFAULT NULL,
+  `End_time` time DEFAULT NULL,
+  `Special_requirements` text DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`id`),
-  KEY `homeowner_id` (`homeowner_id`),
-  KEY `employee_id` (`employee_id`),
-  CONSTRAINT `bookings_ibfk_1` FOREIGN KEY (`homeowner_id`) REFERENCES `employer` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `bookings_ibfk_2` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`) ON DELETE CASCADE
+  PRIMARY KEY (`ID`),
+  KEY `homeowner_id` (`Homeowner_ID`),
+  KEY `employee_id` (`Employee_ID`),
+  CONSTRAINT `bookings_ibfk_1` FOREIGN KEY (`Homeowner_ID`) REFERENCES `employer` (`ID`) ON DELETE CASCADE,
+  CONSTRAINT `bookings_ibfk_2` FOREIGN KEY (`Employee_ID`) REFERENCES `employees` (`ID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Payment table
@@ -128,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `payment` (
   `created_at` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
   KEY `booking_id` (`booking_id`),
-  CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`booking_id`) REFERENCES `bookings` (`id`) ON DELETE CASCADE
+  CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`booking_id`) REFERENCES `bookings` (`ID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Review table
@@ -142,49 +143,49 @@ CREATE TABLE IF NOT EXISTS `review_table` (
   `created_at` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
   KEY `booking_id` (`booking_id`),
-  CONSTRAINT `review_table_ibfk_1` FOREIGN KEY (`booking_id`) REFERENCES `bookings` (`id`) ON DELETE CASCADE
+  CONSTRAINT `review_table_ibfk_1` FOREIGN KEY (`booking_id`) REFERENCES `bookings` (`ID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Jobs table
 CREATE TABLE IF NOT EXISTS `jobs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `employer_id` int(11) NOT NULL,
-  `title` varchar(100) NOT NULL,
-  `description` text NOT NULL,
-  `required_skills` varchar(200) NOT NULL,
-  `location` varchar(100) NOT NULL,
-  `salary_min` decimal(10,2) DEFAULT NULL,
-  `salary_max` decimal(10,2) DEFAULT NULL,
-  `job_type` enum('one-time','part-time','full-time') NOT NULL,
-  `start_date` date NOT NULL,
-  `duration_hours` int(11) DEFAULT NULL,
-  `special_requirements` text DEFAULT NULL,
-  `status` enum('active','filled','expired','cancelled') NOT NULL DEFAULT 'active',
-  `expiry_date` date NOT NULL,
-  `created_at` datetime DEFAULT current_timestamp(),
-  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`id`),
-  KEY `employer_id` (`employer_id`),
-  KEY `status` (`status`),
-  KEY `expiry_date` (`expiry_date`),
-  CONSTRAINT `jobs_ibfk_1` FOREIGN KEY (`employer_id`) REFERENCES `employer` (`id`) ON DELETE CASCADE
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Employer_ID` int(11) NOT NULL,
+  `Title` varchar(100) NOT NULL,
+  `Description` text NOT NULL,
+  `Required_skills` varchar(200) NOT NULL,
+  `Location` varchar(100) NOT NULL,
+  `Salary_min` decimal(10,2) DEFAULT NULL,
+  `Salary_max` decimal(10,2) DEFAULT NULL,
+  `Job_type` enum('one-time','part-time','full-time') NOT NULL,
+  `Start_date` date NOT NULL,
+  `Duration_hours` int(11) DEFAULT NULL,
+  `Special_requirements` text DEFAULT NULL,
+  `Status` enum('active','filled','expired','cancelled') NOT NULL DEFAULT 'active',
+  `Expiry_date` date NOT NULL,
+  `Created_at` datetime DEFAULT current_timestamp(),
+  `Updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`ID`),
+  KEY `employer_id` (`Employer_ID`),
+  KEY `status` (`Status`),
+  KEY `expiry_date` (`Expiry_date`),
+  CONSTRAINT `jobs_ibfk_1` FOREIGN KEY (`Employer_ID`) REFERENCES `employer` (`ID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Job applications table
 CREATE TABLE IF NOT EXISTS `job_applications` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `job_id` int(11) NOT NULL,
-  `employee_id` int(11) NOT NULL,
-  `cover_letter` text DEFAULT NULL,
-  `status` enum('pending','accepted','rejected','withdrawn') NOT NULL DEFAULT 'pending',
-  `applied_at` datetime DEFAULT current_timestamp(),
-  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`id`),
-  KEY `job_id` (`job_id`),
-  KEY `employee_id` (`employee_id`),
-  UNIQUE KEY `unique_application` (`job_id`, `employee_id`),
-  CONSTRAINT `job_applications_ibfk_1` FOREIGN KEY (`job_id`) REFERENCES `jobs` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `job_applications_ibfk_2` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`) ON DELETE CASCADE
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Job_ID` int(11) NOT NULL,
+  `Employee_ID` int(11) NOT NULL,
+  `Cover_letter` text DEFAULT NULL,
+  `Status` enum('pending','accepted','rejected','withdrawn') NOT NULL DEFAULT 'pending',
+  `Applied_at` datetime DEFAULT current_timestamp(),
+  `Updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`ID`),
+  KEY `job_id` (`Job_ID`),
+  KEY `employee_id` (`Employee_ID`),
+  UNIQUE KEY `unique_application` (`Job_ID`, `Employee_ID`),
+  CONSTRAINT `job_applications_ibfk_1` FOREIGN KEY (`Job_ID`) REFERENCES `jobs` (`ID`) ON DELETE CASCADE,
+  CONSTRAINT `job_applications_ibfk_2` FOREIGN KEY (`Employee_ID`) REFERENCES `employees` (`ID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 COMMIT;
