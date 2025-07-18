@@ -205,6 +205,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         #countryList.country-dropdown {
             position: absolute;
+            left: 0;
+            right: 0;
+            top: 100%;
             z-index: 10;
             background: #fff;
             border: 1px solid #cfd8dc;
@@ -213,7 +216,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             max-height: 180px;
             overflow-y: auto;
             box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-            margin-top: -2px;
+            margin-top: 2px;
         }
         #countryList.country-dropdown li {
             padding: 8px 14px;
@@ -281,17 +284,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="form-group">
                 <label for="countryInput">Country</label>
-                <input type="text" id="countryInput" name="country" placeholder="Country" autocomplete="off" required value="<?= isset($_POST['country']) ? htmlspecialchars($_POST['country']) : '' ?>">
-                <ul id="countryList" class="country-dropdown"></ul>
+                <div style="position:relative;">
+                  <input type="text" id="countryInput" name="country" placeholder="Country" autocomplete="off" required value="<?= isset($_POST['country']) ? htmlspecialchars($_POST['country']) : '' ?>">
+                  <ul id="countryList" class="country-dropdown"></ul>
+                </div>
             </div>
             <div class="form-group">
                 <label for="county_province">County/Province</label>
                 <input type="text" name="county_province" id="county_province" required value="<?= isset($_POST['county_province']) ? htmlspecialchars($_POST['county_province']) : '' ?>">
             </div>
             <div class="form-group">
-                <label for="skills">Skills</label>
-                <input type="text" name="skills" id="skills" required placeholder="e.g. babysitting, driver, cleaning, etc." value="<?= isset($_POST['skills']) ? htmlspecialchars($_POST['skills']) : '' ?>">
+                <label for="skills">Job Title</label>
+                <select name="skills" id="skills" required onchange="toggleSpecifyJobTitle(this.value)">
+                    <option value="">Select Job Title</option>
+                    <option value="Housegirl" <?= (isset($_POST['skills']) && $_POST['skills'] == 'Housegirl') ? 'selected' : '' ?>>Housegirl</option>
+                    <option value="Houseboy" <?= (isset($_POST['skills']) && $_POST['skills'] == 'Houseboy') ? 'selected' : '' ?>>Houseboy</option>
+                    <option value="Shambaboy" <?= (isset($_POST['skills']) && $_POST['skills'] == 'Shambaboy') ? 'selected' : '' ?>>Shambaboy</option>
+                    <option value="Gatekeeper" <?= (isset($_POST['skills']) && $_POST['skills'] == 'Gatekeeper') ? 'selected' : '' ?>>Gatekeeper</option>
+                    <option value="Cook" <?= (isset($_POST['skills']) && $_POST['skills'] == 'Cook') ? 'selected' : '' ?>>Cook</option>
+                    <option value="Gardener" <?= (isset($_POST['skills']) && $_POST['skills'] == 'Gardener') ? 'selected' : '' ?>>Gardener</option>
+                    <option value="Driver" <?= (isset($_POST['skills']) && $_POST['skills'] == 'Driver') ? 'selected' : '' ?>>Driver</option>
+                    <option value="Nanny" <?= (isset($_POST['skills']) && $_POST['skills'] == 'Nanny') ? 'selected' : '' ?>>Nanny</option>
+                    <option value="Cleaner" <?= (isset($_POST['skills']) && $_POST['skills'] == 'Cleaner') ? 'selected' : '' ?>>Cleaner</option>
+                    <option value="Other" <?= (isset($_POST['skills']) && $_POST['skills'] == 'Other' || (isset($_POST['skills_specify']) && $_POST['skills_specify'] != '')) ? 'selected' : '' ?>>Other (Specify)</option>
+                </select>
+                <input type="text" name="skills_specify" id="skills_specify" placeholder="Please specify job title" style="display:none;margin-top:8px;" value="<?= isset($_POST['skills_specify']) ? htmlspecialchars($_POST['skills_specify']) : '' ?>" oninput="if(this.value){document.getElementById('skills').value='Other';toggleSpecifyJobTitle('Other');}">
             </div>
+<!-- Job Title Specify Script moved below -->
+<script>
+function toggleSpecifyJobTitle(val) {
+  var specify = document.getElementById('skills_specify');
+  if (val === 'Other') {
+    specify.style.display = 'block';
+    specify.disabled = false;
+    specify.required = true;
+    specify.focus();
+  } else {
+    specify.style.display = 'none';
+    specify.disabled = true;
+    specify.required = false;
+    specify.value = '';
+  }
+}
+// On page load, show specify if Other was selected or if skills_specify has a value
+window.addEventListener('DOMContentLoaded', function() {
+  var sel = document.getElementById('skills');
+  var specify = document.getElementById('skills_specify');
+  if ((sel && sel.value === 'Other') || (specify && specify.value)) {
+    toggleSpecifyJobTitle('Other');
+  }
+});
+</script>
             <div class="form-group">
                 <label for="experience">Experience</label>
                 <input type="text" name="experience" id="experience" placeholder="e.g. 5 years" value="<?= isset($_POST['experience']) ? htmlspecialchars($_POST['experience']) : '' ?>">

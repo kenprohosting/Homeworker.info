@@ -547,7 +547,7 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
         ?>
         <img src="<?= $imgSrc ?>" alt="Profile Picture">
         <h3><?= htmlspecialchars($emp['name'] ?? 'N/A') ?> (<?= $emp['age'] ?? 'N/A' ?>)</h3>
-        <p><strong>Skill:</strong> <?= htmlspecialchars($emp['skills'] ?? 'N/A') ?></p>
+        <p><strong>Job Title:</strong> <?= htmlspecialchars($emp['skills'] ?? 'N/A') ?></p>
         <p><strong>Country:</strong> <?= htmlspecialchars($emp['country'] ?? 'N/A') ?></p>
         <p><strong>County/Province:</strong> <?= htmlspecialchars($emp['county_province'] ?? 'N/A') ?></p>
         <p><strong>Language:</strong> <?= htmlspecialchars($emp['language'] ?? 'N/A') ?></p>
