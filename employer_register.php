@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (empty($errors)) {
-        $stmt = $conn->prepare("INSERT INTO employer (Name, Country, Location, Residence_type, Contact, Gender, email, password_hash, address) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)");
+        $stmt = $conn->prepare("INSERT INTO employer (Name, Country, Location, Residence_type, Contact, Gender, Email, Password_hash, Address) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $result = $stmt->execute([$name, $country, $location, $residence, $contact, $gender, $email, $password_hash, $address]);
 
         if ($result) {

@@ -8,11 +8,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $stmt = $conn->prepare("SELECT * FROM employer WHERE email = ?");
+    $stmt = $conn->prepare("SELECT * FROM employer WHERE Email = ?");
     $stmt->execute([$email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($user && password_verify($password, $user['password_hash'])) {
+    if ($user && password_verify($password, $user['Password_hash'])) {
         $_SESSION['employer_id'] = $user['ID'];
         $_SESSION['employer_name'] = $user['Name'];
         header("Location:employer_dashboard.php");
