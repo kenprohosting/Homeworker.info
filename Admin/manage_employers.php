@@ -35,6 +35,7 @@ $employers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/png" href="/favicon.png">
     <meta charset="UTF-8">
     <title>Admin - Manage Employers</title>
     <link rel="stylesheet" href="../styles.css">

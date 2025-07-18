@@ -41,6 +41,7 @@ $recent_codes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/png" href="/favicon.png">
     <meta charset="UTF-8">
     <title>Admin Dashboard - Homeworker Connect</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
