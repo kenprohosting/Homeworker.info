@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $show_form) {
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/png" href="/favicon.png">
     <title>Reset Password</title>
     <link rel="stylesheet" href="styles.css">
 </head>

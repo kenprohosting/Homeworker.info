@@ -93,7 +93,7 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/png" href="/favicon.png">
   <title>Employer Dashboard - Homeworker Connect</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Main CSS disabled to remove black borders - essential styles added inline -->
