@@ -34,7 +34,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
     <ul class="faq-list">
       <li>
         <div class="faq-q">Who can use Homeworker Connect?</div>
-        <div class="faq-a">Anyone in Kenya looking to hire or work as a domestic professional can use our platform.</div>
+        <div class="faq-a">Anyone in the world looking to hire or work as a domestic professional can use our platform.</div>
       </li>
       <li>
         <div class="faq-q">How do I get started?</div>
@@ -46,11 +46,11 @@ $isLoggedIn = isset($_SESSION['employer_name']);
       </li>
       <li>
         <div class="faq-q">How do you verify workers?</div>
-        <div class="faq-a">We require ID checks and references for all workers before they are approved on the platform.</div>
+        <div class="faq-a">We require ID/Passports checks and references for all workers before they are approved on the platform.</div>
       </li>
       <li>
         <div class="faq-q">How can I get support?</div>
-        <div class="faq-a">You can reach our support team via the Contact Us page or by emailing <a href="mailto:support@homeworkerconnect.co.ke">support@homeworkerconnect.co.ke</a>.</div>
+        <div class="faq-a">You can reach our support team via the Contact Us page or by emailing <a href="mailto:support@homeworkerconnect.info">support@homeworkerconnect.info</a>.</div>
       </li>
     </ul>
   </div>
