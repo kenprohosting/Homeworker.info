@@ -2,8 +2,8 @@
 // setup.php
 
 $host = 'localhost';
-$dbname = 'esoma_homerorker';
-$user = 'esoma_homerorker';
+$dbname = 'esoma_homeworker';
+$user = 'esoma_homeworker';
 $pass = 'Kenyan@254';
 
 // Connect to DB
