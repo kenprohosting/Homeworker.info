@@ -189,16 +189,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <button type="submit" class="btn-admin-login">Login as Admin</button>
         </form>
         
-        <div class="demo-info">
-            <h4>Admin Credentials:</h4>
-            <div class="credentials">
-                <p><strong>Username:</strong> Admnr</p>
-                <p><strong>Password:</strong> Kenya@254</p>
-            </div>
-            <p class="warning">
-                ⚠️ Change these credentials in production!
-            </p>
-        </div>
+
 
         <div class="back-link">
             <a href="../index.php">← Back to Main Site</a>
