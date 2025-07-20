@@ -31,99 +31,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <style>
-      body { background: #f4f8fb; font-family: 'Segoe UI', Arial, sans-serif; }
-      .form-container {
-        max-width: 400px;
-        margin: 40px auto 0 auto;
-        background: #fff;
-        border-radius: 12px;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-        border: 2px solid #111;
-        padding: 18px 16px 0 16px;
-      }
-      .form-container > p:last-of-type {
-        margin-bottom: 0 !important;
-      }
-      .form-container > *:last-child {
-        margin-bottom: 0 !important;
-      }
-      .form-container h2 {
-        text-align: center;
-        color: #197b88;
-        margin-bottom: 18px;
-      }
-      .form-container form {
-        display: grid;
-        gap: 18px;
-      }
-      .form-container input[type="email"],
-      .form-container input[type="password"] {
-        width: 100%;
-        padding: 10px 12px;
-        border: 1px solid #cfd8dc;
-        border-radius: 6px;
-        font-size: 1rem;
-        background: #f9fbfc;
-        transition: border 0.2s;
-      }
-      .form-container input[type="email"]:focus,
-      .form-container input[type="password"]:focus {
-        border: 1.5px solid #197b88;
-        outline: none;
-        background: #fff;
-      }
-      .btn {
-        background: linear-gradient(90deg, #197b88 0%, #1ec8c8 100%);
-        color: #fff;
-        border: none;
-        border-radius: 6px;
-        padding: 12px 0;
-        font-size: 1.1rem;
-        font-weight: 600;
-        cursor: pointer;
-        margin-top: 8px;
-        transition: background 0.2s;
-      }
-      .btn:hover {
-        background: linear-gradient(90deg, #1ec8c8 0%, #197b88 100%);
-      }
-      .error {
-        background: #ffeaea;
-        color: #c0392b;
-        border-left: 4px solid #c0392b;
-        padding: 10px 14px;
-        border-radius: 6px;
-        margin-bottom: 10px;
-      }
-      footer { text-align: center; margin-top: 30px; color: #888; }
-    </style>
+  body { background: #f4f8fb; font-family: 'Segoe UI', Arial, sans-serif; display: flex; flex-direction: column; min-height: 100vh; }
+  .form-container input:focus {
+    border-color: #197b88;
+  }
+  .form-container button:hover {
+    background: linear-gradient(135deg, #1ec8c8, #197b88);
+  }
+  footer { margin-top: auto; text-align: center; color: #888; padding: 16px 0; }
+</style>
 </head>
-<body>
+<body style="background: #f4f8fb; font-family: 'Segoe UI', Arial, sans-serif; display: flex; flex-direction: column; min-height: 100vh;">
     <div style="width:100%;text-align:center;margin:0;padding:0;">
         <img src="bghse.png" alt="Logo" style="height:48px;display:inline-block;margin:0 auto 0 auto;padding-top:8px;">
     </div>
-    <div class="form-container">
-        <a href="index.php" style="display:inline-block;margin-bottom:10px;color:#197b88;text-decoration:none;font-weight:500;">&larr; Back</a>
-        <h2>Employer Login</h2>
-        <?php if (!empty($errors)) foreach ($errors as $e) echo "<p class='error'>$e</p>"; ?>
-        <form method="POST" action="">
-            <input type="email" name="email" placeholder="Email" value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '' ?>" required>
-            <div style="position:relative;">
-              <input type="password" name="password" id="password" placeholder="Password" required style="padding-right:36px;">
-              <span onclick="togglePassword('password', this)" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);cursor:pointer;font-size:1.2em;">
-                &#128065;
-              </span>
+    <div class="form-container" style="max-width: 360px; margin: 24px auto; background: #ffffff; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); padding: 24px; display: flex; flex-direction: column; gap: 16px;">
+        <a href="index.php" style="color: #197b88; text-decoration: none; font-weight: 500; align-self: flex-start;">&larr; Back</a>
+        <h2 style="text-align: center; color: #197b88; margin: 0; font-size: 1.5rem;">Employer Login</h2>
+        <?php if (!empty($errors)) foreach ($errors as $e) echo "<p style='background: #ffeaea; color: #c0392b; padding: 8px 12px; border-radius: 8px; margin: 0; text-align: center;'>$e</p>"; ?>
+        <form method="POST" action="" style="display: flex; flex-direction: column; gap: 12px;">
+            <input type="email" name="email" placeholder="Email" value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '' ?>" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
+            <div style="position: relative;">
+                <input type="password" name="password" id="password" placeholder="Password" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s; width: 100%; box-sizing: border-box;">
+                <span onclick="togglePassword('password', this)" style="position: absolute; top: 50%; right: 12px; transform: translateY(-50%); cursor: pointer; font-size: 1.2em;">
+                    &#128065;
+                </span>
             </div>
-            <button type="submit" class="btn">Login</button>
+            <button type="submit" style="background: linear-gradient(135deg, #197b88, #1ec8c8); color: #fff; border: none; border-radius: 8px; padding: 12px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background 0.3s;">Login</button>
         </form>
-        <p style="text-align:center; margin-top:10px;">
-            <a href="forgot_password.php?type=employer">Forgot Password?</a>
+        <p style="text-align: center; margin: 0; font-size: 0.9rem;">
+            <a href="forgot_password.php?type=employer" style="color: #197b88; text-decoration: none;">Forgot Password?</a>
         </p>
-        <p style="text-align:center; margin-top:10px;">
-            Don't have an account? <a href="employer_register.php">Register here</a>
+        <p style="text-align: center; margin: 0; font-size: 0.9rem;">
+            Don't have an account? <a href="employer_register.php" style="color: #197b88; text-decoration: none;">Register here</a>
         </p>
     </div>
-    <footer>
+    <footer style="text-align:center;margin-top:auto;color:#888;">
         <p>&copy; <?= date("Y") ?> Homeworker Connect. All rights reserved.</p>
 <script>
 function togglePassword(id, el) {
@@ -137,5 +80,6 @@ function togglePassword(id, el) {
   }
 }
 </script>
-</footer>
+    </footer>
+</body>
 
