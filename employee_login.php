@@ -16,9 +16,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user) {
-        if (!isset($user['password_hash']) || $user['password_hash'] === null) {
+        if (!isset($user['Password_hash']) || $user['Password_hash'] === null) {
             $errors[] = "Password hash not found for this user.";
-        } elseif (!password_verify($password, $user['password_hash'])) {
+        } elseif (!password_verify($password, $user['Password_hash'])) {
             $errors[] = "Password does not match.";
         } else {
             $_SESSION['employee_id'] = $user['id'];
