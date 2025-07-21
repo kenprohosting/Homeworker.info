@@ -29,54 +29,6 @@ if ($booking_id) {
 } else {
     $errors[] = "No booking selected.";
 }
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($booking) && $booking) {
-    $phone = trim($_POST['phone']);
-    // Convert phone to international format if needed
-    if (preg_match('/^07\\d{8}$/', $phone)) {
-        $phone = '254' . substr($phone, 1);
-    }
-    $amount = 5; // KES 5 for contact details
-    $description = "Contact details access for booking #$booking_id";
-    $email = $employer['email'];
-    $name = $employer['Name'];
-
-    // IntaSend API keys and endpoint
-    $public_key = "ISPubKey_live_40f25458-716c-47c5-b049-786fd1f3a1ce";
-    $endpoint = "https://payment.intasend.com/api/v1/checkout/";
-
-    // Prepare payment data
-    $data = [
-        "currency" => "KES",
-        "amount" => $amount,
-        "email" => $email,
-        "description" => $description,
-        "redirect_url" => "https://homeworker.info/payment_callback.php?bid=$booking_id", // Corrected path
-        "phone_number" => $phone
-    ];
-
-    $ch = curl_init($endpoint);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        "Authorization: Bearer $public_key",
-        "Content-Type: application/json"
-    ]);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-    $response = curl_exec($ch);
-    curl_close($ch);
-
-    $result = json_decode($response, true);
-
-    if (isset($result['url'])) {
-        // Redirect user to IntaSend payment page
-        header("Location: " . $result['url']);
-        exit();
-    } else {
-        $errors[] = "Payment initiation failed. " . (isset($result['message']) ? $result['message'] : json_encode($result));
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -98,19 +50,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($booking) && $booking) {
 </header>
 
 <div class="form-container">
-    <h2>Pay KES 5 to Access Employee Contact Details</h2>
-
+    <h2>Pay KES 10 to Access Employee Contact Details</h2>
     <?php
     if ($errors) foreach ($errors as $e) echo "<p class='error'>$e</p>";
     if ($success) echo "<p class='success'>$success</p>";
     ?>
 
-    <?php if (isset($booking) && $booking): ?>
-        <form method="POST">
-            <label for="phone">Phone Number (for payment):</label>
-            <input type="text" name="phone" id="phone" value="<?= htmlspecialchars($booking['employee_phone']) ?>" required>
-            <button type="submit" class="btn">Pay KES 5 with IntaSend</button>
-        </form>
+    <?php if (isset($booking) && $booking && isset($employer) && $employer): ?>
+        <button
+            id="intasend-button"
+            class="intaSendPayButton"
+            data-amount="10"
+            data-currency="KES"
+            data-email="<?= htmlspecialchars($employer['email']) ?>"
+            data-description="Contact details access for booking #<?= $booking_id ?>"
+            data-redirect_url="https://homeworker.info/payment_callback.php?bid=<?= $booking_id ?>">
+            Pay KES 10 with IntaSend
+        </button>
+        <script src="https://unpkg.com/intasend-inlinejs-sdk@4.0.1/build/intasend-inline.js"></script>
+        <script>
+            new window.IntaSend({
+                publicAPIKey: "ISPubKey_live_40f25458-716c-47c5-b049-786fd1f3a1ce", // Your live public key
+                live: true // set to true for live environment
+            })
+            .on("COMPLETE", (results) => {
+                // Redirect to callback page with IntaSend's checkout_request_id
+                window.location.href = "payment_callback.php?bid=<?= $booking_id ?>&checkout_request_id=" + results.checkout_request_id;
+            })
+            .on("FAILED", (results) => { alert("Payment failed. Please try again."); })
+            .on("IN-PROGRESS", (results) => { /* Optionally show progress */ });
+        </script>
     <?php endif; ?>
 </div>
 
