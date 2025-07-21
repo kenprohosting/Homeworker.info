@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once('db_connect.php');
+require_once('@pdo.php');
 
 if (!isset($_SESSION['employer_id'])) {
     header("Location:employer_login.php");
@@ -43,9 +44,10 @@ if ($booking_id) {
 
     // 2. If payment is successful, fetch employee details
     if ($payment_success) {
-        $stmt = $conn->prepare("SELECT emp.* FROM bookings b JOIN employees emp ON b.Employee_ID = emp.ID WHERE b.ID = ? AND b.Homeowner_ID = ?");
-        $stmt->execute([$booking_id, $employer_id]);
-        $employee = $stmt->fetch(PDO::FETCH_ASSOC);
+        $employee = PDO_FetchRow(
+            "SELECT emp.* FROM bookings b JOIN employees emp ON b.Employee_ID = emp.ID WHERE b.ID = ? AND b.Homeowner_ID = ?",
+            [$booking_id, $employer_id]
+        );
         if (!$employee) {
             $errors[] = "Invalid booking or employee not found.";
         }
