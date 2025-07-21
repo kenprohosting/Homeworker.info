@@ -1,7 +1,9 @@
 <?php
 session_start();
-require_once('db_connect.php');
 require_once('@pdo.php');
+
+// Connect to the database using PDO helper
+PDO_Connect('mysql:host=localhost;dbname=esoma_homeworker;charset=utf8mb4', 'esoma_homeworker', 'Kenyan@254'); // LIVE DB credentials
 
 if (!isset($_SESSION['employer_id'])) {
     header("Location:employer_login.php");

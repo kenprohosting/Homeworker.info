@@ -1,6 +1,9 @@
 <?php
 session_start();
-require_once('db_connect.php');
+require_once('@pdo.php');
+
+// Connect to the database using PDO helper
+PDO_Connect('mysql:host=localhost;dbname=esoma_homeworker;charset=utf8mb4', 'esoma_homeworker', 'Kenyan@254'); // LIVE DB credentials
 
 if (!isset($_SESSION['employer_id'])) {
     header("Location:employer_login.php");
@@ -14,15 +17,15 @@ $success = '';
 
 // Fetch booking, employer, and employee details
 if ($booking_id) {
-    $stmt = $conn->prepare("SELECT b.*, emp.Name AS employee_name, emp.phone AS employee_phone, emp.country AS employee_country, emp.county_province AS employee_county_province, emp.email AS employee_email, emp.Skills AS employee_skills, emp.Education_level AS employee_education, emp.Gender AS employee_gender, emp.Age AS employee_age, emp.Social_referee AS employee_referee FROM bookings b JOIN employees emp ON b.Employee_ID = emp.ID WHERE b.ID = ? AND b.Homeowner_ID = ?");
-    $stmt->execute([$booking_id, $employer_id]);
-    $booking = $stmt->fetch(PDO::FETCH_ASSOC);
+    $booking = PDO_FetchRow(
+        "SELECT b.*, emp.Name AS employee_name, emp.phone AS employee_phone, emp.country AS employee_country, emp.county_province AS employee_county_province, emp.email AS employee_email, emp.Skills AS employee_skills, emp.Education_level AS employee_education, emp.Gender AS employee_gender, emp.Age AS employee_age, emp.Social_referee AS employee_referee FROM bookings b JOIN employees emp ON b.Employee_ID = emp.ID WHERE b.ID = ? AND b.Homeowner_ID = ?",
+        [$booking_id, $employer_id]
+    );
     if (!$booking) {
         $errors[] = "Invalid booking.";
     }
     // Fetch employer details
-    $empstmt = $conn->prepare("SELECT Name, email FROM employer WHERE ID = ?");
-    $empstmt->execute([$employer_id]);  $employer = $empstmt->fetch(PDO::FETCH_ASSOC);
+    $employer = PDO_FetchRow("SELECT Name, email FROM employer WHERE ID = ?", [$employer_id]);
 } else {
     $errors[] = "No booking selected.";
 }
@@ -38,9 +41,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($booking) && $booking) {
     $email = $employer['email'];
     $name = $employer['Name'];
 
-    // IntaSend API keys
-    $api_key = "ISSecretKey_test_f34b63be-83ef-4a36-a377-6607136d1ee0";
-    $publishable_key = "ISPubKey_test_b46261c4-f53f-4986-9b98-566767bc6434";
+    // IntaSend API keys and endpoint
+    $public_key = "ISPubKey_live_40f25458-716c-47c5-b049-786fd1f3a1ce";
+    $endpoint = "https://payment.intasend.com/api/v1/checkout/";
 
     // Prepare payment data
     $data = [
@@ -48,13 +51,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($booking) && $booking) {
         "amount" => $amount,
         "email" => $email,
         "description" => $description,
-        "redirect_url" => "http://localhost/houselp/payment_callback.php?bid=$booking_id", // Change to your domain in production
+        "redirect_url" => "https://homeworker.info/payment_callback.php?bid=$booking_id", // Corrected path
         "phone_number" => $phone
     ];
 
-    $ch = curl_init('https://api.intasend.com/api/v1/checkout/');
+    $ch = curl_init($endpoint);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        "Authorization: Bearer $api_key",
+        "Authorization: Bearer $public_key",
         "Content-Type: application/json"
     ]);
     curl_setopt($ch, CURLOPT_POST, 1);
@@ -95,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($booking) && $booking) {
 </header>
 
 <div class="form-container">
-    <h2>Pay KES 10 to Access Employee Contact Details</h2>
+    <h2>Pay KES 5 to Access Employee Contact Details</h2>
 
     <?php
     if ($errors) foreach ($errors as $e) echo "<p class='error'>$e</p>";
@@ -103,30 +106,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($booking) && $booking) {
     ?>
 
     <?php if (isset($booking) && $booking): ?>
-        <!-- IntaSend Payment Button -->
-        <button 
-            id="intasend-button" 
-            class="intaSendPayButton"  
-            data-amount="10" 
-            data-currency="KES"
-            data-email="<?= htmlspecialchars($employer['email']) ?>"
-            data-description="Contact details access for booking #<?= $booking_id ?>"
-            data-redirect_url="http://localhost/houselp/payment_callback.php?bid=<?= $booking_id ?>">
-            Pay KES 10 with IntaSend
-        </button>
-        <script src="https://unpkg.com/intasend-inlinejs-sdk@4.0.1/build/intasend-inline.js"></script>
-        <script>
-            new window.IntaSend({
-                publicAPIKey: "ISPubKey_test_e767a17c-5afd-4a1b-8754-9415379df6b6", // Use your test/live key
-                live: false // set to true when going live
-            })
-            .on("COMPLETE", (results) => {
-                // Redirect to callback page
-                window.location.href = "payment_callback.php?bid=<?= $booking_id ?>";
-            })
-            .on("FAILED", (results) => { alert("Payment failed. Please try again."); })
-            .on("IN-PROGRESS", (results) => { /* Optionally show progress */ });
-        </script>
+        <form method="POST">
+            <label for="phone">Phone Number (for payment):</label>
+            <input type="text" name="phone" id="phone" value="<?= htmlspecialchars($booking['employee_phone']) ?>" required>
+            <button type="submit" class="btn">Pay KES 5 with IntaSend</button>
+        </form>
     <?php endif; ?>
 </div>
 
