@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $stmt = $conn->prepare("SELECT * FROM employees WHERE email = ?");
+    $stmt = $conn->prepare("SELECT * FROM employees WHERE Email = ?");
     $stmt->execute([$email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -21,8 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } elseif (!password_verify($password, $user['Password_hash'])) {
             $errors[] = "Password does not match.";
         } else {
-            $_SESSION['employee_id'] = $user['id'];
-            $_SESSION['employee_name'] = $user['name'];
+            $_SESSION['employee_id'] = $user['ID'];
+            $_SESSION['employee_name'] = $user['Name'];
             header("Location: employee_dashboard.php");
             exit();
         }
