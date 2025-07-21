@@ -162,6 +162,8 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
       align-items: center !important;
     }
     
+    /* Override main styles.css navigation */
+    header .nav-links li a,
     .nav-btn {
       background: linear-gradient(90deg, #197b88 0%, #1ec8c8 100%) !important;
       color: #fff !important;
@@ -177,12 +179,22 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
       cursor: pointer !important;
     }
     
-    .nav-btn:hover, .nav-btn:focus {
+    header .nav-links li a:hover,
+    header .nav-links li a:focus,
+    .nav-btn:hover, 
+    .nav-btn:focus {
       background: linear-gradient(90deg, #17606e 0%, #1ec8c8 100%) !important;
       color: #ffd700 !important;
       box-shadow: 0 4px 16px rgba(24,123,136,0.16) !important;
       outline: none !important;
       border-color: #125a66 !important;
+    }
+    
+    /* Ensure nav links don't inherit styles from index page */
+    header .nav-links li a.nav-btn {
+      background: linear-gradient(90deg, #197b88 0%, #1ec8c8 100%) !important;
+      color: #fff !important;
+      text-decoration: none !important;
     }
     
     /* Footer styling */
@@ -473,6 +485,23 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
       opacity: 1 !important;
     }
     
+    /* Override any styles from the landing page */
+    header .nav-links li a {
+      color: #fff !important;
+      text-decoration: none !important;
+      background: linear-gradient(90deg, #197b88 0%, #1ec8c8 100%) !important;
+      padding: 10px 22px !important;
+      border-radius: 8px !important;
+      font-weight: 600 !important;
+      margin: 0 6px !important;
+      transition: background 0.2s !important;
+    }
+    
+    header .nav-links li a:hover {
+      background: linear-gradient(90deg, #17606e 0%, #1ec8c8 100%) !important;
+      color: #ffd700 !important;
+    }
+    
     /* Fix for mobile responsiveness */
     @media (max-width: 768px) {
       .nav-links {
@@ -499,6 +528,7 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
   <nav class="main-nav">
     <ul class="nav-links">
       <li><span class="user-greeting">Hello, <?= htmlspecialchars($_SESSION['employer_name']) ?></span></li>
+      <li><a class="nav-btn" href="employer_dashboard.php">Dashboard</a></li>
       <li><a class="nav-btn" href="post_job.php">Post Job</a></li>
       <li><a class="nav-btn" href="manage_jobs.php">My Jobs</a></li>
       <li><a class="nav-btn" href="employer_bookings.php">My Bookings</a></li>
