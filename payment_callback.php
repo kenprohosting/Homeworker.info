@@ -25,7 +25,7 @@ if ($booking_id) {
     if ($checkout_request_id) {
         $ch = curl_init("https://api.intasend.com/api/v1/checkout/" . urlencode($checkout_request_id) . "/");
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            "Authorization: Bearer $api_key",
+            "Authorization: Bearer $publishable_key",
             "Content-Type: application/json"
         ]);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
