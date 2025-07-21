@@ -892,3 +892,37 @@ footer {
 }
 
 
+/* Hide hamburger on large screens */
+#hamburger {
+  display: none;
+}
+
+/* Show hamburger only on mobile */
+@media (max-width: 768px) {
+  #hamburger {
+    display: block;
+    font-size: 30px;
+    color: white;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    z-index: 1001;
+    cursor: pointer;
+  }
+
+  #navLinks {
+    display: none;
+    flex-direction: column;
+    background-color: #004e7c;
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    z-index: 1000;
+  }
+
+  #navLinks.show {
+    display: flex;
+  }
+}

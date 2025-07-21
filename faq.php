@@ -19,6 +19,8 @@ $isLoggedIn = isset($_SESSION['employer_name']);
   <div class="logo">
     <img src="bghse.png" alt="Logo" style="height: 40px;">
   </div>
+  <div id="hamburger">☰</div>
+ <div id="navLinks">
   <nav class="main-nav">
     <ul class="nav-links">
       <li><a class="nav-btn" href="index.php">Home</a></li>
@@ -27,6 +29,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
       <li><a class="nav-btn" href="faq.php">FAQ</a></li>
     </ul>
   </nav>
+ </div>
 </header>
 <main>
   <div class="faq-container">
@@ -58,5 +61,6 @@ $isLoggedIn = isset($_SESSION['employer_name']);
 <footer>
   <p>&copy; <?= date("Y") ?> Homeworker Connect. All rights reserved.</p>
 </footer>
+<script src="hamburger.js"></script>
 </body>
 </html> 
