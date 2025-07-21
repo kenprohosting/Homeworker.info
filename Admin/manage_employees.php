@@ -12,7 +12,7 @@ if (isset($_POST['action'], $_POST['employee_id'])) {
     $employee_id = $_POST['employee_id'];
     $action = $_POST['action'];
     if ($action === 'delete') {
-        $stmt = $conn->prepare('DELETE FROM employees WHERE id = ?');
+        $stmt = $conn->prepare('DELETE FROM employees WHERE ID = ?');
         if ($stmt->execute([$employee_id])) {
             $success = 'Employee deleted successfully.';
         } else {
@@ -20,7 +20,7 @@ if (isset($_POST['action'], $_POST['employee_id'])) {
         }
     } elseif (in_array($action, ['activate', 'deactivate'])) {
         $new_status = $action === 'activate' ? 'active' : 'inactive';
-        $stmt = $conn->prepare('UPDATE employees SET status = ? WHERE id = ?');
+        $stmt = $conn->prepare('UPDATE employees SET Status = ? WHERE ID = ?');
         if ($stmt->execute([$new_status, $employee_id])) {
             $success = 'Employee status updated.';
         } else {
@@ -29,7 +29,7 @@ if (isset($_POST['action'], $_POST['employee_id'])) {
     }
 }
 // Fetch all employees
-$stmt = $conn->query('SELECT * FROM employees ORDER BY created_at DESC');
+$stmt = $conn->query('SELECT * FROM employees ORDER BY Created_at DESC');
 $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
@@ -54,19 +54,19 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <tbody>
         <?php foreach ($employees as $emp): ?>
             <tr>
-                <td><?= $emp['id'] ?></td>
-                <td><?= htmlspecialchars($emp['name']) ?></td>
-                <td><?= htmlspecialchars($emp['email']) ?></td>
-                <td><?= htmlspecialchars($emp['status']) ?></td>
-                <td><?= htmlspecialchars($emp['created_at']) ?></td>
+                <td><?= $emp['ID'] ?></td>
+                <td><?= htmlspecialchars($emp['Name']) ?></td>
+                <td><?= htmlspecialchars($emp['Email']) ?></td>
+                <td><?= htmlspecialchars($emp['Status']) ?></td>
+                <td><?= htmlspecialchars($emp['Created_at']) ?></td>
                 <td>
                     <form method="POST" style="display:inline;">
-                        <input type="hidden" name="employee_id" value="<?= $emp['id'] ?>">
-                        <input type="hidden" name="action" value="<?= $emp['status'] === 'active' ? 'deactivate' : 'activate' ?>">
-                        <button type="submit"><?= $emp['status'] === 'active' ? 'Deactivate' : 'Activate' ?></button>
+                        <input type="hidden" name="employee_id" value="<?= $emp['ID'] ?>">
+                        <input type="hidden" name="action" value="<?= $emp['Status'] === 'active' ? 'deactivate' : 'activate' ?>">
+                        <button type="submit"><?= $emp['Status'] === 'active' ? 'Deactivate' : 'Activate' ?></button>
                     </form>
                     <form method="POST" style="display:inline;">
-                        <input type="hidden" name="employee_id" value="<?= $emp['id'] ?>">
+                        <input type="hidden" name="employee_id" value="<?= $emp['ID'] ?>">
                         <input type="hidden" name="action" value="delete">
                         <button type="submit" onclick="return confirm('Delete this employee?')">Delete</button>
                     </form>
