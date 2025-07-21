@@ -15,8 +15,7 @@ $employee = null;
 $payment_success = false;
 
 // IntaSend API keys
-$api_key = "ISSecretKey_test_f34b63be-83ef-4a36-a377-6607136d1ee0";
-$publishable_key = "ISPubKey_test_b46261c4-f53f-4986-9b98-566767bc6434";
+$publishable_key = "ISPubKey_live_40f25458-716c-47c5-b049-786fd1f3a1ce";
 
 // IntaSend returns a 'checkout_request_id' in the callback URL
 $checkout_request_id = isset($_GET['checkout_request_id']) ? $_GET['checkout_request_id'] : null;
