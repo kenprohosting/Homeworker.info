@@ -1,0 +1,2 @@
+ALTER TABLE agents ADD COLUMN national_id VARCHAR(50) NOT NULL AFTER email;
+ALTER TABLE employees ADD COLUMN National_id VARCHAR(50) NOT NULL AFTER Email;
