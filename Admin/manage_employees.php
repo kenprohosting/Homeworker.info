@@ -29,7 +29,7 @@ if (isset($_POST['action'], $_POST['employee_id'])) {
     }
 }
 // Fetch all employees
-$stmt = $conn->query('SELECT id, name, email, national_id, status, created_at FROM employees ORDER BY created_at DESC');
+$stmt = $conn->query('SELECT ID, Name, Email, National_id, Status, Created_at FROM employees ORDER BY Created_at DESC');
 $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
@@ -54,12 +54,12 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <tbody>
         <?php foreach ($employees as $emp): ?>
             <tr>
-                <td><?= htmlspecialchars($emp['id']) ?></td>
-                <td><?= htmlspecialchars($emp['name']) ?></td>
-                <td><?= htmlspecialchars($emp['email']) ?></td>
-                <td><?= htmlspecialchars($emp['national_id']) ?></td>
-                <td><?= htmlspecialchars($emp['status']) ?></td>
-                <td><?= htmlspecialchars($emp['created_at']) ?></td>
+                <td><?= htmlspecialchars($emp['ID']) ?></td>
+                <td><?= htmlspecialchars($emp['Name']) ?></td>
+                <td><?= htmlspecialchars($emp['Email']) ?></td>
+                <td><?= htmlspecialchars($emp['National_id']) ?></td>
+                <td><?= htmlspecialchars($emp['Status']) ?></td>
+                <td><?= htmlspecialchars($emp['Created_at']) ?></td>
                 <td>
                     <form method="POST" style="display:inline;">
                         <input type="hidden" name="employee_id" value="<?= $emp['ID'] ?>">
