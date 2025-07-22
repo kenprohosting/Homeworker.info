@@ -11,6 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $registration_code = trim($_POST['registration_code']);
     $name = trim($_POST['name']);
     $phone = trim($_POST['phone']);
+    $national_id = trim($_POST['national_id']);
     $email = trim($_POST['email']);
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
@@ -18,6 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Validation
     if (empty($agent_id) || empty($registration_code) || empty($name) || empty($phone) || empty($email) || empty($password)) {
         $error = 'All fields are required';
+    } elseif (empty($national_id)) {
+        $error = 'National ID/Passport Number is required';
     } elseif ($password !== $confirm_password) {
         $error = 'Passwords do not match';
     } elseif (strlen($password) < 6) {
@@ -61,7 +64,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         
                         // Insert agent with specific ID
                         $stmt = $conn->prepare("INSERT INTO agents (id, name, phone, email, password) VALUES (?, ?, ?, ?, ?)");
-                        $success_insert = $stmt->execute([$agent_id, $name, $phone, $email, $hashed_password]);
+                        $stmt = $conn->prepare("INSERT INTO agents (id, name, phone, email, national_id, password) VALUES (?, ?, ?, ?, ?, ?)");
+                        $success_insert = $stmt->execute([$agent_id, $name, $phone, $email, $national_id, $hashed_password]);
                         
                         if ($success_insert) {
                             // Mark the registration code as used
@@ -107,6 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <p style="background: #e6f4ea; color: #2e7d32; padding: 8px 12px; border-radius: 8px; margin: 0; text-align: center;"><?= $success ?></p>
         <?php endif; ?>
         <form method="POST" action="" style="display: flex; flex-direction: column; gap: 12px;">
+            <input type="text" name="national_id" placeholder="National ID/Passport Number" value="<?= isset($_POST['national_id']) ? htmlspecialchars($_POST['national_id']) : '' ?>" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
             <input type="text" name="registration_code" placeholder="Registration Code" value="<?= isset($_POST['registration_code']) ? htmlspecialchars($_POST['registration_code']) : '' ?>" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
             <small style="color: #666; margin: -8px 0 0; font-size: 0.8rem;">Enter the registration code provided by the company</small>
             <input type="number" name="agent_id" placeholder="Agent ID" value="<?= isset($_POST['agent_id']) ? htmlspecialchars($_POST['agent_id']) : '' ?>" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">

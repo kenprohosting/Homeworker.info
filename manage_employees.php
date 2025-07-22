@@ -161,20 +161,21 @@ $employees = $stmt;
                 <li><a href="employee_register.php">Register Employee</a></li>
                 <li><a href="agent_logout.php" class="logout-btn">Logout</a></li>
             </ul>
-        </nav>
-    </header>
-
-    <div class="container">
-        <div class="page-header">
-            <h1>Manage Employees</h1>
-            <a href="employee_register.php" class="btn">Register New Employee</a>
-        </div>
-
-        <?php if ($success): ?>
-            <p class="success"><?= $success ?></p>
-        <?php endif; ?>
-        
-        <?php if ($error): ?>
+        <thead>
+            <tr>
+                <th>ID</th><th>Name</th><th>Email</th><th>National ID</th><th>Status</th><th>Registered</th><th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($employees as $emp): ?>
+            <tr>
+                <td><?= $emp['ID'] ?></td>
+                <td><?= htmlspecialchars($emp['Name']) ?></td>
+                <td><?= htmlspecialchars($emp['Email']) ?></td>
+                <td><?= htmlspecialchars($emp['National_id']) ?></td>
+                <td><?= htmlspecialchars($emp['Status']) ?></td>
+                <td><?= htmlspecialchars($emp['Created_at']) ?></td>
+                <td>
             <p class="error"><?= $error ?></p>
         <?php endif; ?>
 

@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $gender = $_POST['gender'];
     $age = intval($_POST['age']);
     $phone = trim($_POST['phone']);
-    // Replace location with country and county_province
+    $national_id = trim($_POST['national_id']);
     $country = trim($_POST['country']);
     $county_province = trim($_POST['county_province']);
     $skills = trim($_POST['skills']);
@@ -36,6 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validate required fields
     if (!$name || !$gender || $age < 18 || !$phone || !$country || !$county_province || !$skills || !$education_level || !$email || !$password || !$residence_type) {
         $error = 'Please fill in all required fields and ensure age is 18 or above.';
+    } elseif (empty($national_id)) {
+        $error = 'National ID/Passport Number is required';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = 'Invalid email address.';
     } elseif (strlen($password) < 6) {
@@ -78,8 +80,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
             // Insert into database
             $stmt = $conn->prepare("INSERT INTO employees (name, gender, age, phone, country, county_province, skills, experience, education_level, social_referee, language, email, password_hash, residence_type, verification_status, created_at, agent_id, id_passport, Profile_pic, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO employees (name, gender, age, phone, National_id, country, county_province, skills, experience, education_level, social_referee, language, email, password_hash, residence_type, verification_status, created_at, agent_id, id_passport, Profile_pic, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $result = $stmt->execute([
-                $name, $gender, $age, $phone, $country, $county_province, $skills, $experience, $education_level, $social_referee, $language, $email, $password_hash, $residence_type, $verification_status, $created_at, $agent_id, $fileName, $profile_pic_path, $status
+                $name, $gender, $age, $phone, $national_id, $country, $county_province, $skills, $experience, $education_level, $social_referee, $language, $email, $password_hash, $residence_type, $verification_status, $created_at, $agent_id, $fileName, $profile_pic_path, $status
             ]);
             if ($result) {
                 $success = 'Employee registered successfully!';
@@ -262,6 +265,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p class="success-message"><?= htmlspecialchars($success) ?></p>
         <?php endif; ?>
         <form method="POST" action="" enctype="multipart/form-data" autocomplete="off">
+            <div class="form-group">
+                <label for="national_id">National ID/Passport Number</label>
+                <input type="text" name="national_id" id="national_id" required value="<?= isset($_POST['national_id']) ? htmlspecialchars($_POST['national_id']) : '' ?>">
+            </div>
             <div class="form-group">
                 <label for="name">Full Name</label>
                 <input type="text" name="name" id="name" required value="<?= isset($_POST['name']) ? htmlspecialchars($_POST['name']) : '' ?>">

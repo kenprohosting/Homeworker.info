@@ -184,6 +184,7 @@ $agents = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <th>Agent ID</th>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>National ID</th>
                             <th>Phone</th>
                             <th>Registered</th>
                             <th>Actions</th>
@@ -195,6 +196,7 @@ $agents = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <td class="agent-id"><?= htmlspecialchars($agent['id']) ?></td>
                                 <td><strong><?= htmlspecialchars($agent['name']) ?></strong></td>
                                 <td><?= htmlspecialchars($agent['email']) ?></td>
+                                <td><?= htmlspecialchars($agent['national_id']) ?></td>
                                 <td><?= htmlspecialchars($agent['phone']) ?></td>
                                 <td><?= date('M j, Y', strtotime($agent['created_at'])) ?></td>
                                 <td>
