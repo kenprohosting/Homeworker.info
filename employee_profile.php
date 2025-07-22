@@ -353,48 +353,48 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label>Name:</label>
-                <input name="name" value="<?= htmlspecialchars($employee['name'] ?? '') ?>" required>
+                <input name="name" value="<?= htmlspecialchars($employee['Name'] ?? '') ?>" required>
             </div>
 
             <div class="form-group">
                 <label>Age:</label>
-                <input type="number" name="age" value="<?= htmlspecialchars($employee['age'] ?? '') ?>" required>
+                <input type="number" name="age" value="<?= htmlspecialchars($employee['Age'] ?? '') ?>" required>
             </div>
 
             <div class="form-group">
                 <label>Skills:</label>
-                <textarea name="skills" required><?= htmlspecialchars($employee['skills'] ?? '') ?></textarea>
+                <textarea name="skills" required><?= htmlspecialchars($employee['Skills'] ?? '') ?></textarea>
             </div>
 
             <div class="form-group">
                 <label>Country:</label>
-                <input name="country" value="<?= htmlspecialchars($employee['country'] ?? '') ?>" required>
+                <input name="country" value="<?= htmlspecialchars($employee['Country'] ?? '') ?>" required>
             </div>
 
             <div class="form-group">
                 <label>County/Province:</label>
-                <input name="county_province" value="<?= htmlspecialchars($employee['county_province'] ?? '') ?>" required>
+                <input name="county_province" value="<?= htmlspecialchars($employee['County_province'] ?? '') ?>" required>
             </div>
 
             <div class="form-group">
                 <label>Languages:</label>
                 <select name="language" required>
-                    <option <?= (isset($employee['language']) && $employee['language'] == 'English') ? 'selected' : '' ?>>English</option>
-                    <option <?= (isset($employee['language']) && $employee['language'] == 'Kiswahili') ? 'selected' : '' ?>>Kiswahili</option>
-                    <option <?= (isset($employee['language']) && $employee['language'] == 'Both') ? 'selected' : '' ?>>Both</option>
+                    <option <?= (isset($employee['Language']) && $employee['Language'] == 'English') ? 'selected' : '' ?>>English</option>
+                    <option <?= (isset($employee['Language']) && $employee['Language'] == 'Kiswahili') ? 'selected' : '' ?>>Kiswahili</option>
+                    <option <?= (isset($employee['Language']) && $employee['Language'] == 'Both') ? 'selected' : '' ?>>Both</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label>Education Level:</label>
-                <input name="education" value="<?= htmlspecialchars($employee['education_level'] ?? '') ?>" required>
+                <input name="education" value="<?= htmlspecialchars($employee['Education_level'] ?? '') ?>" required>
             </div>
 
             <div class="form-group">
                 <label>Residence Type:</label>
                 <select name="residence_type" required>
-                    <option <?= (isset($employee['residence_type']) && $employee['residence_type'] == 'urban') ? 'selected' : '' ?>>urban</option>
-                    <option <?= (isset($employee['residence_type']) && $employee['residence_type'] == 'rural') ? 'selected' : '' ?>>rural</option>
+                    <option <?= (isset($employee['Residence_type']) && $employee['Residence_type'] == 'urban') ? 'selected' : '' ?>>urban</option>
+                    <option <?= (isset($employee['Residence_type']) && $employee['Residence_type'] == 'rural') ? 'selected' : '' ?>>rural</option>
                 </select>
             </div>
 
