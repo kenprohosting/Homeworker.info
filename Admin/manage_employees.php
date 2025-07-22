@@ -29,7 +29,7 @@ if (isset($_POST['action'], $_POST['employee_id'])) {
     }
 }
 // Fetch all employees
-$stmt = $conn->query('SELECT * FROM employees ORDER BY Created_at DESC');
+$stmt = $conn->query('SELECT ID, Name, Email, National_id, Status, Created_at FROM employees ORDER BY Created_at DESC');
 $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>

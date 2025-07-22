@@ -30,7 +30,7 @@ if (isset($_POST['action']) && isset($_POST['agent_id'])) {
 }
 
 // Get all agents
-$stmt = $conn->prepare("SELECT id, name, email, phone, created_at FROM agents ORDER BY created_at DESC");
+$stmt = $conn->prepare("SELECT id, name, email, national_id, phone, created_at FROM agents ORDER BY created_at DESC");
 $stmt->execute();
 $agents = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
