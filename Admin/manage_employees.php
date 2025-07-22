@@ -48,7 +48,7 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
             <tr>
-                <th>ID</th><th>Name</th><th>Email</th><th>National ID</th><th></th>Status</th><th>Registered</th><th>Actions</th>
+                <th>ID</th><th>Name</th><th>Email</th><th>National ID</th><th>Status</th><th>Registered</th><th>Actions</th>
             </tr>
         </thead>
         <tbody>
