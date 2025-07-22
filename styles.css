@@ -189,10 +189,22 @@ header {
   max-width: 500px;
   margin: 40px auto;
   background: #fff;
-  padding: 25px 30px;
+  padding: 20px 20px 32px 20px !important;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  height: fit-content !important;
+  min-height: unset !important;
+}
+.form-container > * {
+  margin-bottom: 0 !important;
+}
+.form-container form {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+.form-container p {
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .form-container h2 {
@@ -579,7 +591,7 @@ th {
 }
 
 /* Main Content Area */
-main, .container, .form-container, .contact-container, .faq-container {
+main, .container, .contact-container, .faq-container {
   flex: 1;
 }
 
