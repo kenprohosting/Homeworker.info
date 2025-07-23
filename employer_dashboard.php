@@ -704,6 +704,8 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     <?php foreach ($employee as $emp): ?>
       <div class="card">
         <?php
+          // Reset the skipImg variable for each employee card
+          $skipImg = false;
           $profilePic = $emp['Profile_pic'] ?? '';
           if (!empty($profilePic) && file_exists($profilePic)) {
               $imgSrc = htmlspecialchars($profilePic);
@@ -720,7 +722,7 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
               $skipImg = true;
           }
         ?>
-        <?php if (!isset($skipImg)): ?>
+        <?php if (!$skipImg): ?>
         <img src="<?= $imgSrc ?>" alt="Profile Picture">
         <?php endif; ?>
         <h3><?= htmlspecialchars($emp['Name'] ?? 'N/A') ?> (<?= $emp['Age'] ?? 'N/A' ?>)</h3>
