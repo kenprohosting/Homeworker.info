@@ -232,6 +232,73 @@ $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
             visibility: visible !important;
             opacity: 1 !important;
         }
+        .hamburger {
+          display: none;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          width: 44px;
+          height: 44px;
+          background: none;
+          border: none;
+          cursor: pointer;
+          margin-left: auto;
+          z-index: 1002;
+        }
+        .hamburger .bar {
+          width: 28px;
+          height: 3px;
+          background: #fff;
+          margin: 4px 0;
+          border-radius: 2px;
+          transition: 0.3s;
+          display: block;
+        }
+        @media (max-width: 900px) {
+          .hamburger {
+            display: flex;
+          }
+          .main-nav {
+            width: 100%;
+          }
+          .nav-links {
+            display: none !important;
+            flex-direction: column;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            left: 0;
+            background: #0A4A70;
+            z-index: 1001;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            padding: 18px 0 10px 0;
+            border-radius: 0 0 12px 12px;
+            gap: 0;
+            margin: 0;
+            width: 100vw;
+            min-width: 0;
+          }
+          .nav-links.show {
+            display: flex !important;
+          }
+          .nav-links li {
+            width: 100%;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+          }
+          .nav-links li a, .nav-links li span {
+            display: block;
+            width: 100%;
+            padding: 14px 0;
+            margin: 0;
+            border-radius: 0;
+            border-bottom: 1px solid #197b88;
+          }
+          .nav-links li:last-child a {
+            border-bottom: none;
+          }
+        }
     </style>
 </head>
 <body>
@@ -240,11 +307,18 @@ $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="logo">
         <img src="bghse.png" alt="Logo" style="height: 40px;">
     </div>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Open navigation" aria-expanded="false" aria-controls="mainNav" type="button">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
     <nav class="main-nav">
-        <ul class="nav-links">
+        <ul class="nav-links" id="mainNav">
             <li><span class="user-greeting">Hello, <?= htmlspecialchars($_SESSION['employer_name']) ?></span></li>
             <li><a class="nav-btn" href="employer_dashboard.php">Dashboard</a></li>
             <li><a class="nav-btn" href="post_job.php">Post Job</a></li>
+            <li><a class="nav-btn" href="manage_jobs.php">My Jobs</a></li>
+            <li><a class="nav-btn" href="employer_bookings.php">My Bookings</a></li>
             <li><a class="nav-btn" href="employer_logout.php">Logout</a></li>
         </ul>
     </nav>
@@ -318,5 +392,24 @@ $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <p>&copy; <?= date("Y") ?> Homeworker Connect. All rights reserved.</p>
 </footer>
 
+<script>
+// Hamburger menu toggle
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const navLinks = document.getElementById('mainNav');
+hamburgerBtn.addEventListener('click', function() {
+  const expanded = hamburgerBtn.getAttribute('aria-expanded') === 'true';
+  hamburgerBtn.setAttribute('aria-expanded', !expanded);
+  navLinks.classList.toggle('show');
+});
+// Close menu when clicking outside (mobile only)
+document.addEventListener('click', function(e) {
+  if (window.innerWidth <= 900 && navLinks.classList.contains('show')) {
+    if (!navLinks.contains(e.target) && e.target !== hamburgerBtn && !hamburgerBtn.contains(e.target)) {
+      navLinks.classList.remove('show');
+      hamburgerBtn.setAttribute('aria-expanded', 'false');
+    }
+  }
+});
+</script>
 </body>
 </html> 

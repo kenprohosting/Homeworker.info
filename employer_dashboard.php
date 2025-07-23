@@ -503,18 +503,148 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     }
     
     /* Fix for mobile responsiveness */
+    @media (max-width: 900px) {
+      .card-grid {
+        grid-template-columns: 1fr;
+        padding: 0 5px;
+      }
+      .form-container {
+        padding: 16px 2vw;
+      }
+      .card {
+        padding: 18px 6px;
+      }
+    }
     @media (max-width: 768px) {
       .nav-links {
         flex-direction: column;
         width: 100%;
         gap: 10px;
       }
-      
       .nav-btn {
         width: 100%;
         text-align: center;
         margin: 0;
         padding: 12px 20px;
+      }
+      .form-container {
+        padding: 10px 2vw;
+        width: 100vw;
+        margin-left: 0;
+      }
+      .filter-form {
+        flex-wrap: wrap;
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+      }
+      .filter-form input, .filter-form select, .filter-form button {
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+      }
+      .card-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        padding: 0 2px;
+      }
+      .card {
+        padding: 14px 4px;
+      }
+      .card img {
+        width: 90px;
+        height: 90px;
+      }
+      h2 {
+        font-size: 1.3rem;
+        margin-bottom: 18px;
+      }
+    }
+    @media (max-width: 480px) {
+      .form-container {
+        padding: 4px 1vw;
+      }
+      .card {
+        padding: 8px 2px;
+      }
+      .card img {
+        width: 70px;
+        height: 70px;
+      }
+      h2 {
+        font-size: 1.1rem;
+      }
+      .filter-form input, .filter-form select, .filter-form button {
+        font-size: 13px;
+        height: 36px;
+        padding: 7px 8px;
+      }
+    }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 44px;
+      height: 44px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-left: auto;
+      z-index: 1002;
+    }
+    .hamburger .bar {
+      width: 28px;
+      height: 3px;
+      background: #fff;
+      margin: 4px 0;
+      border-radius: 2px;
+      transition: 0.3s;
+      display: block;
+    }
+    @media (max-width: 900px) {
+      .hamburger {
+        display: flex;
+      }
+      .main-nav {
+        width: 100%;
+      }
+      .nav-links {
+        display: none !important;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        left: 0;
+        background: #0A4A70;
+        z-index: 1001;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        padding: 18px 0 10px 0;
+        border-radius: 0 0 12px 12px;
+        gap: 0;
+        margin: 0;
+        width: 100vw;
+        min-width: 0;
+      }
+      .nav-links.show {
+        display: flex !important;
+      }
+      .nav-links li {
+        width: 100%;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+      }
+      .nav-links li a, .nav-links li span {
+        display: block;
+        width: 100%;
+        padding: 14px 0;
+        margin: 0;
+        border-radius: 0;
+        border-bottom: 1px solid #197b88;
+      }
+      .nav-links li:last-child a {
+        border-bottom: none;
       }
     }
   </style>
@@ -525,8 +655,13 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
   <div class="logo">
     <img src="bghse.png" alt="Logo" style="height: 40px;">
   </div>
+  <button class="hamburger" id="hamburgerBtn" aria-label="Open navigation" aria-expanded="false" aria-controls="mainNav" type="button">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </button>
   <nav class="main-nav">
-    <ul class="nav-links">
+    <ul class="nav-links" id="mainNav">
       <li><span class="user-greeting">Hello, <?= htmlspecialchars($_SESSION['employer_name']) ?></span></li>
       <li><a class="nav-btn" href="employer_dashboard.php">Dashboard</a></li>
       <li><a class="nav-btn" href="post_job.php">Post Job</a></li>
@@ -845,6 +980,24 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
   document.addEventListener("click", function (e) {
     if (!countryList.contains(e.target) && e.target !== countryInput) {
       countryList.style.display = "none";
+    }
+  });
+
+  // Hamburger menu toggle
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const navLinks = document.getElementById('mainNav');
+  hamburgerBtn.addEventListener('click', function() {
+    const expanded = hamburgerBtn.getAttribute('aria-expanded') === 'true';
+    hamburgerBtn.setAttribute('aria-expanded', !expanded);
+    navLinks.classList.toggle('show');
+  });
+  // Close menu when clicking outside (mobile only)
+  document.addEventListener('click', function(e) {
+    if (window.innerWidth <= 900 && navLinks.classList.contains('show')) {
+      if (!navLinks.contains(e.target) && e.target !== hamburgerBtn && !hamburgerBtn.contains(e.target)) {
+        navLinks.classList.remove('show');
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+      }
     }
   });
 </script>
