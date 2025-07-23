@@ -14,9 +14,9 @@ $profile_sql = "SELECT Profile_pic FROM employees WHERE ID = ?";
 $profile_stmt = $conn->prepare($profile_sql);
 $profile_stmt->execute([$employee_id]);
 $profile_data = $profile_stmt->fetch(PDO::FETCH_ASSOC);
-$profile_pic_path = (!empty($profile_data['Profile_pic']) && file_exists($profile_data['Profile_pic']))
-    ? $profile_data['Profile_pic']
-    : 'uploads/default.jpg'; // fallback image
+// Store the profile pic path if it exists
+$has_profile_pic = (!empty($profile_data['Profile_pic']) && file_exists($profile_data['Profile_pic']));
+$profile_pic_path = $has_profile_pic ? $profile_data['Profile_pic'] : '';
 
 // Confirm or Cancel Booking
 if (isset($_GET['action'], $_GET['bid']) && in_array($_GET['action'], ['confirm', 'cancel'])) {
@@ -335,7 +335,19 @@ $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <li><a class="nav-btn" href="my_applications.php">My Applications</a></li>
             <li><a class="nav-btn" href="employee_profile.php">Update Profile</a></li>
             <li><a class="nav-btn" href="employee_logout.php">Logout</a></li>
-            <li><img src="<?= htmlspecialchars($profile_pic_path) ?>" class="profile-img" alt="Profile Pic"></li>
+            <li>
+                <?php if ($has_profile_pic): ?>
+                    <img src="<?= htmlspecialchars($profile_pic_path) ?>" class="profile-img" alt="Profile Pic">
+                <?php else: ?>
+                    <svg width="40" height="40" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" class="profile-img" style="width:40px;height:40px;border-radius:50%;object-fit:cover;">
+                        <rect width="120" height="120" fill="#197b88" rx="60"/>
+                        <g fill="#ffffff" opacity="0.8">
+                            <circle cx="60" cy="40" r="18"/>
+                            <path d="M30 100 C30 85, 42 75, 60 75 C78 75, 90 85, 90 100 L30 100 Z"/>
+                        </g>
+                    </svg>
+                <?php endif; ?>
+            </li>
         </ul>
     </nav>
 </header>

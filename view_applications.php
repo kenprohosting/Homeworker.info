@@ -331,14 +331,19 @@ $applications = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="application-card <?= $app['Status'] ?>">
                     <div class="application-header">
                         <?php
-                            $profile = 'uploads/default.jpg';
-                            if (!empty($app['profile_pic'])) {
-                                if (file_exists(__DIR__ . '/' . $app['profile_pic'])) {
-                                    $profile = $app['profile_pic'];
-                                }
+                            if (!empty($app['profile_pic']) && file_exists(__DIR__ . '/' . $app['profile_pic'])) {
+                                echo '<img src="' . htmlspecialchars($app['profile_pic']) . '" alt="Profile Picture" class="profile-pic">';
+                            } else {
+                                // Use an embedded SVG placeholder
+                                echo '<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" class="profile-pic" style="width:60px;height:60px;border-radius:50%;object-fit:cover;">
+                                    <rect width="120" height="120" fill="#197b88" rx="60"/>
+                                    <g fill="#ffffff" opacity="0.8">
+                                        <circle cx="60" cy="40" r="18"/>
+                                        <path d="M30 100 C30 85, 42 75, 60 75 C78 75, 90 85, 90 100 L30 100 Z"/>
+                                    </g>
+                                </svg>';
                             }
                         ?>
-                        <img src="<?= htmlspecialchars($profile) ?>" alt="Profile Picture" class="profile-pic">
                         <div class="employee-info">
                             <h3><?= htmlspecialchars($app['employee_name']) ?> (<?= $app['Age'] ?>)</h3>
                             <p>Applied <?= date('M j, Y', strtotime($app['Applied_at'])) ?></p>

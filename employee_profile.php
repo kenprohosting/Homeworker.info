@@ -347,7 +347,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ?>
             <img src="<?= htmlspecialchars($profilePath) ?>" alt="Profile Picture" class="profile-pic">
         <?php else: ?>
-            <img src="uploads/default.jpg" class="profile-pic" alt="Default Picture">
+            <svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" class="profile-pic" style="width:120px;height:120px;border-radius:50%;object-fit:cover;margin:0 auto 20px auto;display:block;">
+                <rect width="120" height="120" fill="#197b88" rx="60"/>
+                <g fill="#ffffff" opacity="0.8">
+                    <circle cx="60" cy="40" r="18"/>
+                    <path d="M30 100 C30 85, 42 75, 60 75 C78 75, 90 85, 90 100 L30 100 Z"/>
+                </g>
+            </svg>
         <?php endif; ?>
 
         <form method="POST" enctype="multipart/form-data">

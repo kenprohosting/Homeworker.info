@@ -573,10 +573,21 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
           if (!empty($profilePic) && file_exists($profilePic)) {
               $imgSrc = htmlspecialchars($profilePic);
           } else {
-              $imgSrc = 'placeholder-profile.svg';
+              // Use an embedded SVG placeholder instead of relying on an external file
+              echo '<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" style="width:120px;height:120px;border-radius:8px;margin-bottom:20px;box-shadow:0 4px 15px rgba(24,123,136,0.2);">
+                <rect width="120" height="120" fill="#197b88" rx="8"/>
+                <g fill="#ffffff" opacity="0.8">
+                  <circle cx="60" cy="40" r="18"/>
+                  <path d="M30 100 C30 85, 42 75, 60 75 C78 75, 90 85, 90 100 L30 100 Z"/>
+                </g>
+              </svg>';
+              // Skip the img tag since we're embedding the SVG directly
+              $skipImg = true;
           }
         ?>
+        <?php if (!isset($skipImg)): ?>
         <img src="<?= $imgSrc ?>" alt="Profile Picture">
+        <?php endif; ?>
         <h3><?= htmlspecialchars($emp['Name'] ?? 'N/A') ?> (<?= $emp['Age'] ?? 'N/A' ?>)</h3>
         <p><strong>Job Title:</strong> <?= htmlspecialchars($emp['Skills'] ?? 'N/A') ?></p>
         <p><strong>Country:</strong> <?= htmlspecialchars($emp['Country'] ?? 'N/A') ?></p>
