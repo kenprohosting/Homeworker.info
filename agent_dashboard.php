@@ -141,7 +141,6 @@ $recent_employees = $stmt;
         </div>
         <nav class="main-nav">
             <ul class="nav-links">
-                <li><a href="index.php">Home</a></li>
                 <li><a href="agent_dashboard.php">Dashboard</a></li>
                 <li><a href="agent_logout.php" class="logout-btn">Logout</a></li>
             </ul>
