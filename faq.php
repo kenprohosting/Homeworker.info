@@ -40,20 +40,40 @@ $isLoggedIn = isset($_SESSION['employer_name']);
         <div class="faq-a">Anyone in the world looking to hire or work as a domestic professional can use our platform.</div>
       </li>
       <li>
-        <div class="faq-q">How do I get started?</div>
-        <div class="faq-a">Simply register as an employer or employee, complete your profile, and start connecting!</div>
+        <div class="faq-q">How do I register as an employer?</div>
+        <div class="faq-a">Go to the employer registration page, fill in your details, pay the KES 10 registration fee via IntaSend, and complete your profile.</div>
       </li>
       <li>
-        <div class="faq-q">Is my information safe?</div>
-        <div class="faq-a">Yes, we use secure technology and strict privacy policies to protect your data.</div>
+        <div class="faq-q">How do I register as an agent?</div>
+        <div class="faq-a">Visit the agent registration page, provide your information, agree to the Agent Terms and Conditions, and submit your registration.</div>
       </li>
       <li>
-        <div class="faq-q">How do you verify workers?</div>
-        <div class="faq-a">We require ID/Passports checks and references for all workers before they are approved on the platform.</div>
+        <div class="faq-q">How does the matching process work?</div>
+        <div class="faq-a">Employers post job requirements, and verified workers or agents can apply. You can browse profiles and connect directly.</div>
+      </li>
+      <li>
+        <div class="faq-q">What payment methods are accepted?</div>
+        <div class="faq-a">We use IntaSend for secure payments, supporting M-Pesa and other methods for fees like registration and accessing contact details.</div>
+      </li>
+      <li>
+        <div class="faq-q">How is my information kept safe?</div>
+        <div class="faq-a">We use secure technology, encryption, and strict privacy policies to protect your data. Read our Privacy Policy for details.</div>
+      </li>
+      <li>
+        <div class="faq-q">How are workers verified?</div>
+        <div class="faq-a">We require ID/passport checks, references, and background verification before approving workers on the platform.</div>
+      </li>
+      <li>
+        <div class="faq-q">What if I encounter an issue with a worker or employer?</div>
+        <div class="faq-a">Contact our support team immediately. We have dispute resolution processes in place.</div>
       </li>
       <li>
         <div class="faq-q">How can I get support?</div>
-        <div class="faq-a">You can reach our support team via the Contact Us page or by emailing <a href="mailto:support@homeworkerconnect.info">support@homeworkerconnect.info</a>.</div>
+        <div class="faq-a">Reach our support team via the Contact Us page or email <a href="mailto:support@homeworkerconnect.info">support@homeworkerconnect.info</a>.</div>
+      </li>
+      <li>
+        <div class="faq-q">Can I update my profile after registration?</div>
+        <div class="faq-a">Yes, log in to your account and edit your profile information at any time.</div>
       </li>
     </ul>
   </div>
@@ -63,4 +83,4 @@ $isLoggedIn = isset($_SESSION['employer_name']);
 </footer>
 <script src="hamburger.js"></script>
 </body>
-</html> 
+</html>
