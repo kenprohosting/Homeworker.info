@@ -24,14 +24,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (empty($errors)) {
-        $stmt = $conn->prepare("INSERT INTO employer (Name, Country, Location, Residence_type, Contact, Gender, Email, Password_hash, Address) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $result = $stmt->execute([$name, $country, $location, $residence, $contact, $gender, $email, $password_hash, $address]);
-
-        if ($result) {
-            $success = "Registration successful. Please <a href='employer_login.php'>login</a>.";
-        } else {
-            $errors[] = "Registration failed. Please try again.";
-        }
+        // Store data in session
+        $_SESSION['employer_reg_data'] = [
+            'name' => $name,
+            'country' => $country,
+            'location' => $location,
+            'residence' => $residence,
+            'contact' => $contact,
+            'gender' => $gender,
+            'email' => $email,
+            'address' => $address,
+            'password_hash' => $password_hash
+        ];
+        header("Location: employer_register_payment.php");
+        exit();
     }
 }
 ?>
