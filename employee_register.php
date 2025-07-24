@@ -393,7 +393,11 @@ window.addEventListener('DOMContentLoaded', function() {
             </div>
             <input type="hidden" name="status" value="active">
             <input type="hidden" name="verification_status" value="pending">
-            <button type="submit" class="btn-pro">Register Employee</button>
+            <div class="form-group" style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: #333;">
+    <input type="checkbox" id="terms" name="terms" required style="cursor: pointer;">
+    <label for="terms">I agree to the <a href="terms_and_conditions.php" target="_blank" style="color: #197b88; text-decoration: underline;">Terms and Conditions</a></label>
+</div>
+<button type="submit" class="btn-pro">Register Employee</button>
         </form>
     </div>
     </main>
@@ -747,4 +751,4 @@ countryInput.addEventListener("input", function () {
   });
 </script>
 </body>
-</html> 
+</html>

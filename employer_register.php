@@ -127,7 +127,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           <input type="password" name="password" id="password" placeholder="Password" required style="padding: 12px 36px 12px 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s; width: 100%; box-sizing: border-box;">
           <span onclick="togglePassword('password', this)" style="position: absolute; top: 50%; right: 12px; transform: translateY(-50%); cursor: pointer; font-size: 1.2em;">&#128065;</span>
         </div>
-        <button type="submit" style="background: linear-gradient(135deg, #197b88, #1ec8c8); color: #fff; border: none; border-radius: 8px; padding: 12px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background 0.3s;">Register</button>
+        <div style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: #333;">
+    <input type="checkbox" id="terms" name="terms" required style="cursor: pointer;">
+    <label for="terms">I agree to the <a href="terms_and_conditions.php" target="_blank" style="color: #197b88; text-decoration: underline;">Terms and Conditions</a></label>
+</div>
+<button type="submit" style="background: linear-gradient(135deg, #197b88, #1ec8c8); color: #fff; border: none; border-radius: 8px; padding: 12px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background 0.3s;">Register</button>
     </form>
 
     <p style="text-align: center; margin: 0; font-size: 0.9rem;">
