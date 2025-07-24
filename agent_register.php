@@ -131,7 +131,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     &#128065;
                 </span>
             </div>
-            <button type="submit" style="background: linear-gradient(135deg, #197b88, #1ec8c8); color: #fff; border: none; border-radius: 8px; padding: 12px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background 0.3s;">Register as Agent</button>
+            <div style="display: flex; align-items: center; gap: 8px; margin-top: 12px;">
+    <input type="checkbox" name="terms" id="terms" required style="cursor: pointer;">
+    <label for="terms" style="color: #666; font-size: 0.9rem;">I agree to the <a href="agent_terms_and_conditions.php" target="_blank" style="color: #197b88; text-decoration: none;">Agent Terms and Conditions</a></label>
+</div>
+<button type="submit" style="background: linear-gradient(135deg, #197b88, #1ec8c8); color: #fff; border: none; border-radius: 8px; padding: 12px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background 0.3s;">Register as Agent</button>
         </form>
         <p style="text-align: center; margin: 0; font-size: 0.9rem;">
             Already have an account? <a href="agent_login.php" style="color: #197b88; text-decoration: none;">Login here</a>
