@@ -662,7 +662,7 @@ $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
 <footer>
-    <p>&copy; <?= date("Y") ?> Homeworker Connect. All rights reserved.</p>
+    <p>&copy; <?= date("Y") ?> Homeworker Connect. All rights reserved.</p> | <a href="privacy_policy.php" style="text-decoration: none; color: inherit;">Privacy Policy</a>
 </footer>
 
 <script>

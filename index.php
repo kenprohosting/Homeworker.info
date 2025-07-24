@@ -101,7 +101,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
 </section>
 
 <footer>
-  <p>&copy; <?= date("Y") ?> Homeworker Connect. All rights reserved.</p>
+  <p>&copy; <?= date("Y") ?> Homeworker Connect. All rights reserved.</p> | <a href="privacy_policy.php" style="text-decoration: none; color: inherit;">Privacy Policy</a>
 </footer>
 <script src="hamburger.js"></script>
 
