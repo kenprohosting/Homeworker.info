@@ -137,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <input type="checkbox" id="terms" name="terms" required style="cursor: pointer;">
     <label for="terms">I agree to the <a href="terms_and_conditions.php" target="_blank" style="color: #197b88; text-decoration: underline;">Terms and Conditions</a></label>
 </div>
-<button type="submit" style="background: linear-gradient(135deg, #197b88, #1ec8c8); color: #fff; border: none; border-radius: 8px; padding: 12px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background 0.3s;">Register</button>
+<button type="submit" style="background: linear-gradient(135deg, #197b88, #1ec8c8); color: #fff; border: none; border-radius: 8px; padding: 12px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background 0.3s;">Pay to Complete Registration</button>
     </form>
 
     <p style="text-align: center; margin: 0; font-size: 0.9rem;">
