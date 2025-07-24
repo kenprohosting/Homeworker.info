@@ -1,10 +1,29 @@
 <?php
+session_start();
 require_once('db_connect.php');
 
 $errors = [];
 $success = '';
+$name = '';
+$country = '';
+$location = '';
+$residence = '';
+$contact = '';
+$gender = '';
+$email = '';
+$address = '';
+$password = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $name = $_POST['name'] ?? '';
+    $country = $_POST['country'] ?? '';
+    $location = $_POST['location'] ?? '';
+    $residence = $_POST['residence'] ?? '';
+    $contact = $_POST['contact'] ?? '';
+    $gender = $_POST['gender'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $address = $_POST['address'] ?? '';
+    $password = $_POST['password'] ?? '';
     $name = $_POST['name'];
     $country = $_POST['country'];
     $location = $_POST['location'];
@@ -109,28 +128,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     ?>
 
     <form method="POST" style="display: flex; flex-direction: column; gap: 12px;">
-        <input type="text" name="name" placeholder="Full Name" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
+        <input type="text" name="name" placeholder="Full Name" value="<?php echo htmlspecialchars($name); ?>" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
         <div style="position: relative;">
-          <input type="text" id="countryInput" name="country" placeholder="Country" autocomplete="off" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
+          <input type="text" id="countryInput" name="country" placeholder="Country" value="<?php echo htmlspecialchars($country); ?>" autocomplete="off" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
           <ul id="countryList" class="country-dropdown" style="position: absolute; background: #fff; border: 1px solid #ccc; border-radius: 4px; max-height: 180px; overflow-y: auto; width: 100%; z-index: 9999; list-style: none; margin: 0; padding: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.08);"></ul>
         </div>
-        <input type="text" name="location" placeholder="county or province" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
+        <input type="text" name="location" placeholder="county or province" value="<?php echo htmlspecialchars($location); ?>" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
         <select name="residence" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
             <option value="">Residence Type</option>
-            <option value="urban">Urban</option>
-            <option value="rural">Rural</option>
+            <option value="urban" <?php if ($residence == 'urban') echo 'selected'; ?>>Urban</option>
+            <option value="rural" <?php if ($residence == 'rural') echo 'selected'; ?>>Rural</option>
         </select>
-        <input type="text" name="contact" placeholder="Phone Number" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
+        <input type="text" name="contact" placeholder="Phone Number" value="<?php echo htmlspecialchars($contact); ?>" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
         <select name="gender" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
             <option value="">Gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
+            <option value="male" <?php if ($gender == 'male') echo 'selected'; ?>>Male</option>
+            <option value="female" <?php if ($gender == 'female') echo 'selected'; ?>>Female</option>
+            <option value="other" <?php if ($gender == 'other') echo 'selected'; ?>>Other</option>
         </select>
-        <input type="text" name="address" placeholder="Address (e.g. 123 West Street)" style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
-        <input type="email" name="email" placeholder="Email" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
+        <input type="text" name="address" placeholder="Address (e.g. 123 West Street)" value="<?php echo htmlspecialchars($address); ?>" style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
+        <input type="email" name="email" placeholder="Email" value="<?php echo htmlspecialchars($email); ?>" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
         <div style="position: relative;">
-          <input type="password" name="password" id="password" placeholder="Password" required style="padding: 12px 36px 12px 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s; width: 100%; box-sizing: border-box;">
+          <input type="password" name="password" id="password" placeholder="Password" value="<?php echo htmlspecialchars($password); ?>" required style="padding: 12px 36px 12px 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s; width: 100%; box-sizing: border-box;">
           <span onclick="togglePassword('password', this)" style="position: absolute; top: 50%; right: 12px; transform: translateY(-50%); cursor: pointer; font-size: 1.2em;">&#128065;</span>
         </div>
         <div style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: #333;">
