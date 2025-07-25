@@ -81,6 +81,14 @@ $reg_data = $_SESSION['employer_reg_data'];
             <span id="loading-text" style="display: none;">Processing...</span>
         </button>
 
+        <div id="debug-info" style="margin-top: 20px; padding: 10px; background: #f0f0f0; border-radius: 5px; font-size: 0.8rem; color: #666;">
+            <strong>Debug Info:</strong><br>
+            Public Key: <?= INTASEND_PUBLISHABLE_KEY ?><br>
+            Live Mode: <?= INTASEND_LIVE_MODE ? 'Yes' : 'No' ?><br>
+            Amount: <?= EMPLOYER_REGISTRATION_FEE ?> <?= PAYMENT_CURRENCY ?><br>
+            <span id="sdk-status">SDK Status: Loading...</span>
+        </div>
+
         <p style="text-align: center; margin-top: 16px; font-size: 0.9rem; color: #666;">
             Secure payment powered by IntaSend
         </p>
@@ -88,34 +96,72 @@ $reg_data = $_SESSION['employer_reg_data'];
 
     <script src="https://unpkg.com/intasend-inlinejs-sdk@4.0.1/build/intasend-inline.js"></script>
     <script>
+        console.log('IntaSend SDK loaded');
+        
         const button = document.getElementById('intasend-button');
         const buttonText = document.getElementById('button-text');
         const loadingText = document.getElementById('loading-text');
 
-        new window.IntaSend({
-            publicAPIKey: "<?= INTASEND_PUBLISHABLE_KEY ?>",
-            live: <?= INTASEND_LIVE_MODE ? 'true' : 'false' ?>
-        })
-        .on("COMPLETE", (results) => {
-            buttonText.style.display = 'none';
-            loadingText.style.display = 'inline';
-            loadingText.textContent = 'Payment successful! Redirecting...';
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing IntaSend');
+            document.getElementById('sdk-status').textContent = 'SDK Status: Initializing...';
             
-            setTimeout(() => {
-                window.location.href = "employer_register_callback.php?checkout_request_id=" + results.checkout_request_id;
-            }, 1000);
-        })
-        .on("FAILED", (results) => {
-            alert("Payment failed. Please try again.");
-            button.disabled = false;
-            buttonText.style.display = 'inline';
-            loadingText.style.display = 'none';
-        })
-        .on("IN-PROGRESS", (results) => {
-            button.disabled = true;
-            buttonText.style.display = 'none';
-            loadingText.style.display = 'inline';
-            loadingText.textContent = 'Processing payment...';
+            // Check if IntaSend is available
+            if (typeof window.IntaSend === 'undefined') {
+                console.error('IntaSend SDK not loaded');
+                document.getElementById('sdk-status').textContent = 'SDK Status: Failed to load';
+                alert('Payment system not available. Please refresh the page.');
+                return;
+            }
+            
+            try {
+                const intasend = new window.IntaSend({
+                    publicAPIKey: "<?= INTASEND_PUBLISHABLE_KEY ?>",
+                    live: <?= INTASEND_LIVE_MODE ? 'true' : 'false' ?>
+                });
+
+                console.log('IntaSend initialized successfully');
+                document.getElementById('sdk-status').textContent = 'SDK Status: Ready';
+
+                intasend.on("COMPLETE", (results) => {
+                    console.log('Payment completed:', results);
+                    buttonText.style.display = 'none';
+                    loadingText.style.display = 'inline';
+                    loadingText.textContent = 'Payment successful! Redirecting...';
+                    
+                    setTimeout(() => {
+                        window.location.href = "employer_register_callback.php?checkout_request_id=" + results.checkout_request_id;
+                    }, 1000);
+                });
+
+                intasend.on("FAILED", (results) => {
+                    console.log('Payment failed:', results);
+                    alert("Payment failed. Please try again.");
+                    button.disabled = false;
+                    buttonText.style.display = 'inline';
+                    loadingText.style.display = 'none';
+                });
+
+                intasend.on("IN-PROGRESS", (results) => {
+                    console.log('Payment in progress:', results);
+                    button.disabled = true;
+                    buttonText.style.display = 'none';
+                    loadingText.style.display = 'inline';
+                    loadingText.textContent = 'Processing payment...';
+                });
+
+                // Add click event listener for debugging
+                button.addEventListener('click', function() {
+                    console.log('Payment button clicked');
+                    document.getElementById('sdk-status').textContent = 'SDK Status: Button clicked, processing...';
+                });
+
+            } catch (error) {
+                console.error('Error initializing IntaSend:', error);
+                document.getElementById('sdk-status').textContent = 'SDK Status: Initialization failed';
+                alert('Payment system initialization failed. Please refresh the page and try again.');
+            }
         });
     </script>
 
