@@ -7,23 +7,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terms and Conditions - Houselp.info</title>
-    <style>
-        body { font-family: 'Arial', sans-serif; line-height: 1.6; color: #333; background: #f4f4f4; margin: 0; padding: 0; }
-        .container { max-width: 900px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        h1 { text-align: center; color: #197b88; }
-        h2 { color: #1ec8c8; border-bottom: 2px solid #e0e0e0; padding-bottom: 8px; margin-top: 24px; }
-        h3 { color: #197b88; margin-top: 16px; }
-        ul { list-style-type: disc; padding-left: 20px; }
-        li { margin-bottom: 8px; }
-        p { margin: 12px 0; }
-        footer { text-align: center; margin-top: 40px; font-size: 0.9em; color: #777; }
-        a { color: #197b88; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        @media (max-width: 600px) { .container { padding: 20px; margin: 20px; } }
-    </style>
 </head>
 <body>
-    <div class="container">
+    <div>
         <h1>Houselp.info – Terms and Conditions</h1>
         <p><strong>Effective Date:</strong> October 2023<br>
         <strong>Last Updated:</strong> October 2023</p>
