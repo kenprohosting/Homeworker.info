@@ -430,19 +430,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           countryList.style.display = "none";
           
           // Auto-populate phone number field with country code
-          setTimeout(() => {
-            const contactInput = document.getElementById("contactInput");
+          const contactInput = document.getElementById("contactInput");
+          
+          if (contactInput) {
+            const currentValue = contactInput.value.trim();
             
-            if (contactInput) {
-              const currentValue = contactInput.value.trim();
-              
-              // Only add country code if field is empty or doesn't already start with a +
-              if (!currentValue || !currentValue.startsWith('+')) {
-                contactInput.value = c.code + ' ';
-                contactInput.focus();
-              }
+            // Check if current value has a country code already
+            const hasCountryCode = currentValue.match(/^\+\d+/);
+            
+            if (!currentValue) {
+              // Empty field - add the new country code
+              contactInput.value = c.code + ' ';
+            } else if (hasCountryCode) {
+              // Replace existing country code with new one
+              const phoneNumber = currentValue.replace(/^\+\d+\s*/, '');
+              contactInput.value = c.code + ' ' + phoneNumber;
+            } else {
+              // No country code present - add it
+              contactInput.value = c.code + ' ' + currentValue;
             }
-          }, 10);
+            
+            contactInput.focus();
+          }
         });
         countryList.appendChild(li);
       });
