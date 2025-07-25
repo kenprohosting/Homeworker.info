@@ -131,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <a href="index.php" style="color: #197b88; text-decoration: none; font-weight: 500; align-self: flex-start;">&larr;
       Back</a>
     <h2 style="text-align: center; color: #197b88; margin: 0; font-size: 1.5rem;">Register as Employer</h2>
-    <h3 style="text-align: center; color: #197b88; margin: 0; font-size: 1.2rem;">One-time payment: $1</h3>
+    <h3 style="text-align: center; color: #197b88; margin: 0; font-size: 1.2rem;">One-time subscription: $1</h3>
 
     <?php
     if ($errors)
@@ -167,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           style="position: absolute; background: #fff; border: 1px solid #ccc; border-radius: 4px; max-height: 180px; overflow-y: auto; width: 100%; z-index: 9999; list-style: none; margin: 0; padding: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
         </ul>
       </div>
-      <input type="text" name="location" placeholder="county or province"
+      <input type="text" name="location" placeholder="County,province or state"
         value="<?php echo htmlspecialchars($location); ?>" required
         style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
       <input type="text" name="address" placeholder="Address (e.g. 123 West Street)"
