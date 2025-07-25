@@ -423,7 +423,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
       filtered.forEach(c => {
         const li = document.createElement("li");
-        li.textContent = ${c.flag} ${c.name};
+        li.textContent = `${c.flag} ${c.name}`;
         li.addEventListener("click", () => {
           countryInput.value = c.name;
           countryList.innerHTML = "";
