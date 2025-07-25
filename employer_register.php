@@ -430,14 +430,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           countryList.style.display = "none";
           
           // Auto-populate phone number field with country code
-          const contactInput = document.getElementById("contactInput");
-          const currentValue = contactInput.value.trim();
-          
-          // Only add country code if field is empty or doesn't already start with a +
-          if (!currentValue || !currentValue.startsWith('+')) {
-            contactInput.value = c.code + ' ';
-            contactInput.focus();
-          }
+          setTimeout(() => {
+            const contactInput = document.getElementById("contactInput");
+            
+            if (contactInput) {
+              const currentValue = contactInput.value.trim();
+              
+              // Only add country code if field is empty or doesn't already start with a +
+              if (!currentValue || !currentValue.startsWith('+')) {
+                contactInput.value = c.code + ' ';
+                contactInput.focus();
+              }
+            }
+          }, 10);
         });
         countryList.appendChild(li);
       });
