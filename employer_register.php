@@ -154,9 +154,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <option value="other" <?php if ($gender == 'other')
           echo 'selected'; ?>>Other</option>
       </select>
-      <input type="text" name="contact" placeholder="Phone Number" value="<?php echo htmlspecialchars($contact); ?>"
-        required
-        style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
       <input type="email" name="email" placeholder="Email" value="<?php echo htmlspecialchars($email); ?>" required
         style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
       <div style="position: relative;">
@@ -170,6 +167,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <input type="text" name="location" placeholder="County,province or state"
         value="<?php echo htmlspecialchars($location); ?>" required
         style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
+      <input type="text" name="contact" placeholder="Phone Number" value="<?php echo htmlspecialchars($contact); ?>"
+        required
+        style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
+
+
       <input type="text" name="address" placeholder="Address (e.g. 123 West Street)"
         value="<?php echo htmlspecialchars($address); ?>"
         style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
