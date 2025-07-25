@@ -121,6 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <div class="form-container" style="max-width: 360px; margin: 24px auto; background: #ffffff; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); padding: 24px; display: flex; flex-direction: column; gap: 16px;">
     <a href="index.php" style="color: #197b88; text-decoration: none; font-weight: 500; align-self: flex-start;">&larr; Back</a>
     <h2 style="text-align: center; color: #197b88; margin: 0; font-size: 1.5rem;">Register as Employer</h2>
+    <h3 style="text-align: center; color: #197b88; margin: 0; font-size: 1.2rem;">One-time payment: $1</h3>
 
     <?php
     if ($errors) foreach ($errors as $e) echo "<p style=\"background: #ffeaea; color: #c0392b; padding: 8px 12px; border-radius: 8px; margin: 0; text-align: center;\">$e</p>";
