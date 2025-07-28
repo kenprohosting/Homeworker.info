@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($username === 'Admnr' && $password === 'Kenya@254') {
             $_SESSION['admin_id'] = 1;
             $_SESSION['admin_name'] = 'Administrator';
-            $_SESSION['admin_email'] = 'admin@househelp.info';
+            $_SESSION['admin_email'] = 'support@homeworker.info';
             header("Location: index.php");
             exit();
         } else {

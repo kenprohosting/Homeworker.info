@@ -6,21 +6,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms and Conditions - Houselp.info</title>
+    <title>Terms and Conditions - Homeworker.info</title>
 </head>
 <body>
     <div>
-        <h1>Houselp.info – Terms and Conditions</h1>
+        <h1>Homeworker.info – Terms and Conditions</h1>
         <p><strong>Effective Date:</strong> October 2023<br>
         <strong>Last Updated:</strong> October 2023</p>
         
         <h2>1. Definitions</h2>
         <ul>
-            <li><strong>Platform</strong>: Refers to the Houselp.info website and any future mobile applications.</li>
-            <li><strong>Househelp</strong>: A domestic worker offering services through Houselp.</li>
+            <li><strong>Platform</strong>: Refers to the Homeworker.info website and any future mobile applications.</li>
+            <li><strong>Househelp</strong>: A domestic worker offering services through Homeworker.</li>
             <li><strong>Employer</strong>: A user seeking to hire a househelp via the platform.</li>
             <li><strong>User</strong>: Any individual using the platform (either as househelp or employer).</li>
-            <li><strong>We/Us/Our</strong>: Houselp.info and its administrators.</li>
+            <li><strong>We/Us/Our</strong>: Homeworker.info and its administrators.</li>
         </ul>
         
         <h2>2. Eligibility</h2>
@@ -93,12 +93,12 @@
         <h2>11. Contact</h2>
         <div>
             For support or legal concerns, contact us at:<br>
-            📧 <strong>Email:</strong> <a href="mailto:support@houselp.info">support@houselp.info</a><br>
-            📞 <strong>Phone:</strong> +254 700 000 000
+            📧 <strong>Email:</strong> <a href="mailto:support@homeworker.info">support@homeworker.info</a><br>
+            📞 <strong>Phone:</strong> +254 725 788 400
         </div>
     </div>
     <footer>
-        &copy; <?php echo date('Y'); ?> Houselp.info. All rights reserved.
+        &copy; <?php echo date('Y'); ?> Homeworker.info. All rights reserved.
     </footer>
 </body>
 </html>

@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agent Terms and Conditions - Houselp.info</title>
+    <title>Agent Terms and Conditions - Homeworker.info</title>
     <style>
         body { font-family: 'Arial', sans-serif; line-height: 1.6; color: #333; background: #f4f4f4; margin: 0; padding: 0; }
         .container { max-width: 900px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
@@ -24,19 +24,19 @@
 </head>
 <body>
     <div class="container">
-        <h1>Houselp.info – Agent Terms and Conditions</h1>
+        <h1>Homeworker.info – Agent Terms and Conditions</h1>
         <p><strong>Effective Date:</strong> [Insert Date]<br>
         <strong>Last Updated:</strong> [Insert Date]</p>
         
         <h2>1. Introduction</h2>
-        <p>These Terms and Conditions ("Agreement") govern the registration and participation of <strong>Agents</strong> on the Houselp.info platform.</p>
+        <p>These Terms and Conditions ("Agreement") govern the registration and participation of <strong>Agents</strong> on the Homeworker.info platform.</p>
         <p>By signing up as an Agent, you agree to abide by the terms outlined below.</p>
         
         <h2>2. Role of the Agent</h2>
         <ul>
-            <li>An Agent is authorized to <strong>register househelps</strong> on behalf of Houselp.info.</li>
+            <li>An Agent is authorized to <strong>register househelps</strong> on behalf of Homeworker.info.</li>
             <li>The Agent is responsible for verifying the authenticity and accuracy of the househelp's personal and professional details.</li>
-            <li>The Agent acts as a facilitator only and is <strong>not an employee</strong> of Houselp.info.</li>
+            <li>The Agent acts as a facilitator only and is <strong>not an employee</strong> of Homeworker.info.</li>
         </ul>
         
         <h2>3. Registration of Househelps</h2>
@@ -77,18 +77,18 @@
             <li>Register only genuine, available candidates.</li>
             <li>Not demand illegal or exploitative fees from househelps.</li>
             <li>Not harass, threaten, or mislead users.</li>
-            <li>Cooperate with Houselp.info in case of complaints or verification checks.</li>
+            <li>Cooperate with Homeworker.info in case of complaints or verification checks.</li>
         </ul>
         
         <h2>6. Platform Fees & Deductions</h2>
         <ul>
-            <li>Houselp.info does <strong>not charge agents to create accounts</strong>.</li>
+            <li>Homeworker.info does <strong>not charge agents to create accounts</strong>.</li>
             <li>However, we reserve the right to introduce transaction fees or subscriptions in future, with prior notice.</li>
         </ul>
         
         <h2>7. Termination</h2>
         <ul>
-            <li>Houselp.info reserves the right to:</li>
+            <li>Homeworker.info reserves the right to:</li>
             <ul>
                 <li>Suspend or terminate any agent account for misconduct or fraud.</li>
                 <li>Withhold commissions in case of dispute or unresolved employment confirmation.</li>
@@ -98,7 +98,7 @@
         
         <h2>8. Limitation of Liability</h2>
         <ul>
-            <li>Houselp.info is <strong>not liable</strong> for any side arrangements, cash transactions, or verbal agreements between agents and househelps/employers.</li>
+            <li>Homeworker.info is <strong>not liable</strong> for any side arrangements, cash transactions, or verbal agreements between agents and househelps/employers.</li>
             <li>We do not guarantee job placement for every househelp registered by the agent.</li>
         </ul>
         
@@ -111,16 +111,16 @@
         <h2>10. Dispute Resolution</h2>
         <ul>
             <li>All disputes will be handled in accordance with the laws of <strong>Kenya</strong>.</li>
-            <li>Disputes between agents and employers/househelps should be reported to Houselp.info support team.</li>
+            <li>Disputes between agents and employers/househelps should be reported to Homeworker.info support team.</li>
         </ul>
         
         <h2>11. Contact</h2>
         <p>For inquiries or support:</p>
-        <p>📧 <strong>Email:</strong> support@houselp.info<br>
-        📞 <strong>Phone:</strong> [Insert Phone Number]</p>
+        <p>📧 <strong>Email:</strong> support@homeworker.info<br>
+        📞 <strong>Phone:</strong> +254 725 788 400</p>
     </div>
     <footer>
-        &copy; <?php echo date('Y'); ?> Houselp.info. All rights reserved.
+        &copy; <?php echo date('Y'); ?> Homeworker.info. All rights reserved.
     </footer>
 </body>
 </html>

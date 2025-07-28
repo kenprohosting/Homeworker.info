@@ -35,12 +35,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com'; // Or your SMTP server
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'ethiopianmark@gmail.com'; // Your email
+            $mail->Username   = 'support@homeworker.info'; // Your email
             $mail->Password   = 'bfok yqfu fjpf jlcf';    // App password (not your Gmail password)
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = 587;
 
-            $mail->setFrom('ethiopianmark@gmail.com', 'HouseHelp');
+            $mail->setFrom('support@homeworker.info', 'Homeworker Connect');
             $mail->addAddress($email);
 
             $mail->isHTML(true);

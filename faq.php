@@ -69,7 +69,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
       </li>
       <li>
         <div class="faq-q">How can I get support?</div>
-        <div class="faq-a">Reach our support team via the Contact Us page or email <a href="mailto:support@homeworkerconnect.info">support@homeworkerconnect.info</a>.</div>
+        <div class="faq-a">Reach our support team via the Contact Us page or email <a href="mailto:support@homeworker.info">support@homeworker.info</a>.</div>
       </li>
       <li>
         <div class="faq-q">Can I update my profile after registration?</div>

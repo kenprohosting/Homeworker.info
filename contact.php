@@ -36,8 +36,8 @@ $isLoggedIn = isset($_SESSION['employer_name']);
   <div class="faq-container">
     <div class="faq-title">Contact Us</div>
     <div class="contact-details">
-      <div>Email: <a href="mailto:support@homeworkerconnect.info">support@homeworker.info</a></div>
-      <div>Phone: +254 700 000 000</div>
+      <div>Email: <a href="mailto:support@homeworker.info">support@homeworker.info</a></div>
+      <div>Phone: +254 725 788 400</div>
       <div>Address: Nairobi, Kenya</div>
     </div>
     <form class="contact-form" method="post" action="#">

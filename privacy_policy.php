@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - Houselp.info</title>
+    <title>Privacy Policy - Homeworker.info</title>
     <style>
         body { font-family: 'Arial', sans-serif; line-height: 1.6; color: #333; background: #f4f4f4; margin: 0; padding: 0; }
         .container { max-width: 900px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
@@ -24,12 +24,12 @@
 </head>
 <body>
     <div class="container">
-        <h1>Houselp.info – Privacy Policy</h1>
+        <h1>Homeworker.info – Privacy Policy</h1>
         <p><strong>Effective Date:</strong> [Insert Date]<br>
         <strong>Last Updated:</strong> [Insert Date]</p>
         
         <h2>1. Introduction</h2>
-        <p>Welcome to <strong>Houselp.info</strong>. Your privacy is important to us.</p>
+        <p>Welcome to <strong>Homeworker.info</strong>. Your privacy is important to us.</p>
         <p>This Privacy Policy explains how we collect, use, store, and protect your personal information when you use our platform.</p>
         <p>By using our services, you agree to the practices described in this policy.</p>
         
@@ -101,7 +101,7 @@
             <li>Lodge a complaint with the <strong>Office of the Data Protection Commissioner (ODPC)</strong></li>
         </ul>
         <p>To exercise any of these rights, contact us at:</p>
-        <p>📧 <strong>Email:</strong> support@houselp.info</p>
+        <p>📧 <strong>Email:</strong> support@homeworker.info</p>
         
         <h2>7. Cookies and Tracking</h2>
         <p>We may use cookies and tracking tools to:</p>
@@ -131,11 +131,11 @@
         
         <h2>11. Contact Us</h2>
         <p>If you have any questions or concerns about this Privacy Policy:</p>
-        <p>📧 <strong>Email:</strong> support@houselp.info<br>
-        📞 <strong>Phone:</strong> [Insert phone number]</p>
+        <p>📧 <strong>Email:</strong> support@homeworker.info<br>
+        📞 <strong>Phone:</strong> +254 725 788 400</p>
     </div>
     <footer>
-        &copy; <?php echo date('Y'); ?> Houselp.info. All rights reserved.
+        &copy; <?php echo date('Y'); ?> Homeworker.info. All rights reserved.
     </footer>
 </body>
 </html>
