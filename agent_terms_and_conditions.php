@@ -25,8 +25,8 @@
 <body>
     <div class="container">
         <h1>Homeworker.info – Agent Terms and Conditions</h1>
-        <p><strong>Effective Date:</strong> [Insert Date]<br>
-        <strong>Last Updated:</strong> [Insert Date]</p>
+        <p><strong>Effective Date:</strong> October 2023<br>
+        <strong>Last Updated:</strong> October 2023</p>
         
         <h2>1. Introduction</h2>
         <p>These Terms and Conditions ("Agreement") govern the registration and participation of <strong>Agents</strong> on the Homeworker.info platform.</p>
