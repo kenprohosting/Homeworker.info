@@ -41,7 +41,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
       </li>
       <li>
         <div class="faq-q">How do I register as an employer?</div>
-        <div class="faq-a">Go to the employer registration page, fill in your details, pay the KES 10 registration fee via IntaSend, and complete your profile.</div>
+        <div class="faq-a">Go to the employer registration page, fill in your details, pay the $1 registration fee via IntaSend, and complete your profile.</div>
       </li>
       <li>
         <div class="faq-q">How do I register as an agent?</div>
