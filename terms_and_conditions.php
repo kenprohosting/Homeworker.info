@@ -7,9 +7,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terms and Conditions - Homeworker.info</title>
+    <style>
+        body { 
+            font-family: 'Arial', sans-serif; 
+            line-height: 1.6; 
+            color: #333; 
+            background: #f4f4f4; 
+            margin: 0; 
+            padding: 0; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 20px auto; 
+            background: #fff; 
+            padding: 30px; 
+            border-radius: 8px; 
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+        }
+        h1 { 
+            color: #197b88; 
+            text-align: center; 
+            margin-bottom: 20px; 
+            font-size: 2rem; 
+        }
+        h2 { 
+            color: #197b88; 
+            border-bottom: 2px solid #197b88; 
+            padding-bottom: 5px; 
+            margin-top: 30px; 
+        }
+        h3 { 
+            color: #555; 
+            margin-top: 20px; 
+        }
+        ul { 
+            margin: 10px 0; 
+            padding-left: 20px; 
+        }
+        li { 
+            margin: 8px 0; 
+        }
+        p { 
+            margin: 15px 0; 
+            text-align: justify; 
+        }
+        strong { 
+            color: #197b88; 
+        }
+        a { 
+            color: #197b88; 
+            text-decoration: none; 
+        }
+        a:hover { 
+            text-decoration: underline; 
+        }
+        footer { 
+            text-align: center; 
+            margin-top: 30px; 
+            padding: 20px; 
+            background: #197b88; 
+            color: #fff; 
+            border-radius: 0 0 8px 8px; 
+        }
+        .contact-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+    </style>
 </head>
 <body>
-    <div>
+    <div class="container">
         <h1>Homeworker.info – Terms and Conditions</h1>
         <p><strong>Effective Date:</strong> October 2023<br>
         <strong>Last Updated:</strong> October 2023</p>
@@ -91,7 +160,7 @@
         Disputes will be handled under the jurisdiction of <strong>Kenyan courts</strong>.</p>
         
         <h2>11. Contact</h2>
-        <div>
+        <div class="contact-info">
             For support or legal concerns, contact us at:<br>
             📧 <strong>Email:</strong> <a href="mailto:support@homeworker.info">support@homeworker.info</a><br>
             📞 <strong>Phone:</strong> +254 725 788 400
