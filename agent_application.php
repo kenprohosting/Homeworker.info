@@ -13,6 +13,7 @@ $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = trim($_POST['name']);
+    $email = trim($_POST['email']);
     $contact = trim($_POST['contact']);
     $subject = trim($_POST['subject']);
     
@@ -21,8 +22,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error = 'All fields are required';
     } elseif (!isset($_FILES['cv']) || $_FILES['cv']['error'] !== UPLOAD_ERR_OK) {
         $error = 'Please upload your CV';
+    } elseif (!isset($_FILES['application_letter']) || $_FILES['application_letter']['error'] !== UPLOAD_ERR_OK) {
+        $error = 'Please upload your Application Letter';
     } else {
         $cv_file = $_FILES['cv'];
+        $application_file = $_FILES['application_letter'];
         $allowed_types = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
         $max_size = 5 * 1024 * 1024; // 5MB
         
@@ -30,6 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $error = 'CV must be a PDF or Word document';
         } elseif ($cv_file['size'] > $max_size) {
             $error = 'CV file size must be less than 5MB';
+        } elseif (!in_array($application_file['type'], $allowed_types)) {
+            $error = 'Application Letter must be a PDF or Word document';
+        } elseif ($application_file['size'] > $max_size) {
+            $error = 'Application Letter file size must be less than 5MB';
         } else {
             try {
                 $mail = new PHPMailer(true);
@@ -47,8 +55,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $mail->setFrom('support@homeworker.info', 'Homeworker Connect');
                 $mail->addAddress('support@homeworker.info', 'Homeworker Connect');
                 
-                // Attach CV
-                $mail->addAttachment($cv_file['tmp_name'], $cv_file['name']);
+                // Attach both files
+                $mail->addAttachment($cv_file['tmp_name'], 'CV_' . $cv_file['name']);
+                $mail->addAttachment($application_file['tmp_name'], 'Application_Letter_' . $application_file['name']);
                 
                 // Content
                 $mail->isHTML(true);
@@ -59,7 +68,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <p><strong>Contact:</strong> " . htmlspecialchars($contact) . "</p>
                     <p><strong>Subject:</strong> " . htmlspecialchars($subject) . "</p>
                     <p><strong>Application Date:</strong> " . date('Y-m-d H:i:s') . "</p>
-                    <p>CV is attached to this email.</p>
+                    <p><strong>Attachments:</strong></p>
+                    <ul>
+                        <li>CV: " . htmlspecialchars($cv_file['name']) . "</li>
+                        <li>Application Letter: " . htmlspecialchars($application_file['name']) . "</li>
+                    </ul>
                 ";
                 
                 $mail->send();
@@ -146,8 +159,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="tel" name="contact" placeholder="Phone Number" value="<?= isset($_POST['contact']) ? htmlspecialchars($_POST['contact']) : '' ?>" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
             
             <div class="file-input-wrapper">
-                <input type="file" name="Application Letter" id="Application Letter" class="file-input" accept=".pdf,.doc,.docx" required>
-                <label for="Application Letter" class="file-input-button" id="file-label">
+                <input type="file" name="application_letter" id="application_letter" class="file-input" accept=".pdf,.doc,.docx" required>
+                <label for="application_letter" class="file-input-button" id="application-label">
                     📄 Click to upload your Application Letter (PDF or Word)
                 </label>
             </div>
@@ -155,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <div class="file-input-wrapper">
                 <input type="file" name="cv" id="cv" class="file-input" accept=".pdf,.doc,.docx" required>
-                <label for="cv" class="file-input-button" id="file-label">
+                <label for="cv" class="file-input-button" id="cv-label">
                     📄 Click to upload your CV (PDF or Word)
                 </label>
             </div>
@@ -174,8 +187,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </footer>
 
     <script>
+        // Handle Application Letter upload
+        document.getElementById('application_letter').addEventListener('change', function() {
+            const fileLabel = document.getElementById('application-label');
+            const fileName = this.files[0] ? this.files[0].name : '';
+            
+            if (fileName) {
+                fileLabel.textContent = '✅ ' + fileName;
+                fileLabel.classList.add('file-selected');
+            } else {
+                fileLabel.textContent = '📄 Click to upload your Application Letter (PDF or Word)';
+                fileLabel.classList.remove('file-selected');
+            }
+        });
+
+        // Handle CV upload
         document.getElementById('cv').addEventListener('change', function() {
-            const fileLabel = document.getElementById('file-label');
+            const fileLabel = document.getElementById('cv-label');
             const fileName = this.files[0] ? this.files[0].name : '';
             
             if (fileName) {
