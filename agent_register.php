@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <a href="index.php" style="color: #197b88; text-decoration: none; font-weight: 500; align-self: flex-start;">&larr; Back</a>
         <h2 style="text-align: center; color: #197b88; margin: 0; font-size: 1.5rem;">Agent Registration</h2>
         <p style="text-align: center; color: #666; margin: 0; font-size: 0.9rem;">
-            Need to become an agent? <a href="agent_application.php" style="color: #197b88; text-decoration: none; font-weight: 500;">Click to Apply and get Registration Code</a>
+            Need to become an agent? <a href="agent_application.php" style="color: #197b88; text-decoration: none; font-weight: 500;">Click to Apply and get a Registration Code</a>
         </p>
         <?php if ($error): ?>
             <p style="background: #ffeaea; color: #c0392b; padding: 8px 12px; border-radius: 8px; margin: 0; text-align: center;"><?= $error ?></p>
