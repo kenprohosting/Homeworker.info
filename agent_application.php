@@ -45,6 +45,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } elseif ($application_file['size'] > $max_size) {
             $error = 'Application Letter file size must be less than 5MB';
         } else {
+            // Create email content
+            $email_subject = 'Agent Application: ' . $subject;
+            $email_body = "
+New Agent Application
+
+Name: $name
+Email: $email
+Contact: $contact
+Subject: $subject
+Application Date: " . date('Y-m-d H:i:s') . "
+
+Files attached:
+- CV: " . $cv_file['name'] . "
+- Application Letter: " . $application_file['name'] . "
+            ";
+            
+            // Try PHPMailer first
             try {
                 $mail = new PHPMailer(true);
                 
@@ -53,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $mail->Host       = 'smtp.gmail.com';
                 $mail->SMTPAuth   = true;
                 $mail->Username   = 'support@homeworker.info';
-                $mail->Password   = 'your_app_password_here'; // You'll need to set this
+                $mail->Password   = 'bfok yqfu fjpf jlcf';
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port       = 587;
                 
@@ -66,21 +83,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $mail->addAttachment($application_file['tmp_name'], 'Application_Letter_' . $application_file['name']);
                 
                 // Content
-                $mail->isHTML(true);
-                $mail->Subject = 'Agent Application: ' . htmlspecialchars($subject);
-                $mail->Body    = "
-                    <h2>New Agent Application</h2>
-                    <p><strong>Name:</strong> " . htmlspecialchars($name) . "</p>
-                    <p><strong>Email:</strong> " . htmlspecialchars($email) . "</p>
-                    <p><strong>Contact:</strong> " . htmlspecialchars($contact) . "</p>
-                    <p><strong>Subject:</strong> " . htmlspecialchars($subject) . "</p>
-                    <p><strong>Application Date:</strong> " . date('Y-m-d H:i:s') . "</p>
-                    <p><strong>Attachments:</strong></p>
-                    <ul>
-                        <li>CV: " . htmlspecialchars($cv_file['name']) . "</li>
-                        <li>Application Letter: " . htmlspecialchars($application_file['name']) . "</li>
-                    </ul>
-                ";
+                $mail->isHTML(false);
+                $mail->Subject = $email_subject;
+                $mail->Body    = $email_body;
                 
                 $mail->send();
                 $success = 'Your agent application has been submitted successfully! We will contact you soon.';
@@ -89,8 +94,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_POST = array();
                 
             } catch (Exception $e) {
-                $error = 'Failed to send application. Please try again later.';
-                error_log("Agent application email failed: " . $mail->ErrorInfo);
+                // Fallback to basic PHP mail() function
+                $to = 'support@homeworker.info';
+                $headers = "From: support@homeworker.info\r\n";
+                $headers .= "Reply-To: $email\r\n";
+                $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+                
+                if (mail($to, $email_subject, $email_body, $headers)) {
+                    $success = 'Your agent application has been submitted successfully! We will contact you soon. (Note: File attachments could not be sent - please email them separately to support@homeworker.info)';
+                    // Clear form data on success
+                    $_POST = array();
+                } else {
+                    $error = 'Failed to send application. Please try again later or contact support@homeworker.info directly.';
+                }
+                
+                error_log("Agent application email failed: " . $e->getMessage());
             }
         }
     }
