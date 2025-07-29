@@ -18,8 +18,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $subject = trim($_POST['subject']);
     
     // Validation
-    if (empty($name) || empty($email) || empty($contact) || empty($subject)) {
-        $error = 'All fields are required';
+    if (empty($name)) {
+        $error = 'Name is required';
+    } elseif (empty($email)) {
+        $error = 'Email is required';
+    } elseif (empty($contact)) {
+        $error = 'Contact number is required';
+    } elseif (empty($subject)) {
+        $error = 'Subject is required';
     } elseif (!isset($_FILES['cv']) || $_FILES['cv']['error'] !== UPLOAD_ERR_OK) {
         $error = 'Please upload your CV';
     } elseif (!isset($_FILES['application_letter']) || $_FILES['application_letter']['error'] !== UPLOAD_ERR_OK) {
@@ -156,8 +162,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         <form method="POST" action="" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 12px;">
             <input type="text" name="name" placeholder="Full Name" value="<?= isset($_POST['name']) ? htmlspecialchars($_POST['name']) : '' ?>" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
-             <input type="email" name="email" placeholder="Email Address" value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '' ?>" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
+            <input type="email" name="email" placeholder="Email Address" value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '' ?>" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
             <input type="tel" name="contact" placeholder="Phone Number" value="<?= isset($_POST['contact']) ? htmlspecialchars($_POST['contact']) : '' ?>" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
+            <input type="text" name="subject" placeholder="Subject (e.g., Application for Agent Position)" value="<?= isset($_POST['subject']) ? htmlspecialchars($_POST['subject']) : '' ?>" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
             
             <div class="file-input-wrapper">
                 <input type="file" name="application_letter" id="application_letter" class="file-input" accept=".pdf,.doc,.docx" required>
