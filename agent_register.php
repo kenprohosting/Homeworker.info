@@ -141,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             Already have an account? <a href="agent_login.php" style="color: #197b88; text-decoration: none;">Login here</a>
         </p>
         <p style="text-align: center; margin: 0; font-size: 0.9rem; color: #666;">
-            Need to become an agent? Contact the company at <strong>support@homeworker.info</strong>
+            Need to become an agent? <a href="agent_application.php" style="color: #197b88; text-decoration: none; font-weight: 500;">Click to Apply</a>
         </p>
     </div>
 
