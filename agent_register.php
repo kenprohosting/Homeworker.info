@@ -101,8 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <a href="index.php" style="color: #197b88; text-decoration: none; font-weight: 500; align-self: flex-start;">&larr; Back</a>
         <h2 style="text-align: center; color: #197b88; margin: 0; font-size: 1.5rem;">Agent Registration</h2>
         <p style="text-align: center; color: #666; margin: 0; font-size: 0.9rem;">
-            <strong>Authorized Agents Only</strong><br>
-            You must have a valid registration code from the company to register as an agent.
+            Need to become an agent? <a href="agent_application.php" style="color: #197b88; text-decoration: none; font-weight: 500;">Click to Apply</a>
         </p>
         <?php if ($error): ?>
             <p style="background: #ffeaea; color: #c0392b; padding: 8px 12px; border-radius: 8px; margin: 0; text-align: center;"><?= $error ?></p>
@@ -140,9 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <p style="text-align: center; margin: 0; font-size: 0.9rem;">
             Already have an account? <a href="agent_login.php" style="color: #197b88; text-decoration: none;">Login here</a>
         </p>
-        <p style="text-align: center; margin: 0; font-size: 0.9rem; color: #666;">
-            Need to become an agent? <a href="agent_application.php" style="color: #197b88; text-decoration: none; font-weight: 500;">Click to Apply</a>
-        </p>
+
     </div>
 
 
