@@ -145,8 +145,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             
             <input type="tel" name="contact" placeholder="Phone Number" value="<?= isset($_POST['contact']) ? htmlspecialchars($_POST['contact']) : '' ?>" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
             
-            <input type="text" name="subject" placeholder="Subject (e.g., Application for Agent Position)" value="<?= isset($_POST['subject']) ? htmlspecialchars($_POST['subject']) : '' ?>" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
-            
+            <div class="file-input-wrapper">
+                <input type="file" name="Application Letter" id="Application Letter" class="file-input" accept=".pdf,.doc,.docx" required>
+                <label for="Application Letter" class="file-input-button" id="file-label">
+                    📄 Click to upload your Application Letter (PDF or Word)
+                </label>
+            </div>
+            <small style="color: #666; margin: -8px 0 0; font-size: 0.8rem;">Maximum file size: 5MB. Accepted formats: PDF, DOC, DOCX</small>
+
             <div class="file-input-wrapper">
                 <input type="file" name="cv" id="cv" class="file-input" accept=".pdf,.doc,.docx" required>
                 <label for="cv" class="file-input-button" id="file-label">
