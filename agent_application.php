@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $subject = trim($_POST['subject']);
     
     // Validation
-    if (empty($name) || empty($contact) || empty($subject)) {
+    if (empty($name) || empty($email) || empty($contact) || empty($subject)) {
         $error = 'All fields are required';
     } elseif (!isset($_FILES['cv']) || $_FILES['cv']['error'] !== UPLOAD_ERR_OK) {
         $error = 'Please upload your CV';
@@ -65,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $mail->Body    = "
                     <h2>New Agent Application</h2>
                     <p><strong>Name:</strong> " . htmlspecialchars($name) . "</p>
+                    <p><strong>Email:</strong> " . htmlspecialchars($email) . "</p>
                     <p><strong>Contact:</strong> " . htmlspecialchars($contact) . "</p>
                     <p><strong>Subject:</strong> " . htmlspecialchars($subject) . "</p>
                     <p><strong>Application Date:</strong> " . date('Y-m-d H:i:s') . "</p>
