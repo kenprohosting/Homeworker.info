@@ -78,17 +78,21 @@ Files attached:
             if (move_uploaded_file($cv_file['tmp_name'], $cv_filename) && 
                 move_uploaded_file($application_file['tmp_name'], $app_filename)) {
                 
-                // Try to send email notification (without attachments to avoid SMTP issues)
+                // Send email with file attachments using PHPMailer
                 try {
                     $mail = new PHPMailer(true);
                     
-                    // Use simple mail configuration
-                    $mail->isMail(); // Use PHP's mail() function instead of SMTP
+                    // Use simple mail configuration (no SMTP)
+                    $mail->isMail(); // Use PHP's mail() function
                     
                     // Recipients
                     $mail->setFrom('noreply@homeworker.info', 'Homeworker Connect');
                     $mail->addAddress('support@homeworker.info', 'Homeworker Connect');
                     $mail->addReplyTo($email, $name);
+                    
+                    // Attach the saved files to the email
+                    $mail->addAttachment($cv_filename, 'CV_' . $cv_file['name']);
+                    $mail->addAttachment($app_filename, 'Application_Letter_' . $application_file['name']);
                     
                     // Content
                     $mail->isHTML(true);
@@ -101,27 +105,25 @@ Files attached:
                         <p><strong>Subject:</strong> " . htmlspecialchars($subject) . "</p>
                         <p><strong>Application Date:</strong> " . date('Y-m-d H:i:s') . "</p>
                         <hr>
-                        <p><strong>Documents Uploaded:</strong></p>
+                        <p><strong>Documents Attached:</strong></p>
                         <ul>
                             <li>CV: " . htmlspecialchars($cv_file['name']) . " (" . round($cv_file['size']/1024, 2) . " KB)</li>
                             <li>Application Letter: " . htmlspecialchars($application_file['name']) . " (" . round($application_file['size']/1024, 2) . " KB)</li>
                         </ul>
-                        <p><strong>Files saved to server:</strong></p>
-                        <ul>
-                            <li>" . htmlspecialchars($cv_filename) . "</li>
-                            <li>" . htmlspecialchars($app_filename) . "</li>
-                        </ul>
-                        <p><em>Please check the server uploads folder for the application documents.</em></p>
+                        <p><em>Please find the application documents attached to this email.</em></p>
                     ";
                     
-                    // Send the email
-                    $mail->send();
-                    $success = 'Your agent application with documents has been submitted successfully! Your files have been uploaded and we will contact you soon.';
+                    // Send the email with attachments
+                    if ($mail->send()) {
+                        $success = 'Your agent application with documents has been submitted successfully! The documents have been sent via email and we will contact you soon.';
+                    } else {
+                        $success = 'Your application documents have been uploaded successfully! We will review your application and contact you soon. (Email with attachments may have failed, but your files are safely stored.)';
+                    }
                     
                 } catch (Exception $e) {
                     // Even if email fails, files are saved
-                    $success = 'Your application documents have been uploaded successfully! We will review your application and contact you soon. (Email notification may have failed, but your files are safely stored.)';
-                    error_log("Agent application email notification failed: " . $e->getMessage());
+                    $success = 'Your application documents have been uploaded successfully! We will review your application and contact you soon. (Email notification failed: ' . $e->getMessage() . ')';
+                    error_log("Agent application email with attachments failed: " . $e->getMessage());
                 }
                 
                 // Clear form data on success
