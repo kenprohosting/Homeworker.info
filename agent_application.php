@@ -115,14 +115,14 @@ Files attached:
                     
                     // Send the email with attachments
                     if ($mail->send()) {
-                        $success = 'Your agent application with documents has been submitted successfully! The documents have been sent via email and we will contact you soon.';
+                        $success = 'Your agent application with documents has been submitted successfully! We will contact you soon.';
                     } else {
-                        $success = 'Your application documents have been uploaded successfully! We will review your application and contact you soon. (Email with attachments may have failed, but your files are safely stored.)';
+                        $success = 'Your agent application with documents has been submitted successfully! We will contact you soon.';
                     }
                     
                 } catch (Exception $e) {
                     // Even if email fails, files are saved
-                    $success = 'Your application documents have been uploaded successfully! We will review your application and contact you soon. (Email notification failed: ' . $e->getMessage() . ')';
+                    $success = 'Your agent application with documents has been submitted successfully! We will contact you soon.';
                     error_log("Agent application email with attachments failed: " . $e->getMessage());
                 }
                 
