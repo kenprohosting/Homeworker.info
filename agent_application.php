@@ -61,75 +61,74 @@ Files attached:
 - Application Letter: " . $application_file['name'] . "
             ";
             
-            // Use PHPMailer with better error handling and debugging
-            try {
-                $mail = new PHPMailer(true);
+            // Save files to server and send email notification
+            $upload_dir = 'uploads/agent_applications/';
+            if (!file_exists($upload_dir)) {
+                mkdir($upload_dir, 0755, true);
+            }
+            
+            // Generate unique filenames
+            $timestamp = date('Y-m-d_H-i-s');
+            $safe_name = preg_replace('/[^a-zA-Z0-9_-]/', '_', $name);
+            
+            $cv_filename = $upload_dir . $timestamp . '_' . $safe_name . '_CV_' . $cv_file['name'];
+            $app_filename = $upload_dir . $timestamp . '_' . $safe_name . '_Application_' . $application_file['name'];
+            
+            // Move uploaded files to permanent location
+            if (move_uploaded_file($cv_file['tmp_name'], $cv_filename) && 
+                move_uploaded_file($application_file['tmp_name'], $app_filename)) {
                 
-                // Enable verbose debug output for testing
-                $mail->SMTPDebug = 0; // Set to 2 for debugging if needed
-                $mail->Debugoutput = 'html';
-                
-                // Server settings
-                $mail->isSMTP();
-                $mail->Host       = 'smtp.gmail.com';
-                $mail->SMTPAuth   = true;
-                $mail->Username   = 'support@homeworker.info';
-                $mail->Password   = 'bfok yqfu fjpf jlcf';
-                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                $mail->Port       = 587;
-                $mail->SMTPOptions = array(
-                    'ssl' => array(
-                        'verify_peer' => false,
-                        'verify_peer_name' => false,
-                        'allow_self_signed' => true
-                    )
-                );
-                
-                // Recipients
-                $mail->setFrom('support@homeworker.info', 'Homeworker Connect');
-                $mail->addAddress('support@homeworker.info', 'Homeworker Connect');
-                $mail->addReplyTo($email, $name);
-                
-                // Verify files exist and are readable before attaching
-                if (is_uploaded_file($cv_file['tmp_name']) && is_readable($cv_file['tmp_name'])) {
-                    $mail->addAttachment($cv_file['tmp_name'], 'CV_' . $cv_file['name']);
+                // Try to send email notification (without attachments to avoid SMTP issues)
+                try {
+                    $mail = new PHPMailer(true);
+                    
+                    // Use simple mail configuration
+                    $mail->isMail(); // Use PHP's mail() function instead of SMTP
+                    
+                    // Recipients
+                    $mail->setFrom('noreply@homeworker.info', 'Homeworker Connect');
+                    $mail->addAddress('support@homeworker.info', 'Homeworker Connect');
+                    $mail->addReplyTo($email, $name);
+                    
+                    // Content
+                    $mail->isHTML(true);
+                    $mail->Subject = $email_subject;
+                    $mail->Body    = "
+                        <h2>New Agent Application</h2>
+                        <p><strong>Name:</strong> " . htmlspecialchars($name) . "</p>
+                        <p><strong>Email:</strong> " . htmlspecialchars($email) . "</p>
+                        <p><strong>Contact:</strong> " . htmlspecialchars($contact) . "</p>
+                        <p><strong>Subject:</strong> " . htmlspecialchars($subject) . "</p>
+                        <p><strong>Application Date:</strong> " . date('Y-m-d H:i:s') . "</p>
+                        <hr>
+                        <p><strong>Documents Uploaded:</strong></p>
+                        <ul>
+                            <li>CV: " . htmlspecialchars($cv_file['name']) . " (" . round($cv_file['size']/1024, 2) . " KB)</li>
+                            <li>Application Letter: " . htmlspecialchars($application_file['name']) . " (" . round($application_file['size']/1024, 2) . " KB)</li>
+                        </ul>
+                        <p><strong>Files saved to server:</strong></p>
+                        <ul>
+                            <li>" . htmlspecialchars($cv_filename) . "</li>
+                            <li>" . htmlspecialchars($app_filename) . "</li>
+                        </ul>
+                        <p><em>Please check the server uploads folder for the application documents.</em></p>
+                    ";
+                    
+                    // Send the email
+                    $mail->send();
+                    $success = 'Your agent application with documents has been submitted successfully! Your files have been uploaded and we will contact you soon.';
+                    
+                } catch (Exception $e) {
+                    // Even if email fails, files are saved
+                    $success = 'Your application documents have been uploaded successfully! We will review your application and contact you soon. (Email notification may have failed, but your files are safely stored.)';
+                    error_log("Agent application email notification failed: " . $e->getMessage());
                 }
                 
-                if (is_uploaded_file($application_file['tmp_name']) && is_readable($application_file['tmp_name'])) {
-                    $mail->addAttachment($application_file['tmp_name'], 'Application_Letter_' . $application_file['name']);
-                }
+                // Clear form data on success
+                $_POST = array();
                 
-                // Content
-                $mail->isHTML(true);
-                $mail->Subject = $email_subject;
-                $mail->Body    = "
-                    <h2>New Agent Application</h2>
-                    <p><strong>Name:</strong> " . htmlspecialchars($name) . "</p>
-                    <p><strong>Email:</strong> " . htmlspecialchars($email) . "</p>
-                    <p><strong>Contact:</strong> " . htmlspecialchars($contact) . "</p>
-                    <p><strong>Subject:</strong> " . htmlspecialchars($subject) . "</p>
-                    <p><strong>Application Date:</strong> " . date('Y-m-d H:i:s') . "</p>
-                    <hr>
-                    <p><strong>Attachments:</strong></p>
-                    <ul>
-                        <li>CV: " . htmlspecialchars($cv_file['name']) . " (" . round($cv_file['size']/1024, 2) . " KB)</li>
-                        <li>Application Letter: " . htmlspecialchars($application_file['name']) . " (" . round($application_file['size']/1024, 2) . " KB)</li>
-                    </ul>
-                ";
-                $mail->AltBody = strip_tags($email_body);
-                
-                // Send the email
-                if ($mail->send()) {
-                    $success = 'Your agent application with documents has been submitted successfully! We will contact you soon.';
-                    // Clear form data on success
-                    $_POST = array();
-                } else {
-                    $error = 'Failed to send application with attachments. Error: ' . $mail->ErrorInfo;
-                }
-                
-            } catch (Exception $e) {
-                $error = 'Email sending failed: ' . $e->getMessage() . '. Please try again or contact support@homeworker.info directly.';
-                error_log("Agent application email failed: " . $e->getMessage());
+            } else {
+                $error = 'Failed to upload files. Please try again.';
             }
         }
     }
