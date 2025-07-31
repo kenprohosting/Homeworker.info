@@ -27,9 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } elseif (empty($subject)) {
         $error = 'Subject is required';
     } elseif (!isset($_FILES['cv']) || $_FILES['cv']['error'] !== UPLOAD_ERR_OK) {
-        $error = 'Please upload your CV';
+        $error = 'Please upload your CV. Upload error: ' . ($_FILES['cv']['error'] ?? 'File not found');
     } elseif (!isset($_FILES['application_letter']) || $_FILES['application_letter']['error'] !== UPLOAD_ERR_OK) {
-        $error = 'Please upload your Application Letter';
+        $error = 'Please upload your Application Letter. Upload error: ' . ($_FILES['application_letter']['error'] ?? 'File not found');
     } else {
         $cv_file = $_FILES['cv'];
         $application_file = $_FILES['application_letter'];
@@ -61,9 +61,13 @@ Files attached:
 - Application Letter: " . $application_file['name'] . "
             ";
             
-            // Try PHPMailer first
+            // Use PHPMailer with better error handling and debugging
             try {
                 $mail = new PHPMailer(true);
+                
+                // Enable verbose debug output for testing
+                $mail->SMTPDebug = 0; // Set to 2 for debugging if needed
+                $mail->Debugoutput = 'html';
                 
                 // Server settings
                 $mail->isSMTP();
@@ -73,41 +77,58 @@ Files attached:
                 $mail->Password   = 'bfok yqfu fjpf jlcf';
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port       = 587;
+                $mail->SMTPOptions = array(
+                    'ssl' => array(
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                        'allow_self_signed' => true
+                    )
+                );
                 
                 // Recipients
                 $mail->setFrom('support@homeworker.info', 'Homeworker Connect');
                 $mail->addAddress('support@homeworker.info', 'Homeworker Connect');
+                $mail->addReplyTo($email, $name);
                 
-                // Attach both files
-                $mail->addAttachment($cv_file['tmp_name'], 'CV_' . $cv_file['name']);
-                $mail->addAttachment($application_file['tmp_name'], 'Application_Letter_' . $application_file['name']);
+                // Verify files exist and are readable before attaching
+                if (is_uploaded_file($cv_file['tmp_name']) && is_readable($cv_file['tmp_name'])) {
+                    $mail->addAttachment($cv_file['tmp_name'], 'CV_' . $cv_file['name']);
+                }
+                
+                if (is_uploaded_file($application_file['tmp_name']) && is_readable($application_file['tmp_name'])) {
+                    $mail->addAttachment($application_file['tmp_name'], 'Application_Letter_' . $application_file['name']);
+                }
                 
                 // Content
-                $mail->isHTML(false);
+                $mail->isHTML(true);
                 $mail->Subject = $email_subject;
-                $mail->Body    = $email_body;
+                $mail->Body    = "
+                    <h2>New Agent Application</h2>
+                    <p><strong>Name:</strong> " . htmlspecialchars($name) . "</p>
+                    <p><strong>Email:</strong> " . htmlspecialchars($email) . "</p>
+                    <p><strong>Contact:</strong> " . htmlspecialchars($contact) . "</p>
+                    <p><strong>Subject:</strong> " . htmlspecialchars($subject) . "</p>
+                    <p><strong>Application Date:</strong> " . date('Y-m-d H:i:s') . "</p>
+                    <hr>
+                    <p><strong>Attachments:</strong></p>
+                    <ul>
+                        <li>CV: " . htmlspecialchars($cv_file['name']) . " (" . round($cv_file['size']/1024, 2) . " KB)</li>
+                        <li>Application Letter: " . htmlspecialchars($application_file['name']) . " (" . round($application_file['size']/1024, 2) . " KB)</li>
+                    </ul>
+                ";
+                $mail->AltBody = strip_tags($email_body);
                 
-                $mail->send();
-                $success = 'Your agent application has been submitted successfully! We will contact you soon.';
-                
-                // Clear form data on success
-                $_POST = array();
-                
-            } catch (Exception $e) {
-                // Fallback to basic PHP mail() function
-                $to = 'support@homeworker.info';
-                $headers = "From: support@homeworker.info\r\n";
-                $headers .= "Reply-To: $email\r\n";
-                $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-                
-                if (mail($to, $email_subject, $email_body, $headers)) {
-                    $success = 'Your agent application has been submitted successfully! We will contact you soon. (Note: File attachments could not be sent - please email them separately to support@homeworker.info)';
+                // Send the email
+                if ($mail->send()) {
+                    $success = 'Your agent application with documents has been submitted successfully! We will contact you soon.';
                     // Clear form data on success
                     $_POST = array();
                 } else {
-                    $error = 'Failed to send application. Please try again later or contact support@homeworker.info directly.';
+                    $error = 'Failed to send application with attachments. Error: ' . $mail->ErrorInfo;
                 }
                 
+            } catch (Exception $e) {
+                $error = 'Email sending failed: ' . $e->getMessage() . '. Please try again or contact support@homeworker.info directly.';
                 error_log("Agent application email failed: " . $e->getMessage());
             }
         }
