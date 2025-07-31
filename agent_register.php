@@ -112,15 +112,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <form method="POST" action="" style="display: flex; flex-direction: column; gap: 12px;">
     <input type="text" name="registration_code" placeholder="Registration Code" value="<?= isset($_POST['registration_code']) ? htmlspecialchars($_POST['registration_code']) : '' ?>" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
     <small style="color: #666; margin: -8px 0 0; font-size: 0.8rem;">Enter the registration code provided by the company</small>
-    <input type="number" name="agent_id" placeholder="Agent ID" value="<?= isset($_POST['agent_id']) ? htmlspecialchars($_POST['agent_id']) : '' ?>" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
-    <small style="color: #666; margin: -8px 0 0; font-size: 0.8rem;">Enter the specific agent ID assigned to you</small>
     <!-- proceed button to show full form -->
     <button type="button" id="proceedBtn" onclick="showFullForm()" 
-        style="display: none; background: #197b88; color: #fff; border: none; border-radius: 8px; padding: 12px; font-size: 1rem; font-weight: 600; cursor: pointer;">
-        Proceed to Register
-    </button> 
+    style="display: none; background: #197b88; color: #fff; border: none; border-radius: 8px; padding: 12px; font-size: 1rem; font-weight: 600; cursor: pointer;">
+    Proceed to Register
+</button> 
 
-    <div id="hidden-section" style="display: none; flex-direction: column; gap: 12px;">
+<div id="hidden-section" style="display: none; flex-direction: column; gap: 12px;">
+        <input type="number" name="agent_id" placeholder="Agent ID" value="<?= isset($_POST['agent_id']) ? htmlspecialchars($_POST['agent_id']) : '' ?>" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
+        <small style="color: #666; margin: -8px 0 0; font-size: 0.8rem;">Enter the specific agent ID assigned to you</small>
         <input type="text" name="national_id" placeholder="National ID/Passport Number" value="<?= isset($_POST['national_id']) ? htmlspecialchars($_POST['national_id']) : '' ?>" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
         <input type="text" name="name" placeholder="Full Name" value="<?= isset($_POST['name']) ? htmlspecialchars($_POST['name']) : '' ?>" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
         <input type="tel" name="phone" placeholder="Phone Number" value="<?= isset($_POST['phone']) ? htmlspecialchars($_POST['phone']) : '' ?>" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
@@ -158,15 +158,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <script>
 function checkAgentFields() {
     const regCodeInput = document.querySelector('input[name="registration_code"]');
-    const agentIdInput = document.querySelector('input[name="agent_id"]');
     const proceedBtn = document.getElementById('proceedBtn');
     const hiddenSection = document.getElementById('hidden-section');
 
     const regCode = regCodeInput.value.trim();
-    const agentId = agentIdInput.value.trim();
 
-    // Show proceed button only when both fields are filled
-    if (regCode !== '' && agentId !== '') {
+    if (regCode !== '') {
         proceedBtn.style.display = 'block';
     } else {
         proceedBtn.style.display = 'none';
@@ -174,23 +171,22 @@ function checkAgentFields() {
     }
 }
 
-// Show hidden section when proceed button is clicked
 function showFullForm() {
-    document.getElementById('hidden-section').style.display = 'flex';
-    document.getElementById('proceedBtn').style.display = 'none';
+    const hiddenSection = document.getElementById('hidden-section');
+    const proceedBtn = document.getElementById('proceedBtn');
+
+    hiddenSection.style.display = 'flex'; // or 'block', depending on your layout
+    proceedBtn.style.display = 'none';
 }
 
-// Attach event listeners
 document.addEventListener('DOMContentLoaded', function() {
     const regCodeInput = document.querySelector('input[name="registration_code"]');
-    const agentIdInput = document.querySelector('input[name="agent_id"]');
     regCodeInput.addEventListener('input', checkAgentFields);
-    agentIdInput.addEventListener('input', checkAgentFields);
-    checkAgentFields(); // Initial check
+    checkAgentFields(); // Initial check on page load
 });
 
 function togglePassword(id, el) {
-    var input = document.getElementById(id);
+    const input = document.getElementById(id);
     if (input.type === "password") {
         input.type = "text";
         el.innerHTML = "&#128064;";
@@ -200,5 +196,6 @@ function togglePassword(id, el) {
     }
 }
 </script>
+
 </body>
 </html>
