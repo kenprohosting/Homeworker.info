@@ -1,7 +1,7 @@
 <?php
 $host = "localhost";
-$db = "househelp_db";
-$user = "root";
+$db = "esoma_homeworker";
+$user = "esoma_homeworker";
 $pass = ""; // your DB password
 
 try {
