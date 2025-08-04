@@ -38,7 +38,7 @@
 <h2>2. Responsibilities</h2>
 <ul>
     <li>Provide accurate job offers, payment terms, and expectations.</li>
-    <li>Offer fair pay as per the Kenyan <strong>Employment Act, 2007</strong>.</li>
+    <li>Offer fair pay as per the Kenyan <a href="https://www.kenyalaw.org/lex/actview.xql?actid=No.%2011%20of%202007" target="_blank"><strong>Employment Act, 2007</strong></a>.</li>
     <li>Maintain safe, respectful, and lawful work environments.</li>
 </ul>
 

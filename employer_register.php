@@ -196,7 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       </div>
       <div style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: #333;">
         <input type="checkbox" id="terms" name="terms" required style="cursor: pointer;">
-        <label for="terms">I agree to the <a href="employer_terms.php" target="_blank"
+        <label for="terms">I agree to the <a href="employer_terms.php" target="_self"
             style="color: #197b88; text-decoration: underline;">Terms and Conditions</a></label>
       </div>
       <button type="submit"
