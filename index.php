@@ -38,6 +38,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
   <div class="hero-content">
     <h1>Find Validated Homeworkers Easily</h1>
     <p>Connecting employers with verified domestic workers across the world.</p>
+    <p> +1000 verified homeworkers </p>
 
     <!-- Hero Action Card -->
     <div class="hero-action-card horizontal-card">
