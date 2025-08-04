@@ -26,7 +26,7 @@
 <body>
 <div class="container">
     <h1>Employer Terms & Conditions</h1>
-    <p><strong>Effective Date:</strong> October 2023<br><strong>Last Updated:</strong> October 2023</p>
+    
 
 <h2>1. Definitions</h2>
 <ul>
@@ -63,7 +63,7 @@
 
 <h2>6. Privacy & Data</h2>
 <ul>
-    <li>Employer data is securely handled under Kenya’s Data Protection Act.</li>
+    <li>Employer data is securely handled under <a href="https://www.odpc.go.ke/data-protection-act/" target="_blank" rel="noopener noreferrer">Kenya’s Data Protection Act</a>.</li>
     <li>Employers can request their data be deleted.</li>
 </ul>
 
@@ -85,7 +85,7 @@
     </div>
 </div>
 <footer>
-    &copy; 2025 Homeworker.info. All rights reserved.
+    &copy; 2025 KenPro. All rights reserved.
 </footer>
 </body>
 </html>

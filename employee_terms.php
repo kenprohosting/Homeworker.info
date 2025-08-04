@@ -84,7 +84,7 @@
     </div>
 </div>
 <footer>
-    &copy; 2025 Homeworker.info. All rights reserved.
+    &copy; 2025 KenPro. All rights reserved.
 </footer>
 </body>
 </html>

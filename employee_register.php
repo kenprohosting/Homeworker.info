@@ -402,7 +402,7 @@ window.addEventListener('DOMContentLoaded', function() {
     </div>
     </main>
     <footer>
-        <p>&copy; <?= date('Y') ?> Homeworker Connect. All rights reserved.</p>
+        <p>&copy; <?= date('Y') ?> KenPro. All rights reserved.</p>
     </footer>
 <script>
 function togglePassword(id, el) {

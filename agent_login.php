@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </p>
     </div>
     <footer style="text-align:center;margin-top:auto;color:#888;">
-        <p>&copy; <?= date("Y") ?> Homeworker Connect. All rights reserved.</p>
+        <p>&copy; <?= date("Y") ?> KenPro. All rights reserved.</p>
 <script>
 function togglePassword(id, el) {
   var input = document.getElementById(id);

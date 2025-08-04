@@ -120,7 +120,7 @@
         📞 <strong>Phone:</strong> +254 725 788 400</p>
     </div>
     <footer>
-        &copy; <?php echo date('Y'); ?> Homeworker.info. All rights reserved.
+        &copy; <?php echo date('Y'); ?> KenPro. All rights reserved.
     </footer>
 </body>
 </html>

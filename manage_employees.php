@@ -167,19 +167,6 @@ $employees = $stmt;
             </tr>
         </thead>
         <tbody>
-        <?php foreach ($employees as $emp): ?>
-            <tr>
-                <td><?= $emp['ID'] ?></td>
-                <td><?= htmlspecialchars($emp['Name']) ?></td>
-                <td><?= htmlspecialchars($emp['Email']) ?></td>
-                <td><?= htmlspecialchars($emp['National_id']) ?></td>
-                <td><?= htmlspecialchars($emp['Status']) ?></td>
-                <td><?= htmlspecialchars($emp['Created_at']) ?></td>
-                <td>
-            <p class="error"><?= $error ?></p>
-        <?php endif; ?>
-
-        <div class="filter-section">
             <h3>Filter Employees</h3>
             <form method="GET" class="filter-form">
                 <select name="status">
@@ -228,7 +215,7 @@ $employees = $stmt;
     </div>
 
     <footer>
-        <p>&copy; <?= date("Y") ?> Homeworker Connect. All rights reserved.</p>
+        <p>&copy; <?= date("Y") ?> KenPro. All rights reserved.</p>
     </footer>
 </body>
 </html> 

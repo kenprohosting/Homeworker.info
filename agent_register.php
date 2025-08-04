@@ -153,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
     <footer style="margin-top: auto; text-align: center; color: #888; padding: 16px 0;">
-        <p>&copy; <?= date("Y") ?> Homeworker Connect. All rights reserved.</p>
+        <p>&copy; <?= date("Y") ?> KenPro. All rights reserved.</p>
     </footer>
 <script>
 function checkAgentFields() {

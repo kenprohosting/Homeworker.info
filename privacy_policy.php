@@ -25,117 +25,109 @@
 <body>
     <div class="container">
         <h1>Homeworker.info – Privacy Policy</h1>
-        <p><strong>Effective Date:</strong> [Insert Date]<br>
-        <strong>Last Updated:</strong> [Insert Date]</p>
         
+
         <h2>1. Introduction</h2>
-        <p>Welcome to <strong>Homeworker.info</strong>. Your privacy is important to us.</p>
-        <p>This Privacy Policy explains how we collect, use, store, and protect your personal information when you use our platform.</p>
-        <p>By using our services, you agree to the practices described in this policy.</p>
-        
-        <h2>2. Information We Collect</h2>
-        <p>We may collect the following types of data:</p>
+        <p>Welcome to <strong>Homeworker.info</strong>. Your privacy is important to us. This Privacy Policy outlines how we collect, process, use, store, and protect your personal data in accordance with the <strong>Kenya Data Protection Act, 2019</strong>.</p>
+
+        <h2>2. Definitions</h2>
+        <ul>
+            <li><strong>“You”</strong>: Any person using our platform, including househelps, employers, or site visitors.</li>
+            <li><strong>“We” / “Us” / “Our”</strong>: Homeworker.info, as the data controller.</li>
+            <li><strong>“Personal Data”</strong>: Information that identifies you, such as name, contact, ID, or location.</li>
+            <li><strong>“Processing”</strong>: Any action taken on personal data including collection, storage, modification, or deletion.</li>
+            <li><strong>“Data Subject”</strong>: The person whose personal data is being processed.</li>
+            <li><strong>“Data Controller”</strong>: Homeworker.info, which determines how and why data is processed.</li>
+        </ul>
+
+        <h2>3. Information We Collect</h2>
         <h3>a) From Househelps:</h3>
         <ul>
-            <li>Full name</li>
-            <li>Gender</li>
-            <li>Age</li>
-            <li>Phone number</li>
-            <li>Country and location</li>
-            <li>Work experience and skills</li>
-            <li>Photo (optional)</li>
-            <li>Ratings and reviews</li>
+            <li>Full name, gender, age, contact, location, work experience, skills, optional photo, and ratings</li>
         </ul>
         <h3>b) From Employers:</h3>
         <ul>
-            <li>Full name</li>
-            <li>Email address</li>
-            <li>Phone number</li>
-            <li>Location</li>
-            <li>Job preferences</li>
-            <li>Ratings and reviews</li>
+            <li>Full name, email, phone, job preferences, and reviews</li>
         </ul>
         <h3>c) Automatically Collected:</h3>
         <ul>
-            <li>Device information</li>
-            <li>IP address</li>
-            <li>Browser type</li>
-            <li>Session logs</li>
-            <li>User agent</li>
+            <li>Device data, IP address, session logs, browser info</li>
         </ul>
-        
-        <h2>3. How We Use Your Information</h2>
-        <p>We use your data to:</p>
+
+        <h2>4. Lawful Basis for Processing</h2>
+        <p>We process your data based on:</p>
         <ul>
-            <li>Match househelps with potential employers</li>
-            <li>Create and manage your account</li>
-            <li>Enable communication between users</li>
-            <li>Improve our platform and services</li>
-            <li>Prevent fraud and enforce platform rules</li>
-            <li>Comply with Kenyan laws and legal obligations</li>
+            <li>Your consent</li>
+            <li>Fulfillment of a contract or application process</li>
+            <li>Our legitimate interests (e.g., platform security)</li>
+            <li>Legal obligations</li>
         </ul>
-        
-        <h2>4. Sharing of Information</h2>
-        <p>We <strong>do not sell your personal data</strong>.</p>
-        <p>We may share your data only with:</p>
+
+        <h2>5. How We Use Your Information</h2>
         <ul>
-            <li>Other users, as part of the matching process</li>
-            <li>Service providers who help operate our platform</li>
-            <li>Law enforcement or regulators, if legally required</li>
+            <li>Match househelps with employers</li>
+            <li>Manage user accounts</li>
+            <li>Platform improvements</li>
+            <li>Legal compliance</li>
+            <li>Prevent fraud and abuse</li>
         </ul>
-        
-        <h2>5. Data Storage and Security</h2>
+
+        <h2>6. Data Sharing</h2>
+        <p>We do not sell your personal data. We only share with:</p>
         <ul>
-            <li>Your data is stored securely on our servers.</li>
-            <li>We implement encryption, access control, and regular backups.</li>
-            <li>Only authorized personnel can access personal data.</li>
+            <li>Service providers (under contract)</li>
+            <li>Other users (as part of platform functionality)</li>
+            <li>Law enforcement and regulators when legally required</li>
         </ul>
-        
-        <h2>6. Your Rights</h2>
-        <p>Under the <strong>Kenya Data Protection Act, 2019</strong>, you have the right to:</p>
+
+        <h2>7. Data Storage and Security</h2>
         <ul>
-            <li>Access your personal data</li>
-            <li>Correct inaccurate or outdated data</li>
-            <li>Request deletion of your account and data</li>
-            <li>Object to certain types of processing</li>
-            <li>Lodge a complaint with the <strong>Office of the Data Protection Commissioner (ODPC)</strong></li>
+            <li>Data stored on secure servers</li>
+            <li>Use of encryption, access control, and backups</li>
+            <li>Internal access restricted to authorized personnel only</li>
         </ul>
-        <p>To exercise any of these rights, contact us at:</p>
-        <p>📧 <strong>Email:</strong> support@homeworker.info</p>
-        
-        <h2>7. Cookies and Tracking</h2>
-        <p>We may use cookies and tracking tools to:</p>
+
+        <h2>8. International Data Transfers</h2>
+        <p>If your data is transferred outside Kenya, we ensure protection via data agreements or transfers only to jurisdictions with adequate safeguards.</p>
+
+        <h2>9. Your Rights</h2>
         <ul>
-            <li>Remember your login</li>
-            <li>Analyze usage patterns</li>
-            <li>Improve user experience</li>
+            <li>Access or update your data</li>
+            <li>Withdraw consent at any time</li>
+            <li>Request data deletion</li>
+            <li>Restrict or object to certain processing</li>
+            <li>Complain to the Office of the Data Protection Commissioner (ODPC)</li>
         </ul>
-        <p>You can manage cookies via your browser settings.</p>
-        
-        <h2>8. Data Retention</h2>
-        <p>We retain your data only as long as necessary for:</p>
+        <p>To exercise any rights, email us: <strong>support@homeworker.info</strong></p>
+
+        <h2>10. Cookies and Tracking</h2>
         <ul>
-            <li>Providing our services</li>
-            <li>Legal or regulatory reasons</li>
-            <li>Platform security and backups</li>
+            <li>We use cookies for session management and analytics</li>
+            <li>You can disable cookies in your browser</li>
         </ul>
-        <p>Inactive accounts may be deleted after [insert period, e.g., 12 months].</p>
-        
-        <h2>9. Children’s Privacy</h2>
-        <p>Our platform is not intended for individuals under 18.<br>
-        We do not knowingly collect data from minors.</p>
-        
-        <h2>10. Changes to This Policy</h2>
-        <p>We may update this Privacy Policy.<br>
-        Users will be notified via email or platform notice before changes take effect.</p>
-        
-        <h2>11. Contact Us</h2>
-        <p>If you have any questions or concerns about this Privacy Policy:</p>
-        <p>📧 <strong>Email:</strong> support@homeworker.info<br>
-        📞 <strong>Phone:</strong> +254 725 788 400</p>
+
+        <h2>11. Data Retention</h2>
+        <p>Data is retained as long as necessary for service delivery or legal reasons. Inactive accounts may be purged after [Insert Period, e.g., 12 months].</p>
+
+        <h2>12. Children’s Privacy</h2>
+        <p>Our platform is not intended for individuals under 18. We do not knowingly collect information from minors.</p>
+
+        <h2>13. Breach Notification</h2>
+        <p>In case of a data breach, we will notify affected users and relevant authorities in accordance with Kenyan law.</p>
+
+        <h2>14. Policy Updates</h2>
+        <p>We may revise this policy at any time. All updates will be posted here and communicated where applicable.</p>
+
+        <h2>15. Contact Us</h2>
+        <p>For questions or concerns:</p>
+        <p>
+            📧 <strong>Email:</strong> support@homeworker.info<br>
+            📞 <strong>Phone:</strong> +254 725 788 400
+        </p>
     </div>
+
     <footer>
-        &copy; <?php echo date('Y'); ?> Homeworker.info. All rights reserved.
+        &copy; <?php echo date('Y'); ?> KenPro. All rights reserved.
     </footer>
 </body>
 </html>
