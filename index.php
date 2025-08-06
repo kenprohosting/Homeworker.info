@@ -47,8 +47,8 @@ $isLoggedIn = isset($_SESSION['employer_name']);
           Register <span class="chevron">▼</span>
         </button>
         <div id="registerDropdown" class="pro-dropdown">
-          <a href="employer_register.php" class="pro-dropdown-link">Register as Employer</a>
-          <a href="agent_register.php" class="pro-dropdown-link">Register as Agent</a>
+          <a href="employer_register.php" class="pro-dropdown-link">Employer Register</a>
+          <a href="agent_register.php" class="pro-dropdown-link">Agent Register</a>
         </div>
       </div>
       <div class="hero-divider-vertical"></div>
@@ -57,9 +57,9 @@ $isLoggedIn = isset($_SESSION['employer_name']);
           Login <span class="chevron">▼</span>
         </button>
         <div id="loginDropdown" class="pro-dropdown">
-          <a href="employer_login.php" class="pro-dropdown-link">Login as Employer</a>
-          <a href="employee_login.php" class="pro-dropdown-link">Login as Employee</a>
-          <a href="agent_login.php" class="pro-dropdown-link">Login as Agent</a>
+          <a href="employer_login.php" class="pro-dropdown-link">Employer Login</a>
+          <a href="employee_login.php" class="pro-dropdown-link">Employee Login</a>
+          <a href="agent_login.php" class="pro-dropdown-link">Agent Login</a>
         </div>
       </div>
     </div>
@@ -112,10 +112,10 @@ $isLoggedIn = isset($_SESSION['employer_name']);
         <div class="footer-column">
           <h3>Homeworker For You</h3>
           <ul>
-            <li><a href="/how_it_works.php">How It Works</a></li>
-            <li><a href="/register_worker.php">Join as Worker</a></li>
-            <li><a href="/worker_login.php">Login</a></li>
-            <li><a href="/faq.php">FAQ</a></li>
+            <li><a href="employee_login.php">Employee Login</a></li>
+            <li><a href="agent_register.php">Agent Application</a></li>
+            <li><a href="agent_login">Agent Login</a></li>
+            <li><a href="faq.php">FAQ</a></li>
           </ul>
         </div>
 
@@ -123,10 +123,9 @@ $isLoggedIn = isset($_SESSION['employer_name']);
         <div class="footer-column">
           <h3>Homeworker For Employer</h3>
           <ul>
-            <li><a href="/hire.php">Hire a Worker</a></li>
-            <li><a href="/register_employer.php">Register as Employer</a></li>
-            <li><a href="/employer_login.php">Employer Login</a></li>
-            <li><a href="/post_job.php">Post a Job</a></li>
+            <li><a href="employer_register.php">Employer Register</a></li>
+            <li><a href="employer_login.php">Employer Login</a></li>
+            <li><a href="post_job.php">Post a Job</a></li>
           </ul>
         </div>
 
@@ -134,10 +133,10 @@ $isLoggedIn = isset($_SESSION['employer_name']);
         <div class="footer-column">
           <h3>Quick Links</h3>
           <ul>
-            <li><a href="/privacy_policy.php">Privacy Policy</a></li>
-            <li><a href="/terms.php">Terms & Conditions</a></li>
-            <li><a href="/contact.php">Contact Us</a></li>
-            <li><a href="/sitemap.xml">Sitemap</a></li>
+            <li><a href="privacy_policy.php">Privacy Policy</a></li>
+            <li><a href="agent_terms_and_conditions.php">Terms & Conditions</a></li>
+            <li><a href="contact.php">Contact Us</a></li>
+            <li><a href="sitemap.xml">Sitemap</a></li>
           </ul>
         </div>
       </div>
@@ -148,9 +147,9 @@ $isLoggedIn = isset($_SESSION['employer_name']);
   <div class="footer-bottom">
     <div class="footer-bottom-container">
       <div class="footer-links">
-        <a href="/privacy_policy.php">Privacy Policy</a>
+        <a href="privacy_policy.php">Privacy Policy</a>
         <span>|</span>
-        <a href="/sitemap.xml">Sitemap</a>
+        <a href="sitemap.xml">Sitemap</a>
       </div>
 
       <p>&copy; <?= date("Y") ?> KenPro. All rights reserved.</p>

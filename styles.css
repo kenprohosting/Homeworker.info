@@ -595,15 +595,6 @@ main, .container, .contact-container, .faq-container {
   flex: 1;
 }
 
-/* Footer */
-footer {
-  background-color: #0A4A70 !important;
-  color: white;
-  text-align: center;
-  padding: 15px 0;
-  margin-top: auto;
-}
-
 /* Hero Section */
 .hero {
   position: relative;
@@ -936,10 +927,13 @@ footer {
 /* footer */
 /* General Footer Styling */
 footer {
+  background-color: #0A4A70;
+  text-align: center;
+  margin-top: auto;
   font-family: Arial, sans-serif;
   font-size: 15px;
   color: #fff;
-  background-color: #1c1c1c;
+
   line-height: 1.6;
 }
 
@@ -958,6 +952,7 @@ footer {
 }
 
 .footer-column h3 {
+  text-align: left;
   font-size: 18px;
   margin-bottom: 12px;
   color: #f1f1f1;
@@ -965,6 +960,7 @@ footer {
 
 .footer-column ul {
   list-style: none;
+  text-align: left;
   padding: 0;
 }
 
