@@ -101,9 +101,77 @@ $isLoggedIn = isset($_SESSION['employer_name']);
   </div>
 </section>
 
+
+
 <footer>
-  <p>&copy; <?= date("Y") ?> KenPro. All rights reserved.</p> | <a href="privacy_policy.php" style="text-decoration: none; color: inherit;">Privacy Policy</a>
+  <!-- Top Footer -->
+  <div class="footer-top">
+    <div class="wrap">
+      <div class="footer-grid">
+        <!-- Homeworker For You -->
+        <div class="footer-column">
+          <h3>Homeworker For You</h3>
+          <ul>
+            <li><a href="/how_it_works.php">How It Works</a></li>
+            <li><a href="/register_worker.php">Join as Worker</a></li>
+            <li><a href="/worker_login.php">Login</a></li>
+            <li><a href="/faq.php">FAQ</a></li>
+          </ul>
+        </div>
+
+        <!-- Homeworker For Employer -->
+        <div class="footer-column">
+          <h3>Homeworker For Employer</h3>
+          <ul>
+            <li><a href="/hire.php">Hire a Worker</a></li>
+            <li><a href="/register_employer.php">Register as Employer</a></li>
+            <li><a href="/employer_login.php">Employer Login</a></li>
+            <li><a href="/post_job.php">Post a Job</a></li>
+          </ul>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="/privacy_policy.php">Privacy Policy</a></li>
+            <li><a href="/terms.php">Terms & Conditions</a></li>
+            <li><a href="/contact.php">Contact Us</a></li>
+            <li><a href="/sitemap.xml">Sitemap</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Footer -->
+  <div class="footer-bottom">
+    <div class="footer-bottom-container">
+      <div class="footer-links">
+        <a href="/privacy_policy.php">Privacy Policy</a>
+        <span>|</span>
+        <a href="/sitemap.xml">Sitemap</a>
+      </div>
+
+      <p>&copy; <?= date("Y") ?> KenPro. All rights reserved.</p>
+
+      <div class="footer-socials">
+        <a href="https://facebook.com" target="_blank" aria-label="Facebook">
+          <img src="/icons/Facebook.svg">
+        </a>
+        <a href="https://tiktok.com" target="_blank" aria-label="TikTok">
+          <img src="/icons/Tiktok.svg">
+        </a>
+        <a href="https://wa.me/254712345678" target="_blank" aria-label="WhatsApp">
+          <img src="/icons/Whatsapp.svg" >
+        </a>
+      </div>
+    </div>
+  </div>
 </footer>
+
+
+
 <script src="hamburger.js"></script>
 
 </body>
