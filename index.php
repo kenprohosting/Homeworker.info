@@ -114,7 +114,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
           <ul>
             <li><a href="employee_login.php">Employee Login</a></li>
             <li><a href="agent_register.php">Agent Application</a></li>
-            <li><a href="agent_login">Agent Login</a></li>
+            <li><a href="agent_login.php">Agent Login</a></li>
             <li><a href="faq.php">FAQ</a></li>
           </ul>
         </div>
@@ -149,10 +149,12 @@ $isLoggedIn = isset($_SESSION['employer_name']);
       <div class="footer-links">
         <a href="privacy_policy.php">Privacy Policy</a>
         <span>|</span>
+        <a href="agent_terms_and_conditions.php">Terms & Conditions</a>
+        <span>|</span>
         <a href="sitemap.xml">Sitemap</a>
       </div>
 
-      <p>&copy; <?= date("Y") ?> KenPro. All rights reserved.</p>
+      <p>&copy; <?= date("Y") ?> <a style="color: white;" href="https://www.kenpro.org/">KenPro</a>. All rights reserved.</p>
 
       <div class="footer-socials">
         <a href="https://facebook.com" target="_blank" aria-label="Facebook">
