@@ -927,14 +927,14 @@ main, .container, .contact-container, .faq-container {
 /* footer */
 /* General Footer Styling */
 footer {
-  background-color: #0A4A70;
-  text-align: center;
-  margin-top: auto;
+  
+  
+  /*margin-top: auto;*/
   font-family: Arial, sans-serif;
   font-size: 15px;
   color: #fff;
 
-  line-height: 1.6;
+  /*line-height: 1.6;*/
 }
 
 /* Top Footer */
@@ -945,7 +945,7 @@ footer {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 30px;
   max-width: 1200px;
   margin: 0 auto;
