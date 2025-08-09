@@ -27,6 +27,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
     <ul class="nav-links">
       <li><a class="nav-btn" href="index.php">Home</a></li>
       <li><a class="nav-btn" href="about.php">About</a></li>
+      <li><a class="nav-btn" href="#">Resources</a></li>
       <li><a class="nav-btn" href="contact.php">Contact Us</a></li>
       <li><a class="nav-btn" href="faq.php">FAQ</a></li>
     </ul>
@@ -40,6 +41,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
     <p>Connecting employers with verified domestic workers across the world.</p>
     <p> +1000 verified homeworkers </p>
 
+    
     <!-- Hero Action Card -->
     <div class="hero-action-card horizontal-card">
       <div class="hero-action-section">
@@ -134,7 +136,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
           <h3>Quick Links</h3>
           <ul>
             <li><a href="privacy_policy.php">Privacy Policy</a></li>
-            <li><a href="agent_terms_and_conditions.php">Terms & Conditions</a></li>
+            <li><a href="terms_and_conditions.php">Terms & Conditions</a></li>
             <li><a href="contact.php">Contact Us</a></li>
             <li><a href="sitemap.xml">Sitemap</a></li>
           </ul>
@@ -149,7 +151,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
       <div class="footer-links">
         <a href="privacy_policy.php">Privacy Policy</a>
         <span>|</span>
-        <a href="agent_terms_and_conditions.php">Terms & Conditions</a>
+        <a href="terms_and_conditions.php">Terms & Conditions</a>
         <span>|</span>
         <a href="sitemap.xml">Sitemap</a>
         <span>|</span>
