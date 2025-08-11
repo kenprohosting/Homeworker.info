@@ -51,6 +51,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
         <div id="registerDropdown" class="pro-dropdown">
           <a href="employer_register.php" class="pro-dropdown-link">Employer Register</a>
           <a href="agent_register.php" class="pro-dropdown-link">Agent Register</a>
+          <a href="freelancer_register.php" class="pro-dropdown-link">Freelancer Register</a>
         </div>
       </div>
       <div class="hero-divider-vertical"></div>
@@ -62,6 +63,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
           <a href="employer_login.php" class="pro-dropdown-link">Employer Login</a>
           <a href="employee_login.php" class="pro-dropdown-link">Employee Login</a>
           <a href="agent_login.php" class="pro-dropdown-link">Agent Login</a>
+          <a href="freelancer_login.php" class="pro-dropdown-link">Freelancer Login</a>
         </div>
       </div>
     </div>

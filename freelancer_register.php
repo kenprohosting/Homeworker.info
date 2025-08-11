@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $password_hash = password_hash($password, PASSWORD_BCRYPT);
 
   // Check for existing email
-  $check = $conn->prepare("SELECT * FROM employer WHERE email = ?");
+  $check = $conn->prepare("SELECT * FROM freelancer WHERE email = ?");
   $check->execute([$email]);
   if ($check->rowCount() > 0) {
     $errors[] = "Email is already in use.";
@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       margin-bottom: 0;
     }
   </style>
-  <title>Employer Registration - Homeworker Connect</title>
+  <title>Freelancer Registration - Homeworker Connect</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -130,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     style="max-width: 360px; margin: 24px auto; background: #ffffff; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); padding: 24px; display: flex; flex-direction: column; gap: 16px;">
     <a href="index.php" style="color: #197b88; text-decoration: none; font-weight: 500; align-self: flex-start;">&larr;
       Back</a>
-    <h2 style="text-align: center; color: #197b88; margin: 0; font-size: 1.5rem;">Register as an Employer</h2>
+    <h2 style="text-align: center; color: #197b88; margin: 0; font-size: 1.5rem;">Register as a Freelancer</h2>
     <h3 style="text-align: center; color: #197b88; margin: 0; font-size: 1.2rem;">One-time subscription: $1</h3>
 
     <?php

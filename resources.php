@@ -37,7 +37,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
 
 <!-- About Page Content -->
 <main>
-  <div class="faq-container" style= "padding:0px; margin-top : 0px; margin-left : 0%; margin-right : 20%;">
+  <div class="faq-container" style= "padding:0px; margin-top : 0px; margin-left : 10%; margin-right : 10%; width: 100%;">
           <iframe src="https://homeworker.info/resources/" 
             style="border: none; width: 100%; height: 200vh; display: block;" 
             scrolling="auto"></iframe>
