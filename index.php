@@ -27,7 +27,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
     <ul class="nav-links">
       <li><a class="nav-btn" href="index.php">Home</a></li>
       <li><a class="nav-btn" href="about.php">About</a></li>
-      <li><a class="nav-btn" href="#">Resources</a></li>
+      <li><a class="nav-btn" href="resources.php">Resources</a></li>
       <li><a class="nav-btn" href="contact.php">Contact Us</a></li>
       <li><a class="nav-btn" href="faq.php">FAQ</a></li>
     </ul>
