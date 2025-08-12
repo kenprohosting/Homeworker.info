@@ -11,6 +11,7 @@ define('INTASEND_PUBLISHABLE_KEY', 'ISPubKey_live_40f25458-716c-47c5-b049-786fd1
 define('INTASEND_LIVE_MODE', true); // Set to false for sandbox testing
 
 // Payment settings
-define('EMPLOYER_REGISTRATION_FEE', 10); // KES 10 for testing
-define('PAYMENT_CURRENCY', 'KES');
+define('EMPLOYER_REGISTRATION_FEE', 1); // 1 USD for testing
+define('FREELANCER_REGISTRATION_FEE', 1); // 1 USD 1 for testing
+define('PAYMENT_CURRENCY', 'USD');
 ?>

@@ -38,8 +38,9 @@ $isLoggedIn = isset($_SESSION['employer_name']);
 <section class="hero">
   <div class="hero-content">
     <h1>Find Validated Homeworkers Easily</h1>
-    <p>Connecting employers with verified domestic workers across the world.</p>
+    <p>Connecting employers with verified homeworkers across the world.</p>
     <p> +1000 verified homeworkers </p>
+    <p> +100 verified freelancers </p>
 
     
     <!-- Hero Action Card -->
@@ -61,7 +62,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
         </button>
         <div id="loginDropdown" class="pro-dropdown">
           <a href="employer_login.php" class="pro-dropdown-link">Employer Login</a>
-          <a href="employee_login.php" class="pro-dropdown-link">Employee Login</a>
+          <a href="employee_login.php" class="pro-dropdown-link">Househelp Login</a>
           <a href="agent_login.php" class="pro-dropdown-link">Agent Login</a>
           <a href="freelancer_login.php" class="pro-dropdown-link">Freelancer Login</a>
         </div>
@@ -116,7 +117,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
         <div class="footer-column">
           <h3>Homeworker For You</h3>
           <ul>
-            <li><a href="employee_login.php">Employee Login</a></li>
+            <li><a href="employee_login.php">Househelp Login</a></li>
             <li><a href="agent_register.php">Agent Application</a></li>
             <li><a href="agent_login.php">Agent Login</a></li>
             <li><a href="faq.php">FAQ</a></li>

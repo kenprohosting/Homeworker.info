@@ -69,6 +69,25 @@ CREATE TABLE IF NOT EXISTS `employer` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Freelancer table
+CREATE TABLE IF NOT EXISTS `freelancer` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) NOT NULL,
+  `Location` text NOT NULL,
+  `Residence_type` enum('urban','rural') NOT NULL,
+  `Contact` varchar(20) NOT NULL,
+  `Gender` enum('male','female','other') NOT NULL,
+  `Email` varchar(100) NOT NULL UNIQUE,
+  `Password_hash` varchar(255) NOT NULL,
+  `Address` text DEFAULT NULL,
+  `Country` varchar(100) DEFAULT NULL,
+  `Verification_status` enum('unverified','pending','verified') DEFAULT 'unverified',
+  `Created_at` datetime DEFAULT current_timestamp(),
+  `Reset_token` varchar(255) DEFAULT NULL,
+  `Reset_token_expiry` datetime DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- Agents table
 CREATE TABLE IF NOT EXISTS `agents` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

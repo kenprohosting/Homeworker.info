@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html>
 <head>
     <link rel="icon" type="image/png" href="/favicon.png">
-    <title>Employee Login</title>
+    <title>Househelp Login</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body style="background: #f4f8fb; font-family: 'Segoe UI', Arial, sans-serif; display: flex; flex-direction: column; min-height: 100vh;">
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
     <div class="form-container" style="max-width: 360px; margin: 24px auto; background: #ffffff; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); padding: 24px; display: flex; flex-direction: column; gap: 16px;">
         <a href="index.php" style="color: #197b88; text-decoration: none; font-weight: 500; align-self: flex-start;">&larr; Back</a>
-        <h2 style="text-align: center; color: #197b88; margin: 0; font-size: 1.5rem;">Employee Login</h2>
+        <h2 style="text-align: center; color: #197b88; margin: 0; font-size: 1.5rem;">Househelp Login</h2>
         <?php if ($errors) foreach ($errors as $e) echo "<p style='background: #ffeaea; color: #c0392b; padding: 8px 12px; border-radius: 8px; margin: 0; text-align: center;'>$e</p>"; ?>
         <form method="POST" action="employee_login.php" style="display: flex; flex-direction: column; gap: 12px;">
             <input type="email" name="email" placeholder="Email" value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '' ?>" required style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
