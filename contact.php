@@ -25,6 +25,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
     <ul class="nav-links">
       <li><a class="nav-btn" href="index.php">Home</a></li>
       <li><a class="nav-btn" href="about.php">About</a></li>
+      <li><a class="nav-btn" href="jobs.php">Jobs</a></li>
       <li><a class="nav-btn" href="resources.php">Resources</a></li>
       <li><a class="nav-btn" href="contact.php">Contact Us</a></li>
       <li><a class="nav-btn" href="faq.php">FAQ</a></li>
@@ -36,11 +37,6 @@ $isLoggedIn = isset($_SESSION['employer_name']);
 <main>
   <div class="faq-container">
     <div class="faq-title">Contact Us</div>
-    <div class="contact-details">
-      <div>Email: <a href="mailto:support@homeworker.info">support@homeworker.info</a></div>
-      <div>Phone: +254 725 788 400</div>
-      <div>Address: Nairobi, Kenya</div>
-    </div>
     <form class="contact-form" method="post" action="#">
       <label for="name">Name</label>
       <input type="text" id="name" name="name" required>
@@ -50,6 +46,11 @@ $isLoggedIn = isset($_SESSION['employer_name']);
       <textarea id="message" name="message" required></textarea>
       <button type="submit">Send Message</button>
     </form>
+  </div>
+  <div class="contact-details">
+    <div>Email: <a href="mailto:support@homeworker.info">support@homeworker.info</a></div>
+    <div>Phone: +254 725 788 400</div>
+    <div>Address: Nairobi, Kenya</div>
   </div>
 </main>
 <footer>
