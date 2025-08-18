@@ -6,6 +6,7 @@
     <p>Connecting employers with verified and trained homeworkers across the world.</p>
     <p> +1000 verified homeworkers </p>
     <p> +100 verified freelancers </p>
+    <p> +100 verified agents </p>
 
     
     <!-- Hero Action Card -->
