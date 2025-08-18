@@ -44,5 +44,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
     </ul>
   </nav>
     <script scr="scripts.js"></script>
+    <script src="hamburger.js"></script>
+
  </div>
 </header>

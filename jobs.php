@@ -1,7 +1,7 @@
 <?php include 'header.php'; ?>
 
 <main>
-    <script> scr="scripts.js"</script>
+    <script scr="scripts.js"> </script>
 </main>
   
 

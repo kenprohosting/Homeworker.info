@@ -33,7 +33,7 @@
         </div>
       </div>
     </div>
-    <script> scr="scripts.js"</script>
+    <script scr="scripts.js"></script>
   </div>
 </section>
 
