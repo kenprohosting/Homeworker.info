@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://homeworker.info/</loc>
+    <lastmod>2025-08-22T07:23:01+00:00</lastmod>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>https://homeworker.info/about.php</loc>
+    <lastmod>2025-08-22T07:23:01+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://homeworker.info/resources.php</loc>
+    <lastmod>2025-08-22T07:23:01+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://homeworker.info/contact.php</loc>
+    <lastmod>2025-08-22T07:23:01+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://homeworker.info/faq.php</loc>
+    <lastmod>2025-08-22T07:23:01+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://homeworker.info/privacy_policy.php</loc>
+    <lastmod>2025-08-22T07:23:01+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://homeworker.info/terms_and_conditions.php</loc>
+    <lastmod>2025-08-22T07:23:01+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- Resource Hub -->
+  <url>
+    <loc>https://homeworker.info/resources/</loc>
+    <lastmod>2025-08-22T07:23:01+00:00</lastmod>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://homeworker.info/resources/problogger-online-jobs-for-freelancers/</loc>
+    <lastmod>2025-08-22T07:23:01+00:00</lastmod>
+    <priority>0.64</priority>
+  </url>
+  <url>
+    <loc>https://homeworker.info/resources/hello-world/</loc>
+    <lastmod>2025-08-22T07:23:01+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+
+  <!-- Categories -->
+  <url>
+    <loc>https://homeworker.info/resources/category/freelancer-jobs/</loc>
+    <lastmod>2025-08-22T07:23:01+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://homeworker.info/resources/category/househelp-jobs/</loc>
+    <lastmod>2025-08-22T07:23:01+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+
+  <!-- Example Tags (keep only most relevant for SEO) -->
+  <url>
+    <loc>https://homeworker.info/resources/tag/freelance-writing/</loc>
+    <lastmod>2025-08-22T07:23:01+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://homeworker.info/resources/tag/online-jobs-kenya/</loc>
+    <lastmod>2025-08-22T07:23:01+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+  <url>
+    <loc>https://homeworker.info/resources/tag/work-from-home/</loc>
+    <lastmod>2025-08-22T07:23:01+00:00</lastmod>
+    <priority>0.51</priority>
+  </url>
+
+</urlset>
