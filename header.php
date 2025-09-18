@@ -11,6 +11,7 @@ $isLoggedIn = isset($_SESSION['employer_name']);
   <meta charset="UTF-8">
   <title>Homeworker Connect</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="favicon.png" rel="icon" type="image/png" />
 
 
   <link rel="stylesheet" href="styles.css">
