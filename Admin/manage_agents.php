@@ -157,6 +157,8 @@ $agents = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <div class="admin-nav">
             <ul>
+                <!-- Add back button to main site : jean luc 22 SEP 25 -->
+                <li><a href="https://homeworker.info/" style="color: #e74c3c;">Back</a></li>
                 <li><a href="index.php">Dashboard</a></li>
                 <li><a href="manage_agents.php" class="active">Manage Agents</a></li>
                 <li><a href="manage_codes.php">Registration Codes</a></li>
