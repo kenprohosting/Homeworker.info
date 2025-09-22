@@ -133,7 +133,7 @@ $codes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <td>
                                 <?php if ($code['status'] === 'used' && $code['agent_name']): ?>
                                     <?= htmlspecialchars($code['agent_name']) ?>
-                                    <!-- show agent id and name when code is used : jean luc 22 SEP 25 -->
+                                    <!-- show agent name when code is used : jean luc 22 SEP 25 -->
                                 <?php else: ?>
                                     Unassigned
                                     <!-- show Unassigned when code is still active but not used : jean luc 22 SEP 25 -->
