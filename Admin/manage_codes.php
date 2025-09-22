@@ -37,8 +37,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['generate_code'])) {
     }
 }
 
-// Get all codes
-$stmt = $conn->prepare("SELECT code, agent_id, description, status, assigned_to, created_at, used_at FROM agent_registration_codes ORDER BY created_at DESC");
+/* join agents to get agent name when displaying assigned_to : jean luc 22 SEP 25 */
+$stmt = $conn->prepare("
+    SELECT arc.code, arc.agent_id, arc.description, arc.status, arc.assigned_to, arc.created_at, arc.used_at,
+           a.name AS agent_name
+    FROM agent_registration_codes arc
+    LEFT JOIN agents a ON arc.agent_id = a.id
+    ORDER BY arc.created_at DESC
+");
 $stmt->execute();
 $codes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -124,7 +130,15 @@ $codes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <td><?= htmlspecialchars($code['agent_id']) ?></td>
                             <td><?= htmlspecialchars($code['code']) ?></td>
                             <td><span class="status-<?= $code['status'] ?>"><?= ucfirst($code['status']) ?></span></td>
-                            <td><?= htmlspecialchars($code['assigned_to']) ?></td>
+                            <td>
+                                <?php if ($code['status'] === 'used' && $code['agent_name']): ?>
+                                    <?= htmlspecialchars($code['agent_name']) ?>
+                                    <!-- show agent id and name when code is used : jean luc 22 SEP 25 -->
+                                <?php else: ?>
+                                    Unassigned
+                                    <!-- show Unassigned when code is still active but not used : jean luc 22 SEP 25 -->
+                                <?php endif; ?>
+                            </td>
                             <td><?= htmlspecialchars($code['description']) ?></td>
                             <td><?= date('M j, Y', strtotime($code['created_at'])) ?></td>
                             <td><?= $code['used_at'] ? date('M j, Y', strtotime($code['used_at'])) : '-' ?></td>
@@ -135,4 +149,4 @@ $codes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 </body>
-</html> 
+</html>
