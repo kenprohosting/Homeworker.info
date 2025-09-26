@@ -11,6 +11,55 @@ if (!isset($_SESSION['admin_id'])) {
 $success = '';
 $error = '';
 
+// AJAX endpoint for fetching employee details : jean luc 26 SEP 25
+if (isset($_GET['ajax']) && $_GET['ajax'] === 'get_employee' && isset($_GET['id'])) {
+    $id = (int) $_GET['id'];
+    $stmt = $conn->prepare("SELECT ID, Name, Email, Phone, Gender, Age, Country, County_province, Skills, Education_level, salary_expectation
+                            FROM employees WHERE ID = ?");
+    $stmt->execute([$id]);
+    $employee = $stmt->fetch(PDO::FETCH_ASSOC);
+    header('Content-Type: application/json');
+    echo json_encode($employee ?: []);
+    exit;
+}
+
+// AJAX endpoint for updating employee details : jean luc 26 SEP 25
+if (isset($_POST['ajax']) && $_POST['ajax'] === 'update_employee') {
+    // Ensure admin session still valid
+    if (!isset($_SESSION['admin_id'])) {
+        echo 'Unauthorized';
+        exit;
+    }
+
+    $id = isset($_POST['employee_id']) ? (int) $_POST['employee_id'] : 0;
+    // Whitelist fields (Agent_id intentionally excluded)
+    $name = trim($_POST['Name'] ?? '');
+    $email = trim($_POST['Email'] ?? '');
+    $phone = trim($_POST['Phone'] ?? '');
+    $gender = trim($_POST['Gender'] ?? '');
+    $age = (isset($_POST['Age']) && $_POST['Age'] !== '') ? (int) $_POST['Age'] : null;
+    $country = trim($_POST['Country'] ?? '');
+    $county = trim($_POST['County_province'] ?? '');
+    $skills = trim($_POST['Skills'] ?? '');
+    $education = trim($_POST['Education_level'] ?? '');
+    $salary = trim($_POST['salary_expectation'] ?? '');
+
+    // Basic validation
+    if ($id <= 0 || $name === '' || $email === '') {
+        echo 'Invalid input.';
+        exit;
+    }
+
+    $stmt = $conn->prepare("UPDATE employees 
+                            SET Name = ?, Email = ?, Phone = ?, Gender = ?, Age = ?, Country = ?, County_province = ?, Skills = ?, Education_level = ?, salary_expectation = ?
+                            WHERE ID = ?");
+    $params = [$name, $email, $phone, $gender, $age, $country, $county, $skills, $education, $salary, $id];
+    $ok = $stmt->execute($params);
+
+    echo $ok ? 'Employee updated successfully.' : 'Failed to update employee.';
+    exit;
+}
+
 // Handle status, verification updates, and deletion : jean luc 26 SEP 25
 if (isset($_POST['action'], $_POST['employee_id'])) {
     $employee_id = $_POST['employee_id'];
@@ -167,6 +216,8 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .btn-delete:hover { background: #c0392b; }
         .btn-toggle { background: #3498db; color: white; }
         .btn-toggle:hover { background: #2980b9; }
+        .btn-edit { background: #2ecc71; color: white; } /* Edit button : jean luc 26 SEP 25 */
+        .btn-edit:hover { background: #27ae60; }
         .profile-thumb {
             width: 45px;
             height: 45px;
@@ -192,6 +243,59 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
         .action-buttons form {
             display: inline;
+        }
+        /* Modal styles : jean luc 26 SEP 25 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+            padding: 40px 0; /* Add top and bottom spacing : jean luc 26 SEP 25 */
+        }
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 500px;
+            max-width: 95%;
+            max-height: 80vh; /* Prevent overflow : jean luc 26 SEP 25 */
+            overflow-y: auto; /* Scroll inner fields if content is long : jean luc 26 SEP 25 */
+            position: relative; /* Position anchor for close button : jean luc 26 SEP 25 */
+        }
+        .modal-content h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        .modal-content label {
+            display: block;
+            margin: 8px 0 4px;
+        }
+        .modal-content input, .modal-content select, .modal-content textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        .modal-close {
+            position: absolute; /* Place at top-right : jean luc 26 SEP 25 */
+            top: 10px; right: 10px;
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: #3498db; /* Blue circle : jean luc 26 SEP 25 */
+            color: red; /* Red X : jean luc 26 SEP 25 */
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 32px;
+            cursor: pointer;
+        }
+        .modal-close:hover {
+            background: #2980b9; /* Darker blue on hover : jean luc 26 SEP 25 */
         }
     </style>
 </head>
@@ -269,8 +373,11 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <form method="POST">
                                 <input type="hidden" name="employee_id" value="<?= $emp['ID'] ?>">
                                 <input type="hidden" name="action" value="toggle_verification">
-                                <button type="submit" class="btn-action btn-toggle">Next Verification</button>
+                                <button type="submit" class="btn-action btn-toggle">Change Verification Status</button>
                             </form>
+
+                            <!-- Edit : jean luc 26 SEP 25 -->
+                            <button type="button" class="btn-action btn-edit" onclick="openEditModal(<?= $emp['ID'] ?>)">Edit</button>
 
                             <!-- Delete -->
                             <form method="POST" onsubmit="return confirm('Delete this employee?')">
@@ -292,5 +399,119 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php endif; ?>
     </div>
 </div>
+
+<!-- Edit Modal : jean luc 26 SEP 25 -->
+<div id="editModal" class="modal" aria-hidden="true" role="dialog">
+    <div class="modal-content" role="document">
+        <span class="modal-close" onclick="closeEditModal()" aria-label="Close">&times;</span>
+        <h3>Edit Employee</h3>
+        <form id="editEmployeeForm">
+            <input type="hidden" name="employee_id" id="edit_id">
+            <label for="edit_name">Name</label>
+            <input type="text" name="Name" id="edit_name" required>
+            <label for="edit_email">Email</label>
+            <input type="email" name="Email" id="edit_email" required>
+            <label for="edit_phone">Phone</label>
+            <input type="text" name="Phone" id="edit_phone" required>
+            <label for="edit_gender">Gender</label>
+            <select name="Gender" id="edit_gender">
+                <option value="">-- Select --</option>
+                <option value="male">male</option>
+                <option value="female">female</option>
+            </select>
+            <label for="edit_age">Age</label>
+            <input type="number" name="Age" id="edit_age" min="0">
+            <label for="edit_country">Country</label>
+            <input type="text" name="Country" id="edit_country">
+            <label for="edit_county">County</label>
+            <input type="text" name="County_province" id="edit_county">
+            <label for="edit_skills">Skills</label>
+            <input type="text" name="Skills" id="edit_skills">
+            <label for="edit_education">Education Level</label>
+            <input type="text" name="Education_level" id="edit_education">
+            <label for="edit_salary">Salary Expectation</label>
+            <input type="text" name="salary_expectation" id="edit_salary">
+            <button type="submit" class="btn-action btn-edit" style="margin-top:10px;">Save Changes</button>
+        </form>
+    </div>
+</div>
+
+<script>
+// Open modal and fetch employee details : jean luc 26 SEP 25
+function openEditModal(id) {
+    var modal = document.getElementById('editModal');
+    fetch('manage_employees.php?ajax=get_employee&id=' + encodeURIComponent(id), { credentials: 'same-origin' })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            if (!data || !data.ID) {
+                alert('Employee not found.');
+                return;
+            }
+            document.getElementById('edit_id').value = data.ID;
+            document.getElementById('edit_name').value = data.Name || '';
+            document.getElementById('edit_email').value = data.Email || '';
+            document.getElementById('edit_phone').value = data.Phone || '';
+            document.getElementById('edit_gender').value = data.Gender || '';
+            document.getElementById('edit_age').value = (data.Age !== null && data.Age !== undefined) ? data.Age : '';
+            document.getElementById('edit_country').value = data.Country || '';
+            document.getElementById('edit_county').value = data.County_province || '';
+            document.getElementById('edit_skills').value = data.Skills || '';
+            document.getElementById('edit_education').value = data.Education_level || '';
+            document.getElementById('edit_salary').value = data.salary_expectation || '';
+
+            modal.style.display = 'flex';
+            modal.setAttribute('aria-hidden', 'false');
+        })
+        .catch(function(err) {
+            console.error(err);
+            alert('Failed to fetch employee details.');
+        });
+}
+
+function closeEditModal() {
+    var modal = document.getElementById('editModal');
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+}
+
+// Close modal when clicking outside content
+document.getElementById('editModal').addEventListener('click', function(e) {
+    if (e.target === this) closeEditModal();
+});
+
+// Handle form submit : jean luc 26 SEP 25
+document.getElementById('editEmployeeForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var form = this;
+    var formData = new FormData(form);
+    formData.append('ajax', 'update_employee');
+
+    fetch('manage_employees.php', {
+        method: 'POST',
+        body: formData,
+        credentials: 'same-origin'
+    })
+    .then(function(res) { return res.text(); })
+    .then(function(text) {
+        // Show server message then reload so table reflects changes
+        alert(text);
+        if (text.toLowerCase().indexOf('success') !== -1) {
+            window.location.reload();
+        }
+    })
+    .catch(function(err) {
+        console.error(err);
+        alert('Failed to update employee.');
+    });
+});
+
+// Optional: close modal on ESC
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        var modal = document.getElementById('editModal');
+        if (modal.style.display === 'flex') closeEditModal();
+    }
+});
+</script>
 </body>
 </html>

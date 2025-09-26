@@ -727,6 +727,7 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
         <?php endif; ?>
         <h3><?= htmlspecialchars($emp['Name'] ?? 'N/A') ?> (<?= $emp['Age'] ?? 'N/A' ?>)</h3>
         <p><strong>Job Title:</strong> <?= htmlspecialchars($emp['Skills'] ?? 'N/A') ?></p>
+        <p><strong>Salary:</strong> <?= htmlspecialchars($emp['salary_expectation'] ?? 'N/A') ?></p><!-- Expected Salary : jean luc 26 SEP 25 -->
         <p><strong>Country:</strong> <?= htmlspecialchars($emp['Country'] ?? 'N/A') ?></p>
         <p><strong>County/Province:</strong> <?= htmlspecialchars($emp['County_province'] ?? 'N/A') ?></p>
         <p><strong>Language:</strong> <?= htmlspecialchars($emp['Language'] ?? 'N/A') ?></p>

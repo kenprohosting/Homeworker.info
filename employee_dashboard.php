@@ -390,13 +390,13 @@ $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <?php if ($b['Status'] === 'pending'): ?>
                                 <a href="?action=confirm&bid=<?= $b['ID'] ?>" 
                                    class="btn confirm"
-                                   onclick="return confirm('Are you sure you want to confirm this booking?')">
-                                    Confirm
+                                   onclick="return confirm('Are you sure you want to confirm this job booking?')"><!-- Change naming-con : jean luc 26 SEP 25 -->
+                                    Confirm Job
                                 </a>
                                 <a href="?action=cancel&bid=<?= $b['ID'] ?>" 
                                    class="btn cancel"
-                                   onclick="return confirm('Are you sure you want to cancel this booking?')">
-                                    Cancel
+                                   onclick="return confirm('Are you sure you want to decline this job booking?')"><!-- Change naming-con : jean luc 26 SEP 25 -->
+                                    Decline Job
                                 </a>
                             <?php else: ?>
                                 <span class="btn disabled">No Action</span>

@@ -17,9 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $message = "<div style='background: #fff3cd; color: #856404; padding: 10px; border-radius: 5px; margin-bottom: 20px;'>🔄 Booking cancelled successfully!</div>";
 }
 
-// Fetch employer's bookings
+// Fetch employer's bookings with salary_expectation included : jean luc 26 SEP 25
 $stmt = $conn->prepare("
-    SELECT b.*, emp.Name AS employee_name 
+    SELECT b.*, emp.Name AS employee_name, emp.salary_expectation 
     FROM bookings b 
     JOIN employees emp ON b.Employee_ID = emp.ID 
     WHERE b.Homeowner_ID = ?
@@ -230,6 +230,7 @@ $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <tr>
                         <th>Employee</th>
                         <th>Service</th>
+                        <th>Expected Salary</th> <!-- jean luc 26 SEP 25 -->
                         <th>Date</th>
                         <th>Time</th>
                         <th>Status</th>
@@ -242,6 +243,7 @@ $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <tr>
                         <td><?= htmlspecialchars($b['employee_name']) ?></td>
                         <td><?= htmlspecialchars($b['Service_type']) ?></td>
+                        <td><?= htmlspecialchars($b['salary_expectation'] ?? 'N/A') ?></td> <!-- Expected Salary : jean luc 26 SEP 25 -->
                         <td><?= htmlspecialchars($b['Booking_date']) ?></td>
                         <td><?= $b['Start_time'] ?> - <?= $b['End_time'] ?></td>
                         <td><?= htmlspecialchars($b['Status']) ?></td>
