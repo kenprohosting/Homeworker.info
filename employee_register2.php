@@ -1,3 +1,4 @@
+// doesn't have 'salary expectation field'
 <?php
 session_start();
 require_once 'db_connect.php';
@@ -29,21 +30,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email']);
     $password = $_POST['password'];
     $residence_type = $_POST['residence_type'];
-
-    // Add salary field : jean luc 26 SEP 25
-    $salary_currency = $_POST['salary_currency'];
-    $salary_amount = trim($_POST['salary_amount']);
-    $salary_expectation = $salary_currency . ' ' . $salary_amount;
-
     $status = 'active';
     $verification_status = 'pending';
     $created_at = date('Y-m-d H:i:s');
 
     // Validate required fields
-    if (
-        !$name || !$gender || $age < 18 || !$phone || !$country || !$county_province || 
-        !$skills || !$education_level || !$email || !$password || !$residence_type || !$salary_amount
-    ) {
+    if (!$name || !$gender || $age < 18 || !$phone || !$country || !$county_province || !$skills || !$education_level || !$email || !$password || !$residence_type) {
         $error = 'Please fill in all required fields and ensure age is 18 or above.';
     } elseif (empty($national_id)) {
         $error = 'National ID/Passport Number is required';
@@ -88,17 +80,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Hash password
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
             // Insert into database
-            $stmt = $conn->prepare("INSERT INTO employees (
-                name, gender, age, phone, National_id, country, county_province, skills, 
-                experience, education_level, social_referee, language, email, password_hash, 
-                residence_type, salary_expectation, verification_status, created_at, agent_id, 
-                id_passport, Profile_pic, status
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO employees (name, gender, age, phone, country, county_province, skills, experience, education_level, social_referee, language, email, password_hash, residence_type, verification_status, created_at, agent_id, id_passport, Profile_pic, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO employees (name, gender, age, phone, National_id, country, county_province, skills, experience, education_level, social_referee, language, email, password_hash, residence_type, verification_status, created_at, agent_id, id_passport, Profile_pic, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $result = $stmt->execute([
-                $name, $gender, $age, $phone, $national_id, $country, $county_province, $skills, 
-                $experience, $education_level, $social_referee, $language, $email, $password_hash, 
-                $residence_type, $salary_expectation, $verification_status, $created_at, $agent_id, 
-                $fileName, $profile_pic_path, $status
+                $name, $gender, $age, $phone, $national_id, $country, $county_province, $skills, $experience, $education_level, $social_referee, $language, $email, $password_hash, $residence_type, $verification_status, $created_at, $agent_id, $fileName, $profile_pic_path, $status
             ]);
             if ($result) {
                 $success = 'Employee registered successfully!';
@@ -358,22 +343,6 @@ window.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
-            <!-- Add salary field : jean luc 26 SEP 25 -->
-            <div class="form-group">
-                <label for="salary_expectation">Salary Expectation</label>
-                <div style="display:flex; gap:8px; align-items:center;">
-                    <select name="salary_currency" id="salary_currency" required>
-                        <option value="KES" <?= (isset($_POST['salary_currency']) && $_POST['salary_currency'] == 'KES') ? 'selected' : '' ?>>🇰🇪 KES</option>
-                        <option value="USD" <?= (isset($_POST['salary_currency']) && $_POST['salary_currency'] == 'USD') ? 'selected' : '' ?>>🇺🇸 USD</option>
-                        <option value="EUR" <?= (isset($_POST['salary_currency']) && $_POST['salary_currency'] == 'EUR') ? 'selected' : '' ?>>🇪🇺 EUR</option>
-                        <option value="GBP" <?= (isset($_POST['salary_currency']) && $_POST['salary_currency'] == 'GBP') ? 'selected' : '' ?>>🇬🇧 GBP</option>
-                        <option value="UGX" <?= (isset($_POST['salary_currency']) && $_POST['salary_currency'] == 'UGX') ? 'selected' : '' ?>>🇺🇬 UGX</option>
-                        <option value="TZS" <?= (isset($_POST['salary_currency']) && $_POST['salary_currency'] == 'TZS') ? 'selected' : '' ?>>🇹🇿 TZS</option>
-                        <option value="RWF" <?= (isset($_POST['salary_currency']) && $_POST['salary_currency'] == 'RWF') ? 'selected' : '' ?>>🇷🇼 RWF</option>
-                    </select>
-                    <input type="number" name="salary_amount" id="salary_amount" placeholder="Amount" min="0" required value="<?= isset($_POST['salary_amount']) ? htmlspecialchars($_POST['salary_amount']) : '' ?>">
-                </div>
-            </div>
             <div class="form-group">
                 <label for="experience">Experience</label>
                 <input type="text" name="experience" id="experience" placeholder="e.g. 5 years" value="<?= isset($_POST['experience']) ? htmlspecialchars($_POST['experience']) : '' ?>">

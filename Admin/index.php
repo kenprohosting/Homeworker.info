@@ -214,7 +214,8 @@ $recent_codes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <div class="stat-card">
                 <div class="stat-number"><?= $active_codes ?></div>
-                <div class="stat-label">Active Codes</div>
+                <!-- Rename "Active Codes" to "Un-used Codes" : jean luc 26 SEP 25 -->
+                <div class="stat-label">Un-unsed Codes</div>
             </div>
             <div class="stat-card">
                 <div class="stat-number"><?= $used_codes ?></div>
@@ -284,4 +285,4 @@ $recent_codes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 </body>
-</html> 
+</html>
