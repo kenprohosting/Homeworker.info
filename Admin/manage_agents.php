@@ -161,6 +161,8 @@ $agents = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <li><a href="https://homeworker.info/" style="color: #e74c3c;">Back</a></li>
                 <li><a href="index.php">Dashboard</a></li>
                 <li><a href="manage_agents.php" class="active">Manage Agents</a></li>
+                <li><a href="manage_employees.php">Manage Employees</a></li>
+                <li><a href="manage_employers.php">Manage Employers</a></li>
                 <li><a href="manage_codes.php">Registration Codes</a></li>
                 <li><a href="reports.php">Reports</a></li>
                 <li><a href="settings.php">Settings</a></li>
@@ -221,4 +223,4 @@ $agents = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 </body>
-</html> 
+</html>
