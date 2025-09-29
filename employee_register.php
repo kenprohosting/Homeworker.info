@@ -41,8 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validate required fields
     if (
-        !$name || !$gender || $age < 18 || !$phone || !$country || !$county_province || 
-        !$skills || !$education_level || !$email || !$password || !$residence_type || !$salary_amount
+        !$name || !$gender || $age < 18 || !$phone || !$national_id || !$country || !$county_province || 
+        !$skills || !$education_level || !$social_referee || !$language || !$email || !$password || !$residence_type || !$salary_amount
     ) {
         $error = 'Please fill in all required fields and ensure age is 18 or above.';
     } elseif (empty($national_id)) {
@@ -333,31 +333,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </select>
                 <input type="text" name="skills_specify" id="skills_specify" placeholder="Please specify job title" style="display:none;margin-top:8px;" value="<?= isset($_POST['skills_specify']) ? htmlspecialchars($_POST['skills_specify']) : '' ?>" oninput="if(this.value){document.getElementById('skills').value='Other';toggleSpecifyJobTitle('Other');}">
             </div>
-<!-- Job Title Specify Script moved below -->
-<script>
-function toggleSpecifyJobTitle(val) {
-  var specify = document.getElementById('skills_specify');
-  if (val === 'Other') {
-    specify.style.display = 'block';
-    specify.disabled = false;
-    specify.required = true;
-    specify.focus();
-  } else {
-    specify.style.display = 'none';
-    specify.disabled = true;
-    specify.required = false;
-    specify.value = '';
-  }
-}
-// On page load, show specify if Other was selected or if skills_specify has a value
-window.addEventListener('DOMContentLoaded', function() {
-  var sel = document.getElementById('skills');
-  var specify = document.getElementById('skills_specify');
-  if ((sel && sel.value === 'Other') || (specify && specify.value)) {
-    toggleSpecifyJobTitle('Other');
-  }
-});
-</script>
+            <!-- Job Title Specify Script moved below -->
+            <script>
+            function toggleSpecifyJobTitle(val) {
+            var specify = document.getElementById('skills_specify');
+            if (val === 'Other') {
+                specify.style.display = 'block';
+                specify.disabled = false;
+                specify.required = true;
+                specify.focus();
+            } else {
+                specify.style.display = 'none';
+                specify.disabled = true;
+                specify.required = false;
+                specify.value = '';
+            }
+            }
+            // On page load, show specify if Other was selected or if skills_specify has a value
+            window.addEventListener('DOMContentLoaded', function() {
+            var sel = document.getElementById('skills');
+            var specify = document.getElementById('skills_specify');
+            if ((sel && sel.value === 'Other') || (specify && specify.value)) {
+                toggleSpecifyJobTitle('Other');
+            }
+            });
+            </script>
             <!-- Add salary field : jean luc 26 SEP 25 -->
             <div class="form-group">
                 <label for="salary_expectation">Salary Expectation</label>
@@ -393,8 +393,7 @@ window.addEventListener('DOMContentLoaded', function() {
             </div>
             <div class="form-group">
                 <label for="language-input">Languages</label>
-                <input type="text" id="language-input" placeholder="Type and select languages">
-                <input type="hidden" id="language" name="language" value="<?= isset($_POST['language']) ? htmlspecialchars($_POST['language']) : '' ?>">
+                <input type="text" id="language" name="language" placeholder="Type and select languages" value="<?= isset($_POST['language']) ? htmlspecialchars($_POST['language']) : '' ?>">
             </div>
             <div class="form-group">
                 <label for="email">Email Address</label>
@@ -402,10 +401,10 @@ window.addEventListener('DOMContentLoaded', function() {
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-        <div style="position:relative;">
-          <input type="password" name="password" id="password" placeholder="Password" required style="padding-right:36px;">
-          <span onclick="togglePassword('password', this)" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);cursor:pointer;font-size:1.2em;">&#128065;</span>
-        </div>
+                <div style="position:relative;">
+                <input type="password" name="password" id="password" placeholder="Password" required style="padding-right:36px;">
+                <span onclick="togglePassword('password', this)" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);cursor:pointer;font-size:1.2em;">&#128065;</span>
+            </div>
             </div>
             <div class="form-group">
                 <label for="residence_type">Residence Type</label>
