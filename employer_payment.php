@@ -50,7 +50,7 @@ if ($booking_id) {
 </header>
 
 <div class="form-container">
-    <h2>Pay KES 10 to Access Employee Contact Details</h2>
+    <h2>Pay KES 3000 to Access Employee Contact Details</h2>
     <?php
     if ($errors) foreach ($errors as $e) echo "<p class='error'>$e</p>";
     if ($success) echo "<p class='success'>$success</p>";
@@ -60,12 +60,12 @@ if ($booking_id) {
         <button
             id="intasend-button"
             class="intaSendPayButton"
-            data-amount="10"
+            data-amount="3000"
             data-currency="KES"
             data-email="<?= htmlspecialchars($employer['email']) ?>"
             data-description="Contact details access for booking #<?= $booking_id ?>"
             data-redirect_url="https://homeworker.info/payment_callback.php?bid=<?= $booking_id ?>">
-            Pay KES 10 with IntaSend
+            Pay KES 3000 with IntaSend
         </button>
         <script src="https://unpkg.com/intasend-inlinejs-sdk@4.0.1/build/intasend-inline.js"></script>
         <script>
