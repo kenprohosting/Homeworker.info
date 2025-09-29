@@ -1,0 +1,26 @@
+# === PHP general ===
+*.log
+*.cache
+*.tmp
+*.swp
+
+# === Composer ===
+/vendor/
+/composer.lock
+
+# === Environment & secrets ===
+.env
+.env.*
+*.key
+*.pem
+
+# === OS / Editor cruft ===
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# === Backup files ===
+*.bak
+*.old
+*.orig

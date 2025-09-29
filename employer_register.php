@@ -24,16 +24,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $email = $_POST['email'] ?? '';
   $address = $_POST['address'] ?? '';
   $password = $_POST['password'] ?? '';
-  $name = $_POST['name'];
-  $country = $_POST['country'];
-  $location = $_POST['location'];
-  $residence = $_POST['residence'];
-  $contact = $_POST['contact'];
-  $gender = $_POST['gender'];
-  $email = $_POST['email'];
-  $address = $_POST['address'];
-  $password = $_POST['password'];
   $password_hash = password_hash($password, PASSWORD_BCRYPT);
+
+  // Validate full name: must contain at least two words
+  if (!preg_match('/^.+\s+.+$/', trim($name))) {
+      $errors[] = "Full Name must include at least first and last name.";
+  }
 
   // Check for existing email
   $check = $conn->prepare("SELECT * FROM employer WHERE email = ?");
@@ -131,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <a href="index.php" style="color: #197b88; text-decoration: none; font-weight: 500; align-self: flex-start;">&larr;
       Back</a>
     <h2 style="text-align: center; color: #197b88; margin: 0; font-size: 1.5rem;">Register as an Employer</h2>
-    <h3 style="text-align: center; color: #197b88; margin: 0; font-size: 1.2rem;">One-time subscription: $1</h3>
+    <h3 style="text-align: center; color: #197b88; margin: 0; font-size: 1.2rem;">One-time subscription: $2</h3>
 
     <?php
     if ($errors)
@@ -140,6 +136,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($success)
       echo "<p style=\"background: #e6f4ea; color: #2e7d32; padding: 8px 12px; border-radius: 8px; margin: 0; text-align: center;\">$success</p>";
     ?>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          const form = document.querySelector('form');
+
+          if (!form) {
+              console.error('Form not found on the page');
+              return;
+          }
+
+          form.addEventListener('submit', function(e) {
+              const nameInput = this.querySelector('input[name="name"]');
+              const fullName = nameInput.value.trim();
+
+              // Ensure at least two words separated by space
+              if (!/^.+\s+.+$/.test(fullName)) {
+                  alert("Please enter your full name (at least first and last name).");
+                  nameInput.focus();
+                  e.preventDefault(); // Stop form submission
+              }
+          });
+      });
+    </script>
 
     <form method="POST" style="display: flex; flex-direction: column; gap: 12px;">
       <input type="text" name="name" placeholder="Full Name" value="<?php echo htmlspecialchars($name); ?>" required
@@ -170,8 +189,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <input type="text" id="contactInput" name="contact" placeholder="Phone Number" value="<?php echo htmlspecialchars($contact); ?>"
         required
         style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
-
-
       <input type="text" name="address" placeholder="Address (e.g. 123 West Street)"
         value="<?php echo htmlspecialchars($address); ?>"
         style="padding: 12px; border: 1px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s;">
@@ -183,9 +200,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <option value="rural" <?php if ($residence == 'rural')
           echo 'selected'; ?>>Rural</option>
       </select>
-
-
-
 
       <div style="position: relative;">
         <input type="password" name="password" id="password" placeholder="Password"
@@ -201,7 +215,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       </div>
       <button type="submit"
         style="background: linear-gradient(135deg, #197b88, #1ec8c8); color: #fff; border: none; border-radius: 8px; padding: 12px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background 0.3s;">Pay
-        to Complete Registration</button>
+        to Complete Registration
+      </button>
     </form>
 
     <p style="text-align: center; margin: 0; font-size: 0.9rem;">
@@ -484,5 +499,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   </script>
 
 </body>
-
 </html>
