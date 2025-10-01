@@ -235,7 +235,7 @@ $employers = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <form method="POST">
                                 <input type="hidden" name="employer_id" value="<?= $emp['ID'] ?>">
                                 <input type="hidden" name="action" value="toggle_verification">
-                                <button type="submit" class="btn-action btn-toggle">Next Verification</button>
+                                <button type="submit" class="btn-action btn-toggle">Change Verification Status</button>
                             </form>
 
                             <!-- Delete -->
