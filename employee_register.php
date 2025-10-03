@@ -24,7 +24,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $skills = trim($_POST['skills'] ?? '');
     $experience = trim($_POST['experience']);
     $education_level = trim($_POST['education_level']);
-    $social_referee = trim($_POST['social_referee']);
+    // Collect referees as array
+    $referees = [];
+    if (!empty($_POST['referee_kin'])) {
+        $referees[] = trim($_POST['referee_kin']);
+    }
+    if (!empty($_POST['referee_second'])) {
+        $referees[] = trim($_POST['referee_second']);
+    }
+    if (!empty($_POST['referee_other']) && is_array($_POST['referee_other'])) {
+        foreach ($_POST['referee_other'] as $other) {
+            if (trim($other) !== '') {
+                $referees[] = trim($other);
+            }
+        }
+    }
+    // Save as comma-separated string
+    $social_referee = implode(', ', $referees);
     $language = trim($_POST['language']);
     $email = trim($_POST['email']);
     $password = $_POST['password'];
@@ -52,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validate required fields
     if (
         !$name || !$gender || $age < 18 || !$phone || !$national_id || !$country || !$county_province || 
-        !$skills || !$education_level || !$social_referee || !$language || !$email || !$password || !$residence_type || !$salary_amount
+        !$skills || !$education_level || count($referees) < 2 || !$language || !$email || !$password || !$residence_type || !$salary_amount
     ) {
         $error = 'Please fill in all required fields and ensure age is 18 or above.';
     } elseif (empty($national_id)) {
@@ -399,9 +415,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </select>
             </div>
             <div class="form-group">
-                <label for="social_referee">Social Referee Contact</label>
-                <input type="text" name="social_referee" id="social_referee" placeholder="Social Referee Contact" value="<?= isset($_POST['social_referee']) ? htmlspecialchars($_POST['social_referee']) : '' ?>">
+                <label for="referee_kin">Referee (Next of Kin) *</label>
+                <input type="text" name="referee_kin" id="referee_kin" required 
+                    placeholder="Mother, Father, Sibling..." 
+                    value="<?= isset($_POST['referee_kin']) ? htmlspecialchars($_POST['referee_kin']) : '' ?>">
             </div>
+            <div class="form-group">
+                <label for="referee_second">Referee (Other, can also be Kin) *</label>
+                <input type="text" name="referee_second" id="referee_second" required 
+                    placeholder="Friend, Employer, Relative..." 
+                    value="<?= isset($_POST['referee_second']) ? htmlspecialchars($_POST['referee_second']) : '' ?>">
+            </div>
+            <div id="extraReferees"></div>
+            <button type="button" class="btn-pro" style="margin-top:6px;background:#eee;color:#333;" onclick="addReferee()">+ Add Another Referee</button>
+
+            <script>
+            function addReferee() {
+                const container = document.getElementById('extraReferees');
+                const index = container.children.length;
+                const div = document.createElement('div');
+                div.classList.add('form-group');
+                div.innerHTML = `
+                    <label>Other Referee</label>
+                    <input type="text" name="referee_other[]" placeholder="Extra referee contact">
+                `;
+                container.appendChild(div);
+            }
+            </script>
             <div class="form-group">
                 <label for="language-input">Languages</label>
                 <input type="text" id="language" name="language" placeholder="Type and select languages" value="<?= isset($_POST['language']) ? htmlspecialchars($_POST['language']) : '' ?>">
