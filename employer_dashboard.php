@@ -40,6 +40,10 @@ if (!empty($_GET['residence'])) {
     $filter_sql .= " AND residence_type = ?";
     $params[] = $_GET['residence'];
 }
+if (!empty($_GET['language'])) {
+    $filter_sql .= " AND e.Language LIKE ?";
+    $params[] = '%' . $_GET['language'] . '%';
+}
 
 // Modify query to include booking status
 $filter_sql = "SELECT e.*, 
@@ -72,6 +76,10 @@ if (!empty($_GET['gender'])) {
 if (!empty($_GET['residence'])) {
     $filter_sql .= " AND e.Residence_type = ?";
     $params[] = $_GET['residence'];
+}
+if (!empty($_GET['language'])) {
+    $filter_sql .= " AND e.Language LIKE ?";
+    $params[] = '%' . $_GET['language'] . '%';
 }
 
 $stmt = $conn->prepare($filter_sql);
@@ -694,9 +702,24 @@ $bookings = $stmt2->fetchAll(PDO::FETCH_ASSOC);
       <option value="urban">Urban</option>
       <option value="rural">Rural</option>
     </select>
+    <select name="language">
+      <option value="">Language</option>
+      <?php
+      $languages = [
+        'English', 'Swahili', 'French', 'German', 'Spanish', 'Arabic', 'Somali',
+        'Luo', 'Kikuyu', 'Luhya', 'Kalenjin', 'Kamba', 'Kisii', 'Meru',
+        'Mijikenda', 'Maasai', 'Turkana',
+        'Mandarin Chinese', 'Hindi', 'Portuguese', 'Russian', 'Italian',
+        'Japanese', 'Korean', 'Bengali', 'Urdu', 'Indonesian'
+      ];
+      foreach ($languages as $lang) {
+          $sel = (($_GET['language'] ?? '') === $lang) ? 'selected' : '';
+          echo "<option value=\"$lang\" $sel>$lang</option>";
+      }
+      ?>
+    </select>
     <button type="submit" class="btn search-btn">Search</button>
   </form>
-
 
 
   <!-- Employee Cards -->
