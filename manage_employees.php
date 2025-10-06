@@ -44,6 +44,7 @@ if (isset($_GET['ajax']) && $_GET['ajax'] === 'get_employee' && isset($_GET['id'
                 Experience AS experience,
                 Education_level AS education_level,
                 Social_referee AS social_referee,
+                Health_conditions AS health_conditions,
                 Language AS language,
                 Residence_type AS residence_type,
                 salary_expectation AS salary_expectation,
@@ -110,6 +111,7 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'update_employee') {
     $Experience = trim($_POST['experience'] ?? '');
     $Education_level = trim($_POST['education_level'] ?? '');
     $Social_referee = trim($_POST['social_referee'] ?? '');
+    $Health_conditions = trim($_POST['health_conditions'] ?? '');
     $Language = trim($_POST['language'] ?? '');
     $Residence_type = trim($_POST['residence_type'] ?? '');
     // salary_expectation from split fields
@@ -222,7 +224,8 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'update_employee') {
                         Residence_type = :Residence_type,
                         salary_expectation = :salary_expectation,
                         Profile_pic = :Profile_pic,
-                        ID_passport = :ID_passport
+                        ID_passport = :ID_passport,
+                        health_conditions = :Health_conditions
                       WHERE ID = :ID AND Agent_id = :Agent_id
                       LIMIT 1";
 
@@ -244,6 +247,7 @@ if (isset($_POST['ajax']) && $_POST['ajax'] === 'update_employee') {
             ':salary_expectation' => $salary_expectation,
             ':Profile_pic' => $profile_pic_db,
             ':ID_passport' => $id_passport_db,
+            ':Health_conditions' => $Health_conditions,
             ':ID' => $employee_id,
             ':Agent_id' => $agent_id
         ];
@@ -302,6 +306,7 @@ $sql = "SELECT
             Experience AS experience,
             Education_level AS education_level,
             Social_referee AS social_referee,
+            Health_conditions AS health_conditions,
             Language AS language,
             Residence_type AS residence_type,
             salary_expectation AS salary_expectation,
@@ -617,6 +622,7 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <th>Experience</th>
                         <th>Education</th>
                         <th>Referee</th>
+                        <th>Health Conditions</th>
                         <th>Language</th>
                         <th>Residence</th>
                         <th>Salary</th>
@@ -650,6 +656,7 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <td><?= htmlspecialchars($emp['experience']) ?></td>
                             <td><?= htmlspecialchars($emp['education_level']) ?></td>
                             <td><?= htmlspecialchars($emp['social_referee']) ?></td>
+                            <td><?= htmlspecialchars($emp['health_conditions'] ?? 'Not specified') ?></td>
                             <td><?= htmlspecialchars($emp['language']) ?></td>
                             <td><?= htmlspecialchars($emp['residence_type']) ?></td>
                             <td><?= htmlspecialchars($emp['salary_expectation']) ?></td>
@@ -834,9 +841,9 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                             <div style="margin-top:10px;">
                                 <div class="form-group">
-                                    <label for="edit_notes">Notes (optional)</label>
-                                    <textarea id="edit_notes" name="internal_notes" rows="3" placeholder="Internal notes (not saved to employees table by default)"></textarea>
-                                    <div class="small-note">This field is purely for the agent's reference; it will not be persisted unless you wire it up to an internal notes column.</div>
+                                    <label for="edit_health_conditions">Health Conditions</label>
+                                    <textarea id="edit_health_conditions" name="health_conditions" rows="3" placeholder="e.g. None, Asthma, Allergy to penicillin..."></textarea>
+                                    <div class="small-note">Briefly describe any relevant health conditions.</div>
                                 </div>
                             </div>
                         </div>
@@ -888,6 +895,7 @@ function openEditModal(id) {
             document.getElementById('edit_experience').value = data.experience || '';
             document.getElementById('edit_education_level').value = data.education_level || '';
             document.getElementById('edit_social_referee').value = data.social_referee || '';
+            document.getElementById('edit_health_conditions').value = data.health_conditions || '';
             document.getElementById('edit_language').value = data.language || '';
 
             // Salary parse

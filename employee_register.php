@@ -39,6 +39,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     }
+    // Handle health conditions
+    $health_condition_status = $_POST['health_condition_status'] ?? 'Unknown';
+    if ($health_condition_status === 'Known') {
+        $health_conditions = trim($_POST['health_condition_text'] ?? '');
+        if (empty($health_conditions)) {
+            $error = 'Please specify the health condition.';
+        }
+    } else {
+        $health_conditions = 'N/A';
+    }
     // Save as comma-separated string
     $social_referee = implode(', ', $referees);
     $language = trim($_POST['language']);
@@ -118,14 +128,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $conn->prepare("INSERT INTO employees (
                 name, gender, age, phone, National_id, country, county_province, skills, 
                 experience, education_level, social_referee, language, email, password_hash, 
-                residence_type, salary_expectation, verification_status, created_at, agent_id, 
-                id_passport, Profile_pic, status
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                residence_type, salary_expectation, health_conditions, verification_status, 
+                created_at, agent_id, id_passport, Profile_pic, status
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $result = $stmt->execute([
                 $name, $gender, $age, $phone, $national_id, $country, $county_province, $skills, 
                 $experience, $education_level, $social_referee, $language, $email, $password_hash, 
-                $residence_type, $salary_expectation, $verification_status, $created_at, $agent_id, 
-                $id_passport_path, $profile_pic_path, $status
+                $residence_type, $salary_expectation, $health_conditions, $verification_status, 
+                $created_at, $agent_id, $id_passport_path, $profile_pic_path, $status
             ]);
             if ($result) {
                 $success = 'Employee registered successfully!';
@@ -440,6 +450,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="text" name="referee_other[]" placeholder="Extra referee contact">
                 `;
                 container.appendChild(div);
+            }
+            </script>
+            <!-- Health Conditions Section -->
+            <div class="form-group">
+                <label>Health Conditions</label>
+                <div style="display:flex; align-items:center; gap:12px; margin-top:6px;">
+                    <label><input type="radio" name="health_condition_status" value="Unknown" onclick="toggleHealthCondition('Unknown')" 
+                        <?= (!isset($_POST['health_condition_status']) || $_POST['health_condition_status'] === 'Unknown') ? 'checked' : '' ?>> Unknown</label>
+                    <label><input type="radio" name="health_condition_status" value="Known" onclick="toggleHealthCondition('Known')"
+                        <?= (isset($_POST['health_condition_status']) && $_POST['health_condition_status'] === 'Known') ? 'checked' : '' ?>> Known</label>
+                </div>
+                <div id="healthConditionSpecify" style="display: <?= (isset($_POST['health_condition_status']) && $_POST['health_condition_status'] === 'Known') ? 'block' : 'none' ?>; margin-top:8px;">
+                    <label for="health_condition_text">Specify</label>
+                    <input type="text" name="health_condition_text" id="health_condition_text"
+                        value="<?= isset($_POST['health_condition_text']) ? htmlspecialchars($_POST['health_condition_text']) : '' ?>">
+                </div>
+            </div>
+
+            <script>
+            function toggleHealthCondition(status) {
+                const specifyDiv = document.getElementById('healthConditionSpecify');
+                const specifyInput = document.getElementById('health_condition_text');
+                if (status === 'Known') {
+                    specifyDiv.style.display = 'block';
+                    specifyInput.required = true;
+                } else {
+                    specifyDiv.style.display = 'none';
+                    specifyInput.required = false;
+                    specifyInput.value = '';
+                }
             }
             </script>
             <div class="form-group">
