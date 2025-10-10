@@ -17,7 +17,7 @@ header("Pragma: no-cache");
   <style>
     /* Socials Bar Styles */
     .socials-bar {
-      background: #3da7efff;
+      background: linear-gradient(90deg, #197b88 0%, #1ec8c8 100%);
       padding: 8px 20px;
       display: flex;
       justify-content: space-between;
