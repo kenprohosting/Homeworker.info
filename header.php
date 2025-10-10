@@ -40,8 +40,8 @@ $isLoggedIn = isset($_SESSION['employer_name']);
       </div>
       
       <li><a class="nav-btn" href="resources.php">Resources</a></li>
-      <li><a class="nav-btn" href="contact.php">Contact Us</a></li>
       <li><a class="nav-btn" href="faq.php">FAQ</a></li>
+      <li><a class="nav-btn" href="contact.php">Contact Us</a></li>
     </ul>
   </nav>
     <script scr="scripts.js"></script>
