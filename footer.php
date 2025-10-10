@@ -52,7 +52,7 @@
         <a href="contact.php">Contact Us</a>
       </div>
 
-      <p>&copy; <?= date("Y") ?> <a style="color: white;" href="https://www.kenpro.org/" target="_blank">KenPro</a>. All rights reserved.</p>
+      <p>&copy; <?= date("Y") ?> <a style="color: white;" href="https://www.homeworker.info/" target="_blank">Homeworker Connect</a>. All rights reserved.</p>
 
       <div class="footer-socials">
         <a href="https://facebook.com" target="_blank" aria-label="Facebook">
