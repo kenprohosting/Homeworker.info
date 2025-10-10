@@ -22,6 +22,20 @@ if (isset($_GET['ajax']) && $_GET['ajax'] === 'get_employer' && isset($_GET['id'
     exit;
 }
 
+// AJAX endpoint for fetching employer summary details
+if (isset($_GET['ajax']) && $_GET['ajax'] === 'get_employer_summary' && isset($_GET['id'])) {
+    $id = (int) $_GET['id'];
+    
+    // Get employer details
+    $stmt = $conn->prepare("SELECT ID, Name, Email, Contact, Gender, Location, Residence_type, Country, Verification_status, Created_at FROM employer WHERE ID = ?");
+    $stmt->execute([$id]);
+    $employer = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    header('Content-Type: application/json');
+    echo json_encode($employer ?: []);
+    exit;
+}
+
 // AJAX endpoint for updating employer details
 if (isset($_POST['ajax']) && $_POST['ajax'] === 'update_employer') {
     if (!isset($_SESSION['admin_id'])) {
@@ -214,6 +228,15 @@ if (isset($_POST['action'], $_POST['employer_id'])) {
         }
         .employers-table tr:hover { background: #fbfdfe; }
 
+        .employer-name {
+            color: var(--blue);
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .employer-name:hover {
+            color: var(--accent-1);
+        }
+
         .action-buttons { 
             display: flex; 
             gap: 8px; 
@@ -334,6 +357,51 @@ if (isset($_POST['action'], $_POST['employer_id'])) {
         .modal-buttons .btn-cancel:hover {
             background: #7f8c8d;
         }
+
+        /* Summary Modal Styles */
+        .summary-modal .modal-content {
+            width: 600px;
+        }
+        .summary-header {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--blue);
+        }
+        .summary-header h3 {
+            margin: 0;
+            color: var(--blue);
+        }
+        .summary-info {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 12px;
+        }
+        .summary-label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .summary-value {
+            color: #333;
+        }
+        .verification-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .verification-badge.unverified {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .verification-badge.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .verification-badge.verified {
+            background: #d4edda;
+            color: #155724;
+        }
     </style>
 </head>
 <body>
@@ -381,7 +449,7 @@ if (isset($_POST['action'], $_POST['employer_id'])) {
                 <?php foreach ($employers as $emp): ?>
                 <tr>
                     <td><?= htmlspecialchars($emp['ID']) ?></td>
-                    <td><strong><?= htmlspecialchars($emp['Name']) ?></strong></td>
+                    <td><strong class="employer-name" onclick="openSummaryModal(<?= (int)$emp['ID'] ?>)"><?= htmlspecialchars($emp['Name']) ?></strong></td>
                     <td><?= htmlspecialchars($emp['Email']) ?></td>
                     <td><?= htmlspecialchars($emp['Contact']) ?></td>
                     <td><?= htmlspecialchars($emp['Gender']) ?></td>
@@ -509,6 +577,51 @@ if (isset($_POST['action'], $_POST['employer_id'])) {
     </div>
 </div>
 
+<!-- Summary Modal -->
+<div id="summaryModal" class="modal summary-modal" aria-hidden="true" role="dialog" aria-labelledby="summaryModalTitle">
+    <div class="modal-content" role="document">
+        <div class="modal-close" onclick="closeSummaryModal()" title="Close">&times;</div>
+        <div class="summary-header">
+            <h3 id="summaryModalTitle">Employer Information Summary</h3>
+        </div>
+        
+        <div class="summary-info">
+            <div class="summary-label">Name:</div>
+            <div class="summary-value" id="summary_name"></div>
+            
+            <div class="summary-label">Email:</div>
+            <div class="summary-value" id="summary_email"></div>
+            
+            <div class="summary-label">Contact:</div>
+            <div class="summary-value" id="summary_contact"></div>
+            
+            <div class="summary-label">Gender:</div>
+            <div class="summary-value" id="summary_gender"></div>
+            
+            <div class="summary-label">Location:</div>
+            <div class="summary-value" id="summary_location"></div>
+            
+            <div class="summary-label">Residence Type:</div>
+            <div class="summary-value" id="summary_residence_type"></div>
+            
+            <div class="summary-label">Country:</div>
+            <div class="summary-value" id="summary_country"></div>
+            
+            <div class="summary-label">Verification Status:</div>
+            <div class="summary-value">
+                <span id="summary_verification_status" class="verification-badge"></span>
+            </div>
+            
+            <div class="summary-label">Registration Date:</div>
+            <div class="summary-value" id="summary_created_at"></div>
+        </div>
+        
+        <div class="modal-buttons">
+            <button type="button" class="btn-cancel" onclick="closeSummaryModal()">Close</button>
+        </div>
+    </div>
+</div>
+
 <script>
 /**
  * Open edit modal and populate values via AJAX.
@@ -553,6 +666,58 @@ function closeEditModal() {
 }
 
 /**
+ * Open summary modal and populate values via AJAX.
+ */
+function openSummaryModal(id) {
+    var modal = document.getElementById('summaryModal');
+    fetch('manage_employers.php?ajax=get_employer_summary&id=' + encodeURIComponent(id), { credentials: 'same-origin' })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            if (!data || !data.ID) {
+                alert('Employer not found.');
+                return;
+            }
+
+            // Update modal title with employer name
+            document.getElementById('summaryModalTitle').textContent = 'Employer ' + data.Name + ' Information Summary';
+            
+            // Fill summary fields
+            document.getElementById('summary_name').textContent = data.Name || '';
+            document.getElementById('summary_email').textContent = data.Email || '';
+            document.getElementById('summary_contact').textContent = data.Contact || '';
+            document.getElementById('summary_gender').textContent = data.Gender || '';
+            document.getElementById('summary_location').textContent = data.Location || '';
+            document.getElementById('summary_residence_type').textContent = data.Residence_type || '';
+            document.getElementById('summary_country').textContent = data.Country || '';
+            
+            // Verification status with badge styling
+            var verificationStatus = document.getElementById('summary_verification_status');
+            verificationStatus.textContent = data.Verification_status || 'unverified';
+            verificationStatus.className = 'verification-badge ' + (data.Verification_status || 'unverified');
+            
+            // Registration date
+            document.getElementById('summary_created_at').textContent = data.Created_at ? new Date(data.Created_at).toLocaleString() : '';
+
+            // Show modal
+            modal.style.display = 'flex';
+            modal.setAttribute('aria-hidden', 'false');
+        })
+        .catch(function(err) {
+            console.error(err);
+            alert('Failed to fetch employer details.');
+        });
+}
+
+/**
+ * Close summary modal
+ */
+function closeSummaryModal() {
+    var modal = document.getElementById('summaryModal');
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+}
+
+/**
  * Submit edit form via AJAX
  */
 document.getElementById('editEmployerForm').addEventListener('submit', function(e) {
@@ -586,11 +751,18 @@ document.getElementById('editModal').addEventListener('click', function(e) {
     if (e.target === this) closeEditModal();
 });
 
+document.getElementById('summaryModal').addEventListener('click', function(e) {
+    if (e.target === this) closeSummaryModal();
+});
+
 // Close modal on ESC
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
-        var modal = document.getElementById('editModal');
-        if (modal && modal.style.display === 'flex') closeEditModal();
+        var editModal = document.getElementById('editModal');
+        var summaryModal = document.getElementById('summaryModal');
+        
+        if (editModal && editModal.style.display === 'flex') closeEditModal();
+        if (summaryModal && summaryModal.style.display === 'flex') closeSummaryModal();
     }
 });
 </script>

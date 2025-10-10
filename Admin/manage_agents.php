@@ -1,4 +1,4 @@
-<?php
+ <?php
 session_start();
 require_once '../db_connect.php';
 
@@ -18,6 +18,31 @@ if (isset($_GET['ajax']) && $_GET['ajax'] === 'get_agent' && isset($_GET['id']))
     $stmt = $conn->prepare("SELECT id, name, email, national_id, phone FROM agents WHERE id = ?");
     $stmt->execute([$id]);
     $agent = $stmt->fetch(PDO::FETCH_ASSOC);
+    header('Content-Type: application/json');
+    echo json_encode($agent ?: []);
+    exit;
+}
+
+// Handle AJAX request to get agent summary details
+if (isset($_GET['ajax']) && $_GET['ajax'] === 'get_agent_summary' && isset($_GET['id'])) {
+    $id = (int) $_GET['id'];
+    
+    // Get agent details
+    $stmt = $conn->prepare("SELECT id, name, email, national_id, phone, created_at, updated_at FROM agents WHERE id = ?");
+    $stmt->execute([$id]);
+    $agent = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    // Get registration code for this agent
+    $code = '';
+    if ($agent) {
+        $stmt = $conn->prepare("SELECT code FROM agent_registration_codes WHERE agent_id = ? LIMIT 1");
+        $stmt->execute([$id]);
+        $code_result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $code = $code_result ? $code_result['code'] : '';
+    }
+    
+    $agent['registration_code'] = $code;
+    
     header('Content-Type: application/json');
     echo json_encode($agent ?: []);
     exit;
@@ -205,8 +230,17 @@ if (isset($_POST['action']) && isset($_POST['agent_id'])) {
 
         .agent-id {
             font-weight: bold;
-            color: #3498db;
+            color: #000000ff;
             font-family: monospace;
+        }
+
+        .agent-name {
+            color: var(--blue);
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .agent-name:hover {
+            color: var(--accent-1);
         }
 
         .empty-state {
@@ -309,6 +343,41 @@ if (isset($_POST['action']) && isset($_POST['agent_id'])) {
         .modal-buttons .btn-cancel:hover {
             background: #7f8c8d;
         }
+
+        /* Summary Modal Styles */
+        .summary-modal .modal-content {
+            width: 600px;
+        }
+        .summary-header {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--blue);
+        }
+        .summary-header h3 {
+            margin: 0;
+            color: var(--blue);
+        }
+        .summary-info {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 12px;
+        }
+        .summary-label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .summary-value {
+            color: #333;
+        }
+        .registration-code {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-weight: bold;
+            color: var(--blue);
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
@@ -361,7 +430,7 @@ if (isset($_POST['action']) && isset($_POST['agent_id'])) {
                         <?php foreach ($agents as $agent): ?>
                             <tr>
                                 <td class="agent-id"><?= htmlspecialchars($agent['id']) ?></td>
-                                <td><strong><?= htmlspecialchars($agent['name']) ?></strong></td>
+                                <td><strong class="agent-name" onclick="openSummaryModal(<?= (int)$agent['id'] ?>)"><?= htmlspecialchars($agent['name']) ?></strong></td>
                                 <td><?= htmlspecialchars($agent['email']) ?></td>
                                 <td><?= htmlspecialchars($agent['national_id']) ?></td>
                                 <td><?= htmlspecialchars($agent['phone']) ?></td>
@@ -449,6 +518,45 @@ if (isset($_POST['action']) && isset($_POST['agent_id'])) {
         </div>
     </div>
 
+    <!-- Summary Modal -->
+    <div id="summaryModal" class="modal summary-modal" aria-hidden="true" role="dialog" aria-labelledby="summaryModalTitle">
+        <div class="modal-content" role="document">
+            <div class="modal-close" onclick="closeSummaryModal()" title="Close">&times;</div>
+            <div class="summary-header">
+                <h3 id="summaryModalTitle">Agent Information Summary</h3>
+            </div>
+            
+            <div class="summary-info">
+                <div class="summary-label">Name:</div>
+                <div class="summary-value" id="summary_name"></div>
+                
+                <div class="summary-label">Phone:</div>
+                <div class="summary-value" id="summary_phone"></div>
+                
+                <div class="summary-label">Email:</div>
+                <div class="summary-value" id="summary_email"></div>
+                
+                <div class="summary-label">National ID:</div>
+                <div class="summary-value" id="summary_national_id"></div>
+                
+                <div class="summary-label">Registration Date:</div>
+                <div class="summary-value" id="summary_created_at"></div>
+                
+                <div class="summary-label">Last Updated:</div>
+                <div class="summary-value" id="summary_updated_at"></div>
+                
+                <div class="summary-label">Registration Code:</div>
+                <div class="summary-value">
+                    <div class="registration-code" id="summary_registration_code"></div>
+                </div>
+            </div>
+            
+            <div class="modal-buttons">
+                <button type="button" class="btn-cancel" onclick="closeSummaryModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         /**
          * Open edit modal and populate values via AJAX.
@@ -490,6 +598,50 @@ if (isset($_POST['action']) && isset($_POST['agent_id'])) {
         }
 
         /**
+         * Open summary modal and populate values via AJAX.
+         */
+        function openSummaryModal(id) {
+            var modal = document.getElementById('summaryModal');
+            fetch('manage_agents.php?ajax=get_agent_summary&id=' + encodeURIComponent(id), { credentials: 'same-origin' })
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    if (!data || !data.id) {
+                        alert('Agent not found.');
+                        return;
+                    }
+
+                    // Update modal title with agent name
+                    document.getElementById('summaryModalTitle').textContent = 'Agent ' + data.name + ' Information Summary';
+                    
+                    // Fill summary fields
+                    document.getElementById('summary_name').textContent = data.name || '';
+                    document.getElementById('summary_phone').textContent = data.phone || '';
+                    document.getElementById('summary_email').textContent = data.email || '';
+                    document.getElementById('summary_national_id').textContent = data.national_id || '';
+                    document.getElementById('summary_created_at').textContent = data.created_at ? new Date(data.created_at).toLocaleString() : '';
+                    document.getElementById('summary_updated_at').textContent = data.updated_at ? new Date(data.updated_at).toLocaleString() : '';
+                    document.getElementById('summary_registration_code').textContent = data.registration_code || 'No code assigned';
+
+                    // Show modal
+                    modal.style.display = 'flex';
+                    modal.setAttribute('aria-hidden', 'false');
+                })
+                .catch(function(err) {
+                    console.error(err);
+                    alert('Failed to fetch agent details.');
+                });
+        }
+
+        /**
+         * Close summary modal
+         */
+        function closeSummaryModal() {
+            var modal = document.getElementById('summaryModal');
+            modal.style.display = 'none';
+            modal.setAttribute('aria-hidden', 'true');
+        }
+
+        /**
          * Submit edit form via AJAX
          */
         document.getElementById('editAgentForm').addEventListener('submit', function(e) {
@@ -522,12 +674,19 @@ if (isset($_POST['action']) && isset($_POST['agent_id'])) {
         document.getElementById('editModal').addEventListener('click', function(e) {
             if (e.target === this) closeEditModal();
         });
+        
+        document.getElementById('summaryModal').addEventListener('click', function(e) {
+            if (e.target === this) closeSummaryModal();
+        });
 
         // Close modal on ESC
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                var modal = document.getElementById('editModal');
-                if (modal && modal.style.display === 'flex') closeEditModal();
+                var editModal = document.getElementById('editModal');
+                var summaryModal = document.getElementById('summaryModal');
+                
+                if (editModal && editModal.style.display === 'flex') closeEditModal();
+                if (summaryModal && summaryModal.style.display === 'flex') closeSummaryModal();
             }
         });
     </script>

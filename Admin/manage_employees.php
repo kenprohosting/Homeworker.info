@@ -28,6 +28,36 @@ if (isset($_GET['ajax']) && $_GET['ajax'] === 'get_employee' && isset($_GET['id'
     exit;
 }
 
+// AJAX endpoint for fetching employee summary details
+if (isset($_GET['ajax']) && $_GET['ajax'] === 'get_employee_summary' && isset($_GET['id'])) {
+    $id = (int) $_GET['id'];
+    
+    // Get employee details
+    $stmt = $conn->prepare("SELECT 
+                            ID, Name, Email, Phone, National_id, Profile_pic, ID_passport, 
+                            Gender, Age, Country, County_province, Skills, Experience, 
+                            Education_level, Social_referee, Health_conditions, Language, 
+                            Residence_type, salary_expectation, Verification_status, 
+                            Status, Created_at, Agent_id
+                            FROM employees WHERE ID = ?");
+    $stmt->execute([$id]);
+    $employee = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    // Get agent name if agent_id exists
+    if ($employee && !empty($employee['Agent_id'])) {
+        $stmt = $conn->prepare("SELECT name FROM agents WHERE id = ?");
+        $stmt->execute([$employee['Agent_id']]);
+        $agent = $stmt->fetch(PDO::FETCH_ASSOC);
+        $employee['Agent_name'] = $agent ? $agent['name'] : 'N/A';
+    } else {
+        $employee['Agent_name'] = 'N/A';
+    }
+    
+    header('Content-Type: application/json');
+    echo json_encode($employee ?: []);
+    exit;
+}
+
 // AJAX endpoint for updating employee details : jean luc 26 SEP 25
 if (isset($_POST['ajax']) && $_POST['ajax'] === 'update_employee') {
     if (!isset($_SESSION['admin_id'])) {
@@ -320,7 +350,7 @@ if (isset($_POST['action'], $_POST['employee_id'])) {
             width: 100%;
             border-collapse: collapse;
             margin-top: 14px;
-            min-width: 1300px;
+            min-width: 1200px;
         }
         .employees-table th, .employees-table td {
             padding: 12px 10px;
@@ -337,13 +367,13 @@ if (isset($_POST['action'], $_POST['employee_id'])) {
         }
         .employees-table tr:hover { background: #fbfdfe; }
 
-        .profile-thumb {
-            width: 56px;
-            height: 56px;
-            border-radius: 6px;
-            object-fit: cover;
-            display: inline-block;
-            border: 1px solid #e6eef0;
+        .employee-name {
+            color: var(--blue);
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .employee-name:hover {
+            color: var(--accent-1);
         }
 
         .action-buttons { 
@@ -509,9 +539,81 @@ if (isset($_POST['action'], $_POST['employee_id'])) {
             background: #7f8c8d;
         }
 
+        /* Summary Modal Styles */
+        .summary-modal .modal-content {
+            width: 800px;
+        }
+        .summary-header {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--blue);
+        }
+        .summary-header h3 {
+            margin: 0;
+            color: var(--blue);
+        }
+        .summary-info {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 12px;
+        }
+        .summary-label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .summary-value {
+            color: #333;
+        }
+        .summary-profile {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .summary-profile img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #e6eef0;
+        }
+        .summary-profile-info {
+            flex: 1;
+        }
+        .summary-profile-info h4 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .summary-documents {
+            margin-top: 20px;
+        }
+        .summary-documents h4 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .summary-documents a {
+            display: inline-block;
+            margin-right: 15px;
+            color: var(--blue);
+            text-decoration: none;
+        }
+        .summary-documents a:hover {
+            text-decoration: underline;
+        }
+
         @media (max-width: 900px) {
             .modal-grid { grid-template-columns: 1fr; }
             .employees-table { min-width: 900px; }
+            .summary-modal .modal-content {
+                width: 95%;
+            }
+            .summary-profile {
+                flex-direction: column;
+            }
+            .summary-profile img {
+                width: 100%;
+                height: auto;
+            }
         }
     </style>
 </head>
@@ -550,7 +652,6 @@ if (isset($_POST['action'], $_POST['employee_id'])) {
         <table class="employees-table" role="table" aria-label="Employees table">
             <thead>
                 <tr>
-                    <th>Photo</th>
                     <th>ID</th>
                     <th>Name</th>
                     <th>Email</th>
@@ -578,15 +679,8 @@ if (isset($_POST['action'], $_POST['employee_id'])) {
             <tbody>
                 <?php foreach ($employees as $emp): ?>
                 <tr>
-                    <td>
-                        <?php if (!empty($emp['Profile_pic'])): ?>
-                            <img src="../<?= htmlspecialchars($emp['Profile_pic']) ?>" alt="Profile picture" class="profile-thumb" loading="lazy">
-                        <?php else: ?>
-                            <img src="../placeholder-user.png" alt="No photo" class="profile-thumb" loading="lazy">
-                        <?php endif; ?>
-                    </td>
                     <td><?= htmlspecialchars($emp['ID']) ?></td>
-                    <td><strong><?= htmlspecialchars($emp['Name']) ?></strong></td>
+                    <td><strong class="employee-name" onclick="openSummaryModal(<?= (int)$emp['ID'] ?>)"><?= htmlspecialchars($emp['Name']) ?></strong></td>
                     <td><?= htmlspecialchars($emp['Email']) ?></td>
                     <td><?= htmlspecialchars($emp['Phone']) ?></td>
                     <td><?= htmlspecialchars($emp['National_id'] ?? '') ?></td>
@@ -834,6 +928,92 @@ if (isset($_POST['action'], $_POST['employee_id'])) {
     </div>
 </div>
 
+<!-- Summary Modal -->
+<div id="summaryModal" class="modal summary-modal" aria-hidden="true" role="dialog" aria-labelledby="summaryModalTitle">
+    <div class="modal-content" role="document">
+        <div class="modal-close" onclick="closeSummaryModal()" title="Close">&times;</div>
+        <div class="summary-header">
+            <h3 id="summaryModalTitle">Employee Information Summary</h3>
+        </div>
+        
+        <div class="summary-profile">
+            <img id="summary_profile_pic" src="../placeholder-user.png" alt="Profile Picture">
+            <div class="summary-profile-info">
+                <h4 id="summary_name"></h4>
+                <div class="summary-info">
+                    <div class="summary-label">Email:</div>
+                    <div class="summary-value" id="summary_email"></div>
+                    
+                    <div class="summary-label">Phone:</div>
+                    <div class="summary-value" id="summary_phone"></div>
+                    
+                    <div class="summary-label">National ID:</div>
+                    <div class="summary-value" id="summary_national_id"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="summary-info">
+            <div class="summary-label">Gender:</div>
+            <div class="summary-value" id="summary_gender"></div>
+            
+            <div class="summary-label">Age:</div>
+            <div class="summary-value" id="summary_age"></div>
+            
+            <div class="summary-label">Country:</div>
+            <div class="summary-value" id="summary_country"></div>
+            
+            <div class="summary-label">County/Province:</div>
+            <div class="summary-value" id="summary_county_province"></div>
+            
+            <div class="summary-label">Skills:</div>
+            <div class="summary-value" id="summary_skills"></div>
+            
+            <div class="summary-label">Experience:</div>
+            <div class="summary-value" id="summary_experience"></div>
+            
+            <div class="summary-label">Education Level:</div>
+            <div class="summary-value" id="summary_education_level"></div>
+            
+            <div class="summary-label">Social Referee:</div>
+            <div class="summary-value" id="summary_social_referee"></div>
+            
+            <div class="summary-label">Health Conditions:</div>
+            <div class="summary-value" id="summary_health_conditions"></div>
+            
+            <div class="summary-label">Languages:</div>
+            <div class="summary-value" id="summary_language"></div>
+            
+            <div class="summary-label">Residence Type:</div>
+            <div class="summary-value" id="summary_residence_type"></div>
+            
+            <div class="summary-label">Salary Expectation:</div>
+            <div class="summary-value" id="summary_salary_expectation"></div>
+            
+            <div class="summary-label">Verification Status:</div>
+            <div class="summary-value" id="summary_verification_status"></div>
+            
+            <div class="summary-label">Account Status:</div>
+            <div class="summary-value" id="summary_status"></div>
+            
+            <div class="summary-label">Agent:</div>
+            <div class="summary-value" id="summary_agent"></div>
+            
+            <div class="summary-label">Registration Date:</div>
+            <div class="summary-value" id="summary_created_at"></div>
+        </div>
+        
+        <div class="summary-documents">
+            <h4>Documents</h4>
+            <a id="summary_id_passport_link" href="#" target="_blank">View ID/Passport</a>
+        </div>
+        
+        <div class="modal-buttons">
+            <button type="button" class="btn-cancel" onclick="closeSummaryModal()">Close</button>
+        </div>
+    </div>
+</div>
+
 <!-- Tagify JS -->
 <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
 
@@ -963,6 +1143,88 @@ function closeEditModal() {
     }
 }
 
+/**
+ * Open summary modal and populate values via AJAX.
+ */
+function openSummaryModal(id) {
+    var modal = document.getElementById('summaryModal');
+    fetch('manage_employees.php?ajax=get_employee_summary&id=' + encodeURIComponent(id), { credentials: 'same-origin' })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            if (!data || !data.ID) {
+                alert('Employee not found.');
+                return;
+            }
+
+            // Update modal title with employee name
+            document.getElementById('summaryModalTitle').textContent = 'Employee ' + data.Name + ' Information Summary';
+            
+            // Profile picture
+            var profilePic = document.getElementById('summary_profile_pic');
+            if (data.Profile_pic) {
+                profilePic.src = '../' + data.Profile_pic;
+            } else {
+                profilePic.src = '../placeholder-user.png';
+            }
+            
+            // Basic info
+            document.getElementById('summary_name').textContent = data.Name || '';
+            document.getElementById('summary_email').textContent = data.Email || '';
+            document.getElementById('summary_phone').textContent = data.Phone || '';
+            document.getElementById('summary_national_id').textContent = data.National_id || '';
+            
+            // Personal details
+            document.getElementById('summary_gender').textContent = data.Gender || '';
+            document.getElementById('summary_age').textContent = data.Age || '';
+            document.getElementById('summary_country').textContent = data.Country || '';
+            document.getElementById('summary_county_province').textContent = data.County_province || '';
+            
+            // Professional details
+            document.getElementById('summary_skills').textContent = data.Skills || '';
+            document.getElementById('summary_experience').textContent = data.Experience || '';
+            document.getElementById('summary_education_level').textContent = data.Education_level || '';
+            document.getElementById('summary_social_referee').textContent = data.Social_referee || '';
+            document.getElementById('summary_health_conditions').textContent = data.Health_conditions || 'Not specified';
+            document.getElementById('summary_language').textContent = data.Language || '';
+            document.getElementById('summary_residence_type').textContent = data.Residence_type || '';
+            document.getElementById('summary_salary_expectation').textContent = data.salary_expectation || '';
+            
+            // Status details
+            document.getElementById('summary_verification_status').textContent = data.Verification_status || '';
+            document.getElementById('summary_status').textContent = data.Status || '';
+            document.getElementById('summary_agent').textContent = data.Agent_name || 'N/A';
+            
+            // Dates
+            document.getElementById('summary_created_at').textContent = data.Created_at ? new Date(data.Created_at).toLocaleString() : '';
+            
+            // Documents
+            var idPassportLink = document.getElementById('summary_id_passport_link');
+            if (data.ID_passport) {
+                idPassportLink.href = '../' + data.ID_passport;
+                idPassportLink.style.display = 'inline-block';
+            } else {
+                idPassportLink.style.display = 'none';
+            }
+
+            // Show modal
+            modal.style.display = 'flex';
+            modal.setAttribute('aria-hidden', 'false');
+        })
+        .catch(function(err) {
+            console.error(err);
+            alert('Failed to fetch employee details.');
+        });
+}
+
+/**
+ * Close summary modal
+ */
+function closeSummaryModal() {
+    var modal = document.getElementById('summaryModal');
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
+}
+
 document.getElementById('editEmployeeForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -999,11 +1261,18 @@ document.getElementById('editModal').addEventListener('click', function(e) {
     if (e.target === this) closeEditModal();
 });
 
+document.getElementById('summaryModal').addEventListener('click', function(e) {
+    if (e.target === this) closeSummaryModal();
+});
+
 // Close modal on ESC
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
-        var modal = document.getElementById('editModal');
-        if (modal && modal.style.display === 'flex') closeEditModal();
+        var editModal = document.getElementById('editModal');
+        var summaryModal = document.getElementById('summaryModal');
+        
+        if (editModal && editModal.style.display === 'flex') closeEditModal();
+        if (summaryModal && summaryModal.style.display === 'flex') closeSummaryModal();
     }
 });
 
