@@ -424,34 +424,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <option value="Tertiary" <?= (isset($_POST['education_level']) && $_POST['education_level'] == 'Tertiary') ? 'selected' : '' ?>>Tertiary</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label for="referee_kin">Referee (Next of Kin) *</label>
-                <input type="text" name="referee_kin" id="referee_kin" required 
-                    placeholder="Mother, Father, Sibling..." 
-                    value="<?= isset($_POST['referee_kin']) ? htmlspecialchars($_POST['referee_kin']) : '' ?>">
-            </div>
-            <div class="form-group">
-                <label for="referee_second">Referee (Other, can also be Kin) *</label>
-                <input type="text" name="referee_second" id="referee_second" required 
-                    placeholder="Friend, Employer, Relative..." 
-                    value="<?= isset($_POST['referee_second']) ? htmlspecialchars($_POST['referee_second']) : '' ?>">
-            </div>
-            <div id="extraReferees"></div>
-            <button type="button" class="btn-pro" style="margin-top:6px;background:#eee;color:#333;" onclick="addReferee()">+ Add Another Referee</button>
-
-            <script>
-            function addReferee() {
-                const container = document.getElementById('extraReferees');
-                const index = container.children.length;
-                const div = document.createElement('div');
-                div.classList.add('form-group');
-                div.innerHTML = `
-                    <label>Other Referee</label>
-                    <input type="text" name="referee_other[]" placeholder="Extra referee contact">
-                `;
-                container.appendChild(div);
-            }
-            </script>
             <!-- Health Conditions Section -->
             <div class="form-group">
                 <label>Health Conditions</label>
@@ -505,6 +477,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <option value="rural" <?= (isset($_POST['residence_type']) && $_POST['residence_type'] == 'rural') ? 'selected' : '' ?>>Rural</option>
                 </select>
             </div>
+            <!-- Referee Fields -->
+            <div class="form-group">
+                <label for="referee_kin">Referee 1 (relative) *</label>
+                <input type="text" name="referee_kin" id="referee_kin" required 
+                    placeholder="Mother, Father, Sibling..." 
+                    value="<?= isset($_POST['referee_kin']) ? htmlspecialchars($_POST['referee_kin']) : '' ?>">
+            </div>
+            <div class="form-group">
+                <label for="referee_second">Referee 2 (referral) *</label>
+                <input type="text" name="referee_second" id="referee_second" required 
+                    placeholder="Friend, Employer, Relative..." 
+                    value="<?= isset($_POST['referee_second']) ? htmlspecialchars($_POST['referee_second']) : '' ?>">
+            </div>
+            <div id="extraReferees"></div>
+            <button type="button" class="btn-pro" style="margin-top:6px;background:#eee;color:#333;" onclick="addReferee()">+ Add Another Referee</button>
+
+            <script>
+            function addReferee() {
+                const container = document.getElementById('extraReferees');
+                // Start counting from 3 since we already have Referee 1 and Referee 2
+                const index = container.children.length + 3;
+                const div = document.createElement('div');
+                div.classList.add('form-group');
+                div.innerHTML = `
+                    <label>Referee ${index}</label>
+                    <input type="text" name="referee_other[]" placeholder="Extra referee contact">
+                `;
+                container.appendChild(div);
+            }
+            </script>
             <div class="form-group">
                 <label for="id_passport">ID/Passport (Upload or Take Photo)</label>
                 <input type="file" name="id_passport" id="id_passport" accept="image/*,.pdf" capture="environment" required>
